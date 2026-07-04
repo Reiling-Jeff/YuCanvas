@@ -43,6 +43,7 @@ public partial class MainWindowViewModel : ObservableObject
     {
         List<Course> cached = await CacheService.LoadCoursesAsync();
         _dashboard.ApplyCachedCourses(cached);
+        _assignments.Load(cached);
     }
 
     private async Task LoadFromCanvasAsync()
@@ -58,7 +59,6 @@ public partial class MainWindowViewModel : ObservableObject
             foreach (CanvasCourse c in canvasCourses)
                 c.Assignments = await service.GetAssignmentsAsync(c.Id);
 
-            // Beide Seiten mit denselben Daten versorgen
             _dashboard.ApplyCanvasCourses(canvasCourses);
             _assignments.Load(canvasCourses);
 
