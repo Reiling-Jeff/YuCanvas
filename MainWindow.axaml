@@ -3,6 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:YuCanvas.Controls"
+        xmlns:vm="clr-namespace:YuCanvas.Models"
+        x:DataType="vm:MainWindowViewModel"
         xmlns:views="clr-namespace:YuCanvas.Views"
         mc:Ignorable="d" d:DesignWidth="1320" d:DesignHeight="860"
         x:Class="YuCanvas.MainWindow"
@@ -26,7 +28,7 @@
             <controls:SidebarView Grid.Column="0" />
             <Grid Grid.Column="1" RowDefinitions="Auto,*">
                 <controls:TopBarView Grid.Row="0" />
-                <views:DashboardView Grid.Row="1" />
+                <ContentControl Grid.Row="1" Content="{Binding CurrentPage}" />
             </Grid>
         </Grid>
     </Panel>

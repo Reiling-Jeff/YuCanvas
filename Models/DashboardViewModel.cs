@@ -4,13 +4,10 @@ using Avalonia.Media;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using YuCanvas.Calculator;
 using YuCanvas.Json;
 using YuCanvas.Media;
-using YuCanvas.Service;
-using Assignment = YuCanvas.Json.Assignment;
 
 namespace YuCanvas.Models;
 
@@ -77,89 +74,56 @@ public partial class DashboardViewModel : ObservableObject
     
     // --- Load Data ---
     
-    public async Task LoadFromCacheAsync()
+    public void ApplyCachedCourses(List<Course> courses)
     {
-        int overallProgress = 0;
-        List<Course> courses = await CacheService.LoadCoursesAsync();
-        
+        if (courses.Count == 0)
+            return;
+
         LoadCardValues(courses);
-        
+
         Courses.Clear();
+        int overallProgress = 0;
         foreach (Course c in courses)
         {
             overallProgress += c.Progress;
             Courses.Add(c);
         }
 
-        overallProgress = courses.Count > 0 ? overallProgress / courses.Count : 0;
-        
-        ProgressInPercentage = overallProgress;
-        Console.WriteLine(overallProgress);
-        
-        LastSyncText = $"Synchronisiert...";
+        ProgressInPercentage = courses.Count > 0 ? overallProgress / courses.Count : 0;
+        LastSyncText = "Synchronisiert...";
     }
-    
-    public async Task LoadFromCanvasAsync()
+
+    public void ApplyCanvasCourses(List<CanvasCourse> canvasCourses)
     {
-        try
+        Courses.Clear();
+        int overallProgress = 0;
+
+        foreach (CanvasCourse c in canvasCourses)
         {
-            string baseUrl = Program.Configuration["Canvas:BaseUrl"]!;
-            string token   = Program.Configuration["Canvas:Token"]!;
-        
-            int overallProgress = 0;
-        
-            CanvasService service = new CanvasService(baseUrl, token);
+            int progress = CalculateBasicProgress(c.Assignments!);
+            overallProgress += progress;
 
-            List<CanvasCourse> canvasCourses = await service.GetCoursesAsync();
-
-            foreach (CanvasCourse c in canvasCourses)
+            Courses.Add(new Course
             {
-                c.Assignments = await service.GetAssignmentsAsync(c.Id);
-            }
-        
-            Courses.Clear();
-
-            foreach (CanvasCourse c in canvasCourses)
-            {
-                int progress = CalculateBasicProgress(c.Assignments!);
-                overallProgress += progress;
-            
-                Courses.Add(new Course
-                {
-                    Code       = ShortCode(c.CourseCode),
-                    Name       = c.Name,
-                    Lecturer   = c.Teachers.FirstOrDefault()?.DisplayName ?? "Unbekannt",
-                    Progress   = progress,
-                    Assignments = c.Assignments
-                });
-            
-                await CacheService.SaveCoursesAsync(Courses.ToList());
-            }
-            
-            List<CanvasAssignment> assignments = new List<CanvasAssignment>();
-            
-            foreach (CanvasCourse course in canvasCourses)
-            {
-                if (course.Assignments != null)
-                    assignments.AddRange(course.Assignments);
-            }
-            
-            LoadCardValues(canvasCourses);
-
-            overallProgress /= canvasCourses.Count;
-        
-            _progressInPercentage = overallProgress;
-        
-            PassedSync = true;
-
-            LastSyncText = $"Letzte Synchronisierung ·  {DateTime.Now.ToString("dd.MM.yyyy HH:mm")}";
+                Code        = ShortCode(c.CourseCode),
+                Name        = c.Name,
+                Lecturer    = c.Teachers.FirstOrDefault()?.DisplayName ?? "Unbekannt",
+                Progress    = progress,
+                Assignments = c.Assignments
+            });
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            PassedSync = false;
-            LastSyncText = "Sync failed. Contact mail@yuuto.me";
-        }
+
+        LoadCardValues(canvasCourses);
+
+        ProgressInPercentage = canvasCourses.Count > 0 ? overallProgress / canvasCourses.Count : 0;
+        PassedSync = true;
+        LastSyncText = $"Letzte Synchronisierung ·  {DateTime.Now:dd.MM.yyyy HH:mm}";
+    }
+
+    public void MarkSyncFailed()
+    {
+        PassedSync = false;
+        LastSyncText = "Sync failed. Contact mail@yuuto.me";
     }
 
     private static int CalculatePointsAboveBasics(List<CanvasAssignment> assignments)

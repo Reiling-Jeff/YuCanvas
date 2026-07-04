@@ -2,6 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:YuCanvas.Controls"
+             xmlns:views="clr-namespace:YuCanvas.Views"
+             xmlns:vm ="clr-namespace:YuCanvas.Models"
+             x:DataType="vm:MainWindowViewModel"
              mc:Ignorable="d" d:DesignWidth="260" d:DesignHeight="820"
              x:Class="YuCanvas.Controls.SidebarView">
 
@@ -30,14 +34,14 @@
                 <StackPanel Spacing="4">
                     <TextBlock Text="MENÜ" Classes="eyebrow" Margin="10,0,0,8" />
 
-                    <Button Classes="navitem active">
+                    <Button Classes="navitem active" Command="{Binding ShowDashboardCommand}">
                         <StackPanel Orientation="Horizontal" Spacing="14">
                             <TextBlock Text="◈" FontSize="16" VerticalAlignment="Center" />
                             <TextBlock Text="Dashboard" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
 
-                    <Button Classes="navitem">
+                    <Button Classes="navitem" Command="{Binding ShowAssignmentsCommand}">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
                                 <TextBlock Text="✎" FontSize="16" VerticalAlignment="Center" />

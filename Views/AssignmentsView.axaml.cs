@@ -3,8 +3,8 @@ using Avalonia.Markup.Xaml;
 
 namespace YuCanvas.Views;
 
-public partial class DashboardView : UserControl
+public partial class AssignmentsView : UserControl
 {
-    public DashboardView() => InitializeComponent();
+    public AssignmentsView() => InitializeComponent();
     private void InitializeComponent() => AvaloniaXamlLoader.Load(this);
 }
