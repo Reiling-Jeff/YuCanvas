@@ -22,6 +22,8 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly SideBarViewModel _sideBarViewModel = SidebarView.GetViewModel();
     private readonly SettingsViewModel _settings = new();
 
+    private AppSettings _appSettings;
+
     public DashboardViewModel Dashboard => _dashboard;
 
     public AssignmentsViewModel Assignments => _assignments;
@@ -45,6 +47,9 @@ public partial class MainWindowViewModel : ObservableObject
 
     private async Task InitAsync()
     {
+        _appSettings = await SettingsService.LoadAsync();
+        await _settings.InitAsync();
+        
         await LoadFromCacheAsync();
         await LoadFromCanvasAsync();
     }
@@ -58,7 +63,6 @@ public partial class MainWindowViewModel : ObservableObject
         _dashboard.ApplyCachedCourses(cachedCourses);
         _assignments.Load(cachedCourses);
         _topBarViewModel.Load(cachedStudentData);
-        Console.WriteLine($"F, sideBar null? {_sideBarViewModel == null}");
         _sideBarViewModel.Load(cachedStudentData);
         _settings.ApplyUser(cachedStudentData);
         Console.WriteLine("=== LoadFromCache DONE ===");
@@ -69,8 +73,24 @@ public partial class MainWindowViewModel : ObservableObject
         Console.WriteLine("=== LoadFromCanvas START ===");
         try
         {
-            string baseUrl = Program.Configuration["Canvas:BaseUrl"]!;
-            string token   = Program.Configuration["Canvas:Token"]!;
+            string baseUrl = _settings.CanvasBaseUrl;
+            string token   = _settings.CanvasToken;
+
+            if (string.IsNullOrWhiteSpace(baseUrl) || string.IsNullOrWhiteSpace(token))
+            {
+                baseUrl = Program.Configuration["Canvas:BaseUrl"] ?? "";
+                token   = Program.Configuration["Canvas:Token"] ?? "";
+
+                _settings.CanvasBaseUrl = baseUrl;
+                _settings.CanvasToken   = token;
+                await SettingsService.SaveAsync(_appSettings);
+            }
+
+            if (string.IsNullOrWhiteSpace(baseUrl) || string.IsNullOrWhiteSpace(token))
+            {
+                _dashboard.MarkSyncFailed();
+                return;
+            }
             Console.WriteLine(1);
             await _settings.InitAsync();
             CanvasService service = new CanvasService(baseUrl, token);

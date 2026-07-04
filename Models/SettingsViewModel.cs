@@ -10,25 +10,56 @@ namespace YuCanvas.Models;
 
 public partial class SettingsViewModel : ObservableObject
 {
-    // --- Konto-Infos (read-only) ---
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShowAccount))]
+    [NotifyPropertyChangedFor(nameof(ShowBehavior))]
+    [NotifyPropertyChangedFor(nameof(ShowData))]
+    [NotifyPropertyChangedFor(nameof(ShowConnection))]
+    [NotifyPropertyChangedFor(nameof(NoResults))]
+    private string _searchQuery = "";
+
     [ObservableProperty] private string _accountName = "—";
     [ObservableProperty] private string _accountId = "—";
     [ObservableProperty] private string _accountLocale = "—";
 
-    // --- Einstellungen ---
     [ObservableProperty] private bool _autoSync = true;
     [ObservableProperty] private bool _startOnDashboard = true;
 
-    // --- Rückmeldung an den Nutzer ---
+    [ObservableProperty] private string _canvasBaseUrl = "";
+    [ObservableProperty] private string _canvasToken = "";
+
     [ObservableProperty] private string _statusText = "";
 
     private AppSettings _settings = new();
+
+    private bool Matches(params string[] keywords)
+    {
+        if (string.IsNullOrWhiteSpace(SearchQuery))
+            return true;
+
+        string q = SearchQuery.Trim().ToLowerInvariant();
+        foreach (string kw in keywords)
+        {
+            if (kw.ToLowerInvariant().Contains(q))
+                return true;
+        }
+        return false;
+    }
+
+    public bool ShowAccount    => Matches("konto", "account", "name", "nutzer", "id", "sprache", "profil");
+    public bool ShowBehavior   => Matches("verhalten", "sync", "synchronisieren", "automatisch", "dashboard", "start");
+    public bool ShowData       => Matches("daten", "cache", "zwischenspeicher", "leeren", "löschen");
+    public bool ShowConnection => Matches("canvas", "verbindung", "url", "token", "zugriff", "anmeldung");
+
+    public bool NoResults => !ShowAccount && !ShowBehavior && !ShowData && !ShowConnection;
 
     public async Task InitAsync()
     {
         _settings = await SettingsService.LoadAsync();
         AutoSync = _settings.AutoSync;
         StartOnDashboard = _settings.StartOnDashboard;
+        CanvasBaseUrl = _settings.CanvasBaseUrl;
+        CanvasToken = _settings.CanvasToken;
     }
 
     public void ApplyUser(StudentData user)
@@ -43,12 +74,14 @@ public partial class SettingsViewModel : ObservableObject
     {
         _settings.AutoSync = AutoSync;
         _settings.StartOnDashboard = StartOnDashboard;
+        _settings.CanvasBaseUrl = CanvasBaseUrl.Trim();
+        _settings.CanvasToken = CanvasToken.Trim();
         await SettingsService.SaveAsync(_settings);
-        StatusText = "Einstellungen gespeichert.";
+        StatusText = "Gespeichert. Zum Übernehmen neu synchronisieren.";
     }
 
     [RelayCommand]
-    private async Task ClearCache()
+    private void ClearCache()
     {
         try
         {
@@ -66,6 +99,5 @@ public partial class SettingsViewModel : ObservableObject
             StatusText = "Cache konnte nicht geleert werden.";
             Console.WriteLine(e);
         }
-        await Task.CompletedTask;
     }
 }

@@ -4,78 +4,133 @@
              x:Class="YuCanvas.Views.SettingsView"
              x:DataType="vm:SettingsViewModel">
 
-    <ScrollViewer Padding="32,20,32,32">
-        <StackPanel Spacing="24">
+    <ScrollViewer Padding="40,24,40,32">
+        <StackPanel Spacing="20">
 
-            <TextBlock Text="Einstellungen" Classes="h1" />
+            <StackPanel Spacing="14" MaxWidth="620" HorizontalAlignment="Left">
+                <TextBlock Text="Einstellungen" Classes="h1" />
+                <Grid>
+                    <TextBox Classes="search" Text="{Binding SearchQuery}"
+                             Watermark="Einstellungen durchsuchen …"
+                             Padding="42,11,14,11" />
+                    <TextBlock Text="⌕" FontSize="17" Foreground="{StaticResource TextMutedBrush}"
+                               VerticalAlignment="Center" Margin="15,0,0,0"
+                               HorizontalAlignment="Left" IsHitTestVisible="False" />
+                </Grid>
+            </StackPanel>
 
-            <!-- Konto -->
-            <TextBlock Text="Konto" Classes="h2" />
-            <Border Classes="glass" Padding="22" CornerRadius="18">
-                <StackPanel Spacing="14" MaxWidth="600" HorizontalAlignment="Left">
-                    <Grid ColumnDefinitions="140,*">
-                        <TextBlock Grid.Column="0" Text="Name" Classes="caption" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="1" Text="{Binding AccountName}" Classes="body" />
-                    </Grid>
-                    <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" />
-                    <Grid ColumnDefinitions="140,*">
-                        <TextBlock Grid.Column="0" Text="Nutzer-ID" Classes="caption" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="1" Text="{Binding AccountId}" Classes="body" />
-                    </Grid>
-                    <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" />
-                    <Grid ColumnDefinitions="140,*">
-                        <TextBlock Grid.Column="0" Text="Sprache" Classes="caption" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="1" Text="{Binding AccountLocale}" Classes="body" />
-                    </Grid>
-                </StackPanel>
-            </Border>
+            <WrapPanel Orientation="Horizontal">
 
-            <!-- Verhalten -->
-            <TextBlock Text="Verhalten" Classes="h2" />
-            <Border Classes="glass" Padding="22" CornerRadius="18">
-                <StackPanel Spacing="18" MaxWidth="600" HorizontalAlignment="Left">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <StackPanel Grid.Column="0" Spacing="3">
-                            <TextBlock Text="Automatisch synchronisieren" Classes="h3" />
-                            <TextBlock Text="Beim Start automatisch von Canvas laden" Classes="caption" />
+                <!-- KONTO -->
+                <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
+                            IsVisible="{Binding ShowAccount}">
+                    <TextBlock Text="KONTO" Classes="eyebrow" />
+                    <Border Classes="glass" Padding="8" CornerRadius="16">
+                        <StackPanel>
+                            <Grid ColumnDefinitions="160,*" Margin="14,12">
+                                <TextBlock Grid.Column="0" Text="Name" Classes="body"
+                                           Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="{Binding AccountName}" Classes="body"
+                                           FontWeight="Medium" VerticalAlignment="Center" />
+                            </Grid>
+                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
+                            <Grid ColumnDefinitions="160,*" Margin="14,12">
+                                <TextBlock Grid.Column="0" Text="Nutzer-ID" Classes="body"
+                                           Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="{Binding AccountId}" Classes="body"
+                                           FontWeight="Medium" VerticalAlignment="Center" />
+                            </Grid>
+                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
+                            <Grid ColumnDefinitions="160,*" Margin="14,12">
+                                <TextBlock Grid.Column="0" Text="Sprache" Classes="body"
+                                           Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="{Binding AccountLocale}" Classes="body"
+                                           FontWeight="Medium" VerticalAlignment="Center" />
+                            </Grid>
                         </StackPanel>
-                        <ToggleSwitch Grid.Column="1" IsChecked="{Binding AutoSync}"
-                                      VerticalAlignment="Center" />
-                    </Grid>
-                    <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" />
-                    <Grid ColumnDefinitions="*,Auto">
-                        <StackPanel Grid.Column="0" Spacing="3">
-                            <TextBlock Text="Mit Dashboard starten" Classes="h3" />
-                            <TextBlock Text="Beim Öffnen direkt das Dashboard zeigen" Classes="caption" />
+                    </Border>
+                </StackPanel>
+
+                <!-- VERHALTEN -->
+                <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
+                            IsVisible="{Binding ShowBehavior}">
+                    <TextBlock Text="VERHALTEN" Classes="eyebrow" />
+                    <Border Classes="glass" Padding="8" CornerRadius="16">
+                        <StackPanel>
+                            <Grid ColumnDefinitions="*,Auto" Margin="14,12">
+                                <StackPanel Grid.Column="0" Spacing="2">
+                                    <TextBlock Text="Automatisch synchronisieren" Classes="body" FontWeight="Medium" />
+                                    <TextBlock Text="Beim Start automatisch von Canvas laden" Classes="caption" />
+                                </StackPanel>
+                                <ToggleSwitch Grid.Column="1" IsChecked="{Binding AutoSync}" VerticalAlignment="Center" />
+                            </Grid>
+                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
+                            <Grid ColumnDefinitions="*,Auto" Margin="14,12">
+                                <StackPanel Grid.Column="0" Spacing="2">
+                                    <TextBlock Text="Mit Dashboard starten" Classes="body" FontWeight="Medium" />
+                                    <TextBlock Text="Beim Öffnen direkt das Dashboard zeigen" Classes="caption" />
+                                </StackPanel>
+                                <ToggleSwitch Grid.Column="1" IsChecked="{Binding StartOnDashboard}" VerticalAlignment="Center" />
+                            </Grid>
                         </StackPanel>
-                        <ToggleSwitch Grid.Column="1" IsChecked="{Binding StartOnDashboard}"
-                                      VerticalAlignment="Center" />
-                    </Grid>
+                    </Border>
                 </StackPanel>
+
+                <!-- CANVAS-VERBINDUNG -->
+                <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
+                            IsVisible="{Binding ShowConnection}">
+                    <TextBlock Text="CANVAS-VERBINDUNG" Classes="eyebrow" />
+                    <Border Classes="glass" Padding="18" CornerRadius="16">
+                        <StackPanel Spacing="16">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="Canvas-URL" Classes="caption" />
+                                <TextBox Classes="search" Text="{Binding CanvasBaseUrl}"
+                                         Watermark="https://deine-hochschule.instructure.com" />
+                            </StackPanel>
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="Zugriffstoken" Classes="caption" />
+                                <TextBox Classes="search" Text="{Binding CanvasToken}"
+                                         PasswordChar="•" Watermark="Dein Canvas-Token" />
+                                <TextBlock Text="Wird unverschlüsselt lokal gespeichert."
+                                           FontSize="11" Foreground="{StaticResource WarnBrush}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- DATEN -->
+                <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
+                            IsVisible="{Binding ShowData}">
+                    <TextBlock Text="DATEN" Classes="eyebrow" />
+                    <Border Classes="glass" Padding="18" CornerRadius="16">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackPanel Grid.Column="0" Spacing="2" VerticalAlignment="Center">
+                                <TextBlock Text="Zwischenspeicher leeren" Classes="body" FontWeight="Medium" />
+                                <TextBlock Text="Löscht die lokal gespeicherten Kursdaten" Classes="caption" />
+                            </StackPanel>
+                            <Button Grid.Column="1" Classes="ghost" Command="{Binding ClearCacheCommand}"
+                                    VerticalAlignment="Center">
+                                <TextBlock Text="Cache leeren" FontSize="13" />
+                            </Button>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+
+            </WrapPanel>
+
+            <!-- KEINE TREFFER -->
+            <Border Classes="glass" Padding="24" CornerRadius="16" Width="540"
+                    HorizontalAlignment="Left" IsVisible="{Binding NoResults}">
+                <TextBlock Text="Keine Einstellungen gefunden." Classes="body"
+                           HorizontalAlignment="Center" Foreground="{StaticResource TextMutedBrush}" />
             </Border>
 
-            <!-- Daten -->
-            <TextBlock Text="Daten" Classes="h2" />
-            <Border Classes="glass" Padding="22" CornerRadius="18">
-                <StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Left">
-                    <StackPanel Spacing="3">
-                        <TextBlock Text="Zwischenspeicher leeren" Classes="h3" />
-                        <TextBlock Text="Löscht die lokal gespeicherten Kursdaten" Classes="caption" />
-                    </StackPanel>
-                    <Button Classes="ghost" Command="{Binding ClearCacheCommand}"
-                            HorizontalAlignment="Left">
-                        <TextBlock Text="Cache leeren" FontSize="13" />
-                    </Button>
-                </StackPanel>
-            </Border>
-
-            <!-- Speichern -->
+            <!-- SPEICHERN -->
             <StackPanel Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
                 <Button Classes="accent" Command="{Binding SaveCommand}">
                     <TextBlock Text="Speichern" FontSize="13.5" />
                 </Button>
-                <TextBlock Text="{Binding StatusText}" Classes="caption"
-                           VerticalAlignment="Center" />
+                <TextBlock Text="{Binding StatusText}" Classes="caption" VerticalAlignment="Center" />
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

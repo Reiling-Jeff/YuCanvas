@@ -22,7 +22,7 @@ public class CanvasService
         _http = new HttpClient
         {
             BaseAddress = uri,
-            Timeout = TimeSpan.FromSeconds(15)
+            Timeout = TimeSpan.FromSeconds(60)
         };
         _http.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", token);
