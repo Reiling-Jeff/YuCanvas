@@ -20,10 +20,13 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly AssignmentsViewModel _assignments = new();
     private readonly TopBarViewModel _topBarViewModel = TopBarView.GetViewModel();
     private readonly SideBarViewModel _sideBarViewModel = SidebarView.GetViewModel();
+    private readonly SettingsViewModel _settings = new();
 
     public DashboardViewModel Dashboard => _dashboard;
 
     public AssignmentsViewModel Assignments => _assignments;
+
+    public SettingsViewModel Settings => _settings;
 
     public MainWindowViewModel()
     {
@@ -57,6 +60,7 @@ public partial class MainWindowViewModel : ObservableObject
         _topBarViewModel.Load(cachedStudentData);
         Console.WriteLine($"F, sideBar null? {_sideBarViewModel == null}");
         _sideBarViewModel.Load(cachedStudentData);
+        _settings.ApplyUser(cachedStudentData);
         Console.WriteLine("=== LoadFromCache DONE ===");
     }
 
@@ -68,6 +72,7 @@ public partial class MainWindowViewModel : ObservableObject
             string baseUrl = Program.Configuration["Canvas:BaseUrl"]!;
             string token   = Program.Configuration["Canvas:Token"]!;
             Console.WriteLine(1);
+            await _settings.InitAsync();
             CanvasService service = new CanvasService(baseUrl, token);
             List<CanvasCourse> canvasCourses = await service.GetCoursesAsync();
             StudentData studentData = await service.GetStudentDataAsync();
@@ -90,6 +95,7 @@ public partial class MainWindowViewModel : ObservableObject
             _assignments.Load(canvasCourses);
             _topBarViewModel.Load(studentData);
             _sideBarViewModel.Load(studentData);
+            _settings.ApplyUser(studentData);
             
             await CacheService.SaveCoursesAsync(_dashboard.Courses.ToList());
             await CacheService.SaveStudentDataAsync(studentData);

@@ -1,0 +1,82 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:YuCanvas.Models"
+             x:Class="YuCanvas.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+
+    <ScrollViewer Padding="32,20,32,32">
+        <StackPanel Spacing="24">
+
+            <TextBlock Text="Einstellungen" Classes="h1" />
+
+            <!-- Konto -->
+            <TextBlock Text="Konto" Classes="h2" />
+            <Border Classes="glass" Padding="22" CornerRadius="18">
+                <StackPanel Spacing="14" MaxWidth="600" HorizontalAlignment="Left">
+                    <Grid ColumnDefinitions="140,*">
+                        <TextBlock Grid.Column="0" Text="Name" Classes="caption" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="1" Text="{Binding AccountName}" Classes="body" />
+                    </Grid>
+                    <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" />
+                    <Grid ColumnDefinitions="140,*">
+                        <TextBlock Grid.Column="0" Text="Nutzer-ID" Classes="caption" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="1" Text="{Binding AccountId}" Classes="body" />
+                    </Grid>
+                    <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" />
+                    <Grid ColumnDefinitions="140,*">
+                        <TextBlock Grid.Column="0" Text="Sprache" Classes="caption" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="1" Text="{Binding AccountLocale}" Classes="body" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Verhalten -->
+            <TextBlock Text="Verhalten" Classes="h2" />
+            <Border Classes="glass" Padding="22" CornerRadius="18">
+                <StackPanel Spacing="18" MaxWidth="600" HorizontalAlignment="Left">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0" Spacing="3">
+                            <TextBlock Text="Automatisch synchronisieren" Classes="h3" />
+                            <TextBlock Text="Beim Start automatisch von Canvas laden" Classes="caption" />
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="1" IsChecked="{Binding AutoSync}"
+                                      VerticalAlignment="Center" />
+                    </Grid>
+                    <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" />
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0" Spacing="3">
+                            <TextBlock Text="Mit Dashboard starten" Classes="h3" />
+                            <TextBlock Text="Beim Öffnen direkt das Dashboard zeigen" Classes="caption" />
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="1" IsChecked="{Binding StartOnDashboard}"
+                                      VerticalAlignment="Center" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Daten -->
+            <TextBlock Text="Daten" Classes="h2" />
+            <Border Classes="glass" Padding="22" CornerRadius="18">
+                <StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Left">
+                    <StackPanel Spacing="3">
+                        <TextBlock Text="Zwischenspeicher leeren" Classes="h3" />
+                        <TextBlock Text="Löscht die lokal gespeicherten Kursdaten" Classes="caption" />
+                    </StackPanel>
+                    <Button Classes="ghost" Command="{Binding ClearCacheCommand}"
+                            HorizontalAlignment="Left">
+                        <TextBlock Text="Cache leeren" FontSize="13" />
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- Speichern -->
+            <StackPanel Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
+                <Button Classes="accent" Command="{Binding SaveCommand}">
+                    <TextBlock Text="Speichern" FontSize="13.5" />
+                </Button>
+                <TextBlock Text="{Binding StatusText}" Classes="caption"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -20,4 +20,11 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\SettingsView.axaml.cs">
+      <DependentUpon>SettingsView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

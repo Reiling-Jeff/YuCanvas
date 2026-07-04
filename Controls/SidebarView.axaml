@@ -125,7 +125,8 @@
                         </StackPanel>
                     </StackPanel>
                     <Button Classes="ghost" HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center" Padding="0,9">
+                            HorizontalContentAlignment="Center" Padding="0,9"
+                            Command="{Binding ShowSettingsCommand}">
                         <TextBlock Text="Einstellungen" FontSize="13" />
                     </Button>
                 </StackPanel>

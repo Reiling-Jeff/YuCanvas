@@ -23,6 +23,9 @@
         <DataTemplate DataType="{x:Type vm:AssignmentDetailViewModel}">
             <views:AssignmentDetailView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+            <views:SettingsView />
+        </DataTemplate>
     </Application.DataTemplates>
 
     <Application.Styles>

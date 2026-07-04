@@ -25,4 +25,7 @@ public partial class SideBarViewModel : ObservableObject
 
     [RelayCommand]
     private void ShowAssignments() => MainVm.CurrentPage = MainVm.Assignments;
+    
+    [RelayCommand]
+    private void ShowSettings() => MainVm.CurrentPage = MainVm.Settings;
 }
