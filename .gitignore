@@ -1,0 +1,27 @@
+# .NET Build-Ausgaben
+bin/
+obj/
+out/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Secrets
+appsettings.*.json
+!appsettings.json
+.env
+secrets.json
+
+# Lokale App-Daten
+*.local.json
+
+# Betriebssystem-Kram
+.DS_Store
+Thumbs.db
+*~

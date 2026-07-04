@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="76"
+             x:Class="YuCanvas.Controls.TopBarView">
+
+    <Grid ColumnDefinitions="Auto,*,Auto" Margin="32,20,32,4">
+
+        <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="3">
+            <TextBlock Text="Willkommen zurück, Lena" Classes="h1" />
+            <TextBlock Text="Donnerstag, 3. Juli · 3 Abgaben stehen diese Woche an"
+                       Classes="caption" />
+        </StackPanel>
+
+        <Border Grid.Column="1" MaxWidth="360" HorizontalAlignment="Right"
+                VerticalAlignment="Center" Margin="0,0,20,0">
+            <Grid>
+                <TextBox Classes="search" Watermark="Kurse, Aufgaben, Dateien suchen …"
+                         Padding="42,11,14,11" />
+                <TextBlock Text="⌕" FontSize="17" Foreground="{StaticResource TextMutedBrush}"
+                           VerticalAlignment="Center" Margin="15,0,0,0"
+                           HorizontalAlignment="Left" IsHitTestVisible="False" />
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10"
+                    VerticalAlignment="Center">
+            <Button Classes="iconbtn">
+                <Panel>
+                    <TextBlock Text="⚲" FontSize="17" HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+                </Panel>
+            </Button>
+            <Button Classes="iconbtn">
+                <Panel>
+                    <TextBlock Text="◭" FontSize="16" HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+                    <Ellipse Width="8" Height="8" Fill="{StaticResource AccentPurpleBrightBrush}"
+                             HorizontalAlignment="Right" VerticalAlignment="Top"
+                             Margin="0,8,8,0" />
+                </Panel>
+            </Button>
+            <Button Classes="accent" Padding="18,11">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="+" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" />
+                    <TextBlock Text="Synchronisieren" FontSize="13.5" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

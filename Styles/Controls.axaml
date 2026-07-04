@@ -1,0 +1,318 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="Button.accent">
+        <Setter Property="Background" Value="{StaticResource AccentGradient}" />
+        <Setter Property="Foreground" Value="{StaticResource TextOnAccentBrush}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="22,12" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="RenderTransform" Value="scale(1)" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.22" Easing="CubicEaseOut" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Button.accent /template/ ContentPresenter">
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.25" />
+                <BoxShadowsTransition Property="BoxShadow" Duration="0:0:0.28" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Button.accent:pointerover">
+        <Setter Property="RenderTransform" Value="scale(1.035)" />
+    </Style>
+
+    <Style Selector="Button.accent:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AccentGradientHover}" />
+        <Setter Property="BoxShadow" Value="0 12 40 0 #667C3AED" />
+    </Style>
+
+    <Style Selector="Button.accent:pressed">
+        <Setter Property="RenderTransform" Value="scale(0.98)" />
+    </Style>
+
+    <Style Selector="Button.ghost">
+        <Setter Property="Background" Value="#00FFFFFF" />
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Padding" Value="18,11" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{StaticResource GlassStrokeBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.22" />
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.22" />
+                <BrushTransition Property="Foreground" Duration="0:0:0.22" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Button.ghost:pointerover">
+        <Setter Property="Background" Value="#1F8B5CF6" />
+        <Setter Property="BorderBrush" Value="{StaticResource AccentPurpleBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style Selector="Button.ghost:pressed">
+        <Setter Property="Background" Value="#308B5CF6" />
+    </Style>
+
+    <Style Selector="Button.iconbtn">
+        <Setter Property="Background" Value="#00FFFFFF" />
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+        <Setter Property="Width" Value="42" />
+        <Setter Property="Height" Value="42" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.2" />
+                <BrushTransition Property="Foreground" Duration="0:0:0.2" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Button.iconbtn:pointerover">
+        <Setter Property="Background" Value="#1FFFFFFF" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style Selector="Button.navitem">
+        <Setter Property="Background" Value="#00FFFFFF" />
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+        <Setter Property="FontSize" Value="14.5" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Padding" Value="16,13" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.22" />
+                <BrushTransition Property="Foreground" Duration="0:0:0.22" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Button.navitem:pointerover">
+        <Setter Property="Background" Value="#141E38" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style Selector="Button.navitem.active">
+        <Setter Property="Background" Value="#242A6B" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style Selector="Button.navitem.active:pointerover">
+        <Setter Property="Background" Value="#2A3175" />
+    </Style>
+
+    <Style Selector="Border.glass">
+        <Setter Property="Background" Value="{StaticResource GlassGradient}" />
+        <Setter Property="BorderBrush" Value="{StaticResource GlassStrokeBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="BoxShadow" Value="0 8 28 0 #40060B18" />
+    </Style>
+
+    <Style Selector="Border.card">
+        <Setter Property="Background" Value="{StaticResource GlassGradient}" />
+        <Setter Property="BorderBrush" Value="{StaticResource GlassStrokeBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="18" />
+        <Setter Property="BoxShadow" Value="0 6 22 0 #38060B18" />
+        <Setter Property="RenderTransform" Value="translateY(0px)" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.28" />
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.28" />
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.28" Easing="CubicEaseOut" />
+                <BoxShadowsTransition Property="BoxShadow" Duration="0:0:0.3" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Border.card:pointerover">
+        <Setter Property="Background" Value="{StaticResource GlassGradientHover}" />
+        <Setter Property="BorderBrush" Value="{StaticResource GlassStrokeBrightBrush}" />
+        <Setter Property="RenderTransform" Value="translateY(-4px)" />
+        <Setter Property="BoxShadow" Value="0 18 46 0 #55070C1E" />
+    </Style>
+
+    <Style Selector="Border.coursecard">
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{StaticResource GlassStrokeBrush}" />
+        <Setter Property="RenderTransform" Value="translateY(0px)" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.3" Easing="CubicEaseOut" />
+                <BoxShadowsTransition Property="BoxShadow" Duration="0:0:0.32" />
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.28" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Border.coursecard:pointerover">
+        <Setter Property="RenderTransform" Value="translateY(-6px)" />
+        <Setter Property="BorderBrush" Value="{StaticResource GlassStrokeBrightBrush}" />
+        <Setter Property="BoxShadow" Value="0 22 52 0 #66070C1E" />
+    </Style>
+
+    <Style Selector="Border.pill">
+        <Setter Property="CornerRadius" Value="999" />
+        <Setter Property="Padding" Value="12,5" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+
+    <Style Selector="Border.stattile">
+        <Setter Property="Background" Value="{StaticResource GlassGradient}" />
+        <Setter Property="BorderBrush" Value="{StaticResource GlassStrokeBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="18" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="RenderTransform" Value="scale(1)" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.26" />
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.26" Easing="CubicEaseOut" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Border.stattile:pointerover">
+        <Setter Property="BorderBrush" Value="{StaticResource AccentPurpleBrush}" />
+        <Setter Property="RenderTransform" Value="scale(1.02)" />
+    </Style>
+
+    <Style Selector="Border.listrow">
+        <Setter Property="Background" Value="#00FFFFFF" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Padding" Value="16,14" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="#00FFFFFF" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.2" />
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.2" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Border.listrow:pointerover">
+        <Setter Property="Background" Value="#16213C" />
+        <Setter Property="BorderBrush" Value="{StaticResource GlassStrokeBrush}" />
+    </Style>
+
+    <Style Selector="TextBox.search">
+        <Setter Property="Background" Value="#141D33" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource AccentPurpleBrightBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource GlassStrokeBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Padding" Value="14,11" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="BorderBrush" Duration="0:0:0.22" />
+                <BrushTransition Property="Background" Duration="0:0:0.22" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="TextBox.search:focus">
+        <Setter Property="BorderBrush" Value="{StaticResource AccentPurpleBrush}" />
+        <Setter Property="Background" Value="#17203A" />
+    </Style>
+
+    <Style Selector="TextBox.search:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="#00FFFFFF" />
+    </Style>
+
+    <Style Selector="ProgressBar.thin">
+        <Setter Property="Height" Value="8" />
+        <Setter Property="CornerRadius" Value="999" />
+        <Setter Property="Background" Value="#101830" />
+        <Setter Property="Foreground" Value="{StaticResource AccentGradient}" />
+        <Setter Property="MinWidth" Value="0" />
+    </Style>
+
+    <Style Selector="ScrollBar">
+        <Setter Property="Background" Value="#00FFFFFF" />
+        <Setter Property="Width" Value="10" />
+    </Style>
+
+    <Style Selector="ScrollBar /template/ Thumb">
+        <Setter Property="Background" Value="#2A3757" />
+        <Setter Property="CornerRadius" Value="999" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.2" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="ScrollBar:pointerover /template/ Thumb">
+        <Setter Property="Background" Value="#3C4E78" />
+    </Style>
+
+    <Style Selector="TextBlock.h1">
+        <Setter Property="FontSize" Value="27" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.h2">
+        <Setter Property="FontSize" Value="19" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.h3">
+        <Setter Property="FontSize" Value="15.5" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.body">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+        <Setter Property="LineHeight" Value="21" />
+    </Style>
+
+    <Style Selector="TextBlock.caption">
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.eyebrow">
+        <Setter Property="FontSize" Value="11.5" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource AccentPurpleBrightBrush}" />
+        <Setter Property="LetterSpacing" Value="1.5" />
+    </Style>
+
+</Styles>

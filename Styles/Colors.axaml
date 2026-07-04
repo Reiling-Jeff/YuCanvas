@@ -1,0 +1,93 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="BgDeep">#0B1120</Color>
+    <Color x:Key="BgBase">#0F1628</Color>
+    <Color x:Key="BgRaised">#151E36</Color>
+    <Color x:Key="BgSidebar">#0D1424</Color>
+
+    <Color x:Key="GlassFill">#1E2A47</Color>
+    <Color x:Key="GlassFillSoft">#182238</Color>
+    <Color x:Key="GlassStroke">#2A3A5E</Color>
+    <Color x:Key="GlassStrokeBright">#3A4D78</Color>
+
+    <Color x:Key="AccentPurple">#8B5CF6</Color>
+    <Color x:Key="AccentPurpleBright">#A78BFA</Color>
+    <Color x:Key="AccentPurpleDeep">#6D28D9</Color>
+    <Color x:Key="AccentGlow">#7C3AED</Color>
+
+    <Color x:Key="TextPrimary">#F1F5FC</Color>
+    <Color x:Key="TextSecondary">#A6B2CE</Color>
+    <Color x:Key="TextMuted">#6B7899</Color>
+    <Color x:Key="TextOnAccent">#FFFFFF</Color>
+
+    <Color x:Key="SuccessGreen">#34D399</Color>
+    <Color x:Key="WarnAmber">#FBBF24</Color>
+    <Color x:Key="DangerRose">#FB7185</Color>
+    <Color x:Key="InfoCyan">#38BDF8</Color>
+
+    <SolidColorBrush x:Key="BgDeepBrush" Color="{StaticResource BgDeep}" />
+    <SolidColorBrush x:Key="BgBaseBrush" Color="{StaticResource BgBase}" />
+    <SolidColorBrush x:Key="BgRaisedBrush" Color="{StaticResource BgRaised}" />
+    <SolidColorBrush x:Key="BgSidebarBrush" Color="{StaticResource BgSidebar}" />
+
+    <SolidColorBrush x:Key="GlassStrokeBrush" Color="{StaticResource GlassStroke}" />
+    <SolidColorBrush x:Key="GlassStrokeBrightBrush" Color="{StaticResource GlassStrokeBright}" />
+
+    <SolidColorBrush x:Key="AccentPurpleBrush" Color="{StaticResource AccentPurple}" />
+    <SolidColorBrush x:Key="AccentPurpleBrightBrush" Color="{StaticResource AccentPurpleBright}" />
+    <SolidColorBrush x:Key="AccentPurpleDeepBrush" Color="{StaticResource AccentPurpleDeep}" />
+
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}" />
+    <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}" />
+    <SolidColorBrush x:Key="TextOnAccentBrush" Color="{StaticResource TextOnAccent}" />
+
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessGreen}" />
+    <SolidColorBrush x:Key="WarnBrush" Color="{StaticResource WarnAmber}" />
+    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerRose}" />
+    <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource InfoCyan}" />
+
+    <LinearGradientBrush x:Key="AccentGradient" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#A78BFA" Offset="0" />
+        <GradientStop Color="#7C3AED" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="AccentGradientHover" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#B79CFC" Offset="0" />
+        <GradientStop Color="#8B4FE8" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="GlassGradient" StartPoint="0%,0%" EndPoint="0%,100%">
+        <GradientStop Color="#242F4E" Offset="0" />
+        <GradientStop Color="#161F38" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="GlassGradientHover" StartPoint="0%,0%" EndPoint="0%,100%">
+        <GradientStop Color="#2C3960" Offset="0" />
+        <GradientStop Color="#1B2542" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="SidebarGradient" StartPoint="0%,0%" EndPoint="0%,100%">
+        <GradientStop Color="#111A30" Offset="0" />
+        <GradientStop Color="#0A1120" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="AppBackground" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#0C1324" Offset="0" />
+        <GradientStop Color="#0F1830" Offset="0.5" />
+        <GradientStop Color="#0B1020" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HeroGradient" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#3B2A6B" Offset="0" />
+        <GradientStop Color="#1E2A52" Offset="0.55" />
+        <GradientStop Color="#172241" Offset="1" />
+    </LinearGradientBrush>
+
+    <RadialGradientBrush x:Key="GlowPurple" Center="50%,50%" GradientOrigin="50%,50%" RadiusX="70%" RadiusY="70%">
+        <GradientStop Color="#5B37B8" Offset="0" />
+        <GradientStop Color="#00000000" Offset="1" />
+    </RadialGradientBrush>
+
+</ResourceDictionary>

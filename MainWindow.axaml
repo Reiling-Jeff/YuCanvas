@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:YuCanvas.Controls"
+        xmlns:views="clr-namespace:YuCanvas.Views"
+        mc:Ignorable="d" d:DesignWidth="1320" d:DesignHeight="860"
+        x:Class="YuCanvas.MainWindow"
+        Title="YuCanvas"
+        Width="1320" Height="860"
+        MinWidth="1040" MinHeight="680"
+        Background="{StaticResource BgDeepBrush}"
+        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="False">
+
+    <Panel>
+        <Border Background="{StaticResource AppBackground}" />
+        <Border Background="{StaticResource GlowPurple}" Width="700" Height="700"
+                Opacity="0.35" HorizontalAlignment="Right" VerticalAlignment="Top"
+                Margin="0,-320,-220,0" />
+        <Border Background="{StaticResource GlowPurple}" Width="560" Height="560"
+                Opacity="0.22" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                Margin="-260,0,0,-260" />
+
+        <Grid ColumnDefinitions="260,*">
+            <controls:SidebarView Grid.Column="0" />
+            <Grid Grid.Column="1" RowDefinitions="Auto,*">
+                <controls:TopBarView Grid.Row="0" />
+                <views:DashboardView Grid.Row="1" />
+            </Grid>
+        </Grid>
+    </Panel>
+</Window>

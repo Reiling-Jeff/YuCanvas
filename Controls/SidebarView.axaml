@@ -1,0 +1,133 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="260" d:DesignHeight="820"
+             x:Class="YuCanvas.Controls.SidebarView">
+
+    <Border Background="{StaticResource SidebarGradient}"
+            BorderBrush="{StaticResource GlassStrokeBrush}"
+            BorderThickness="0,0,1,0">
+        <Grid RowDefinitions="Auto,*,Auto" Margin="16,22,16,20">
+
+            <StackPanel Grid.Row="0" Spacing="26">
+                <StackPanel Orientation="Horizontal" Spacing="12" Margin="8,0,0,0">
+                    <Border Width="42" Height="42" CornerRadius="13"
+                            Background="{StaticResource AccentGradient}"
+                            BoxShadow="0 6 18 0 #557C3AED">
+                        <TextBlock Text="Y" FontSize="22" FontWeight="Bold"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <StackPanel VerticalAlignment="Center" Spacing="1">
+                        <TextBlock Text="YuCanvas" FontSize="18" FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimaryBrush}" />
+                        <TextBlock Text="Learning Hub" FontSize="11"
+                                   Foreground="{StaticResource TextMutedBrush}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                    <TextBlock Text="MENÜ" Classes="eyebrow" Margin="10,0,0,8" />
+
+                    <Button Classes="navitem active">
+                        <StackPanel Orientation="Horizontal" Spacing="14">
+                            <TextBlock Text="◈" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Dashboard" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Classes="navitem">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
+                                <TextBlock Text="✎" FontSize="16" VerticalAlignment="Center" />
+                                <TextBlock Text="Aufgaben" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Border Grid.Column="2" Classes="pill" Background="#2E2A6B"
+                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
+                                <TextBlock Text="5" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="{StaticResource AccentPurpleBrightBrush}" />
+                            </Border>
+                        </Grid>
+                    </Button>
+
+                    <Button Classes="navitem">
+                        <StackPanel Orientation="Horizontal" Spacing="14">
+                            <TextBlock Text="◎" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Noten" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Classes="navitem">
+                        <StackPanel Orientation="Horizontal" Spacing="14">
+                            <TextBlock Text="▤" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Kalender" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Classes="navitem">
+                        <StackPanel Orientation="Horizontal" Spacing="14">
+                            <TextBlock Text="❏" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Module" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Classes="navitem">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
+                                <TextBlock Text="◭" FontSize="16" VerticalAlignment="Center" />
+                                <TextBlock Text="Ankündigungen" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Ellipse Grid.Column="2" Width="8" Height="8"
+                                     Fill="{StaticResource DangerBrush}" VerticalAlignment="Center" />
+                        </Grid>
+                    </Button>
+
+                    <Button Classes="navitem">
+                        <StackPanel Orientation="Horizontal" Spacing="14">
+                            <TextBlock Text="⬇" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Dateien" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Classes="navitem">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
+                                <TextBlock Text="✉" FontSize="16" VerticalAlignment="Center" />
+                                <TextBlock Text="Nachrichten" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Border Grid.Column="2" Classes="pill" Background="#2E2A6B"
+                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
+                                <TextBlock Text="3" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="{StaticResource AccentPurpleBrightBrush}" />
+                            </Border>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+
+            <Border Grid.Row="2" Classes="glass" CornerRadius="16" Padding="14">
+                <StackPanel Spacing="12">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Border Width="40" Height="40" CornerRadius="12"
+                                Background="{StaticResource HeroGradient}">
+                            <TextBlock Text="LM" FontSize="14" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <StackPanel VerticalAlignment="Center" Spacing="1">
+                            <TextBlock Text="Lena Meyer" FontSize="13.5" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                            <TextBlock Text="Informatik · 4. Sem." FontSize="11"
+                                       Foreground="{StaticResource TextMutedBrush}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Button Classes="ghost" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center" Padding="0,9">
+                        <TextBlock Text="Einstellungen" FontSize="13" />
+                    </Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>
