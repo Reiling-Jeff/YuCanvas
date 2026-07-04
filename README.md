@@ -67,6 +67,16 @@ Die Trennung folgt einem klaren Prinzip: **`Service` redet mit Canvas und liefer
 2. Unter **Approved Integrations** auf **+ New Access Token** klicken.
 3. Einen Namen vergeben, Token erzeugen und **sofort kopieren**
 
+### Repo Clonen
+
+Zuerst musst du das Repository clonen:
+```bash
+git clone https://github.com/Reiling-Jeff/YuCanvas.git
+```
+> Gehe vorher im terminal it `cd` in einen Ordner, in dem du YuCanvas Ablegen möchtest.
+>
+> Optional kannst du mit `git checkout dev` die version die in entwickelung ist auswählen, bedeutet: schnellere updates, mehr features. (features können in dem fall noch unvollständig sein.)
+
 ### Secrets hinterlegen
 
 **WICHTIG:** Folgendes kann sich noch ändern!
@@ -75,11 +85,13 @@ YuCanvas liest Basis-URL und Token über **User Secrets**. Im Projektverzeichnis
 
 ```bash
 dotnet user-secrets init
-dotnet user-secrets set "Canvas:BaseUrl" "https://deine-hochschule.instructure.com"
-dotnet user-secrets set "Canvas:Token" "dein-token-hier"
+dotnet user-secrets set "Canvas:BaseUrl" "[URL zu deinem Canvas]"
+dotnet user-secrets set "Canvas:Token" "[dein token]"
 ```
 
 > User Secrets liegen außerhalb des Projektordners (`~/.microsoft/usersecrets/...`) und werden nicht mit committet.
+> 
+> solltest du Student des SAE's sein, ist die URL "https://canvas.sae.edu"
 
 ### Starten
 
