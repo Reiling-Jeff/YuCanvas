@@ -136,7 +136,7 @@ public partial class DashboardViewModel : ObservableObject
 
         ProgressInPercentage = canvasCourses.Count > 0 ? overallProgress / canvasCourses.Count : 0;
         PassedSync = true;
-        LastSyncText = $"Letzte Synchronisierung ·  {DateTime.Now:dd.MM.yyyy HH:mm}";
+        LastSyncText = $"Letzte Synchronisierung · {DateTime.Now:dd.MM.yyyy HH:mm}";
     }
 
     public void MarkSyncFailed()
