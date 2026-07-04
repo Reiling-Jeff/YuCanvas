@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using YuCanvas.Calculator;
 using YuCanvas.Json;
 using YuCanvas.Media;
@@ -13,10 +14,28 @@ namespace YuCanvas.Models;
 
 public partial class DashboardViewModel : ObservableObject
 {
+    private CanvasAssignment? _heroAssignment;
+    
     private static readonly HashSet<long> _basicCollectiveDeadlineIds = new()
     {
         176092
     };
+    
+    public event Action<CanvasAssignment>? AssignmentSelected;
+
+    [RelayCommand]
+    private void OpenDeadline(Deadline deadline)
+    {
+        if (deadline.Source != null)
+            AssignmentSelected?.Invoke(deadline.Source);
+    }
+
+    [RelayCommand]
+    private void OpenHeroAssignment()
+    {
+        if (_heroAssignment != null)
+            AssignmentSelected?.Invoke(_heroAssignment);
+    }
     
     // --- Top Card ---
     
@@ -184,11 +203,12 @@ public partial class DashboardViewModel : ObservableObject
             if (next != null)
             {
                 NextAssignmentDeadline = $"Deine nächste Deadline ist {FormatDeadline(deadline)}";
-                NextAssignmentText = $"Abgabe „{next.Name}“ bis {deadline.ToString("dd.MM.yy")} um {deadline.ToString("HH:mm")} Uhr.";
+                NextAssignmentText = $"Abgabe „{next.Name}“ bis {deadline:dd.MM.yy} um {deadline:HH:mm} Uhr.";
+                _heroAssignment = next;
             }
             else
             {
-                Console.WriteLine($"Sammelfrist {deadline:dd.MM.yyyy}, aber keine offene Basic mehr");
+                _heroAssignment = null;
             }
         }
         
@@ -202,7 +222,8 @@ public partial class DashboardViewModel : ObservableObject
                 Title    = canvasAssignment.Name, 
                 Course   = canvasAssignment.Course,
                 DueLabel = canvasAssignment.DueAt!.Value.ToString("dd.MM.yy HH:mm"), 
-                Relative = FormatDeadline(canvasAssignment.DueAt.Value)
+                Relative = FormatDeadline(canvasAssignment.DueAt.Value),
+                Source   = canvasAssignment
             });
         }
         

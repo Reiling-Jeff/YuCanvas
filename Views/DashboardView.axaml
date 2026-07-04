@@ -42,7 +42,7 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center"
                                     Spacing="10" HorizontalAlignment="Right">
-                            <Button Classes="accent">
+                            <Button Classes="accent" Command="{Binding OpenHeroAssignmentCommand}">
                                 <TextBlock Text="Zur Aufgabe" FontSize="13.5" />
                             </Button>
                             <Button Classes="ghost" HorizontalContentAlignment="Center">
@@ -203,26 +203,30 @@
 
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-
-                                        <Border Classes="listrow">
-                                            <Grid ColumnDefinitions="Auto,*,Auto">
-                                                <Border Grid.Column="0" Width="4" Height="38" CornerRadius="2"
-                                                        Background="{Binding AccentColor}" Margin="0,0,14,0" />
-                                                <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center">
-                                                    <TextBlock Text="{Binding Title}" FontSize="13.5" FontWeight="SemiBold"
-                                                               Foreground="{StaticResource TextPrimaryBrush}" />
-                                                    <TextBlock Text="{Binding Course}" Classes="caption" />
-                                                </StackPanel>
-                                                <StackPanel Grid.Column="2" VerticalAlignment="Center"
-                                                            HorizontalAlignment="Right" Spacing="2">
-                                                    <TextBlock Text="{Binding DueLabel}" FontSize="12.5" FontWeight="SemiBold"
-                                                               Foreground="{Binding AccentColor}" HorizontalAlignment="Right" />
-                                                    <TextBlock Text="{Binding Relative}" FontSize="11"
-                                                               Foreground="{StaticResource TextMutedBrush}" HorizontalAlignment="Right" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </Border>
-
+                                        <Button Command="{Binding $parent[ItemsControl].((vm:DashboardViewModel)DataContext).OpenDeadlineCommand}"
+                                                CommandParameter="{Binding}"
+                                                Classes="cardbutton"
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Stretch">
+                                            <Border Classes="listrow">
+                                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                                    <Border Grid.Column="0" Width="4" Height="38" CornerRadius="2"
+                                                            Background="{Binding AccentColor}" Margin="0,0,14,0" />
+                                                    <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding Title}" FontSize="13.5" FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource TextPrimaryBrush}" />
+                                                        <TextBlock Text="{Binding Course}" Classes="caption" />
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="2" VerticalAlignment="Center"
+                                                                HorizontalAlignment="Right" Spacing="2">
+                                                        <TextBlock Text="{Binding DueLabel}" FontSize="12.5" FontWeight="SemiBold"
+                                                                   Foreground="{Binding AccentColor}" HorizontalAlignment="Right" />
+                                                        <TextBlock Text="{Binding Relative}" FontSize="11"
+                                                                   Foreground="{StaticResource TextMutedBrush}" HorizontalAlignment="Right" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </Button>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

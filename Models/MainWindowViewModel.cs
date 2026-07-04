@@ -22,6 +22,7 @@ public partial class MainWindowViewModel : ObservableObject
     {
         _currentPage = _dashboard;
         _assignments.AssignmentSelected += ShowAssignmentDetail;
+        _dashboard.AssignmentSelected += ShowAssignmentDetail;
         _ = InitAsync();
     }
     
