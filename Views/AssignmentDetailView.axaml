@@ -44,7 +44,8 @@
             <TextBlock Text="Beschreibung" Classes="h2" />
             <Border Classes="glass" Padding="22" CornerRadius="18">
                 <Border Classes="glass" Padding="22" CornerRadius="18">
-                    <TextBlock x:Name="DescriptionBlock" Classes="body" TextWrapping="Wrap" />
+                    <TextBlock x:Name="DescriptionBlock" Classes="body" TextWrapping="Wrap"
+                               MaxWidth="820" HorizontalAlignment="Left" />
                 </Border>
             </Border>
 
