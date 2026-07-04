@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -13,7 +14,7 @@ public class CanvasService
 
     public CanvasService(string baseUrl, string token)
     {
-        _http = new HttpClient { BaseAddress = new System.Uri(baseUrl) };
+        _http = new HttpClient { BaseAddress = new Uri(baseUrl) };
         _http.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", token);
     }
@@ -23,6 +24,11 @@ public class CanvasService
         List<CanvasCourse>? result = await _http.GetFromJsonAsync<List<CanvasCourse>>(
             "/api/v1/courses?enrollment_state=active&include[]=teachers");
         return result ?? new List<CanvasCourse>();
+    }
+    
+    public async Task<StudentData> GetStudentDataAsync()
+    {
+        return await _http.GetFromJsonAsync<StudentData>("/api/v1/users/self") ?? new StudentData();
     }
     
     public async Task<List<CanvasAssignment>> GetAssignmentsAsync(long courseId)

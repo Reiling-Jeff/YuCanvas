@@ -51,6 +51,14 @@ public static class CacheService
         string json = JsonSerializer.Serialize(courses, options);
         await File.WriteAllTextAsync(_coursesFile, json);
     }
+    
+    public static async Task SaveStudentDataAsync(StudentData studentData)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(_studentDataFile)!);
+        JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
+        string json = JsonSerializer.Serialize(studentData, options);
+        await File.WriteAllTextAsync(_studentDataFile, json);
+    }
 
     public static async Task<List<Course>> LoadCoursesAsync()
     {
@@ -59,5 +67,14 @@ public static class CacheService
 
         string json = await File.ReadAllTextAsync(_coursesFile);
         return JsonSerializer.Deserialize<List<Course>>(json) ?? new List<Course>();
+    }
+    
+    public static async Task<StudentData> LoadStudentDataAsync()
+    {
+        if (!File.Exists(_studentDataFile))
+            return new StudentData();
+
+        string json = await File.ReadAllTextAsync(_studentDataFile);
+        return JsonSerializer.Deserialize<StudentData>(json) ?? new StudentData();
     }
 }

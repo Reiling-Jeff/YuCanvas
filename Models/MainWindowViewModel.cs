@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using YuCanvas.Controls;
 using YuCanvas.Json;
 using YuCanvas.Media;
 using YuCanvas.Service;
@@ -17,6 +18,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     private readonly DashboardViewModel _dashboard = new();
     private readonly AssignmentsViewModel _assignments = new();
+    private readonly TopBarViewModel _topBarViewModel = TopBarView.GetViewModel();
 
     public MainWindowViewModel()
     {
@@ -41,9 +43,11 @@ public partial class MainWindowViewModel : ObservableObject
 
     private async Task LoadFromCacheAsync()
     {
-        List<Course> cached = await CacheService.LoadCoursesAsync();
-        _dashboard.ApplyCachedCourses(cached);
-        _assignments.Load(cached);
+        List<Course> cachedCourses = await CacheService.LoadCoursesAsync();
+        StudentData cachedStudentData = await CacheService.LoadStudentDataAsync();
+        _dashboard.ApplyCachedCourses(cachedCourses);
+        _assignments.Load(cachedCourses);
+        _topBarViewModel.Load(cachedStudentData);
     }
 
     private async Task LoadFromCanvasAsync()
@@ -55,14 +59,17 @@ public partial class MainWindowViewModel : ObservableObject
 
             CanvasService service = new CanvasService(baseUrl, token);
             List<CanvasCourse> canvasCourses = await service.GetCoursesAsync();
+            StudentData studentData = await service.GetStudentDataAsync();
 
             foreach (CanvasCourse c in canvasCourses)
                 c.Assignments = await service.GetAssignmentsAsync(c.Id);
 
             _dashboard.ApplyCanvasCourses(canvasCourses);
             _assignments.Load(canvasCourses);
+            _topBarViewModel.Load(studentData);
 
             await CacheService.SaveCoursesAsync(_dashboard.Courses.ToList());
+            await CacheService.SaveStudentDataAsync(studentData);
         }
         catch (Exception e)
         {
