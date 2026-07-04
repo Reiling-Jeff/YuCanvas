@@ -17,8 +17,6 @@ internal class Program
             .AddUserSecrets<Program>()
             .Build();
 
-        TestCanvasConnection().Wait();
-
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }
 
@@ -33,9 +31,9 @@ internal class Program
 
         try
         {
-            //string response = await http.GetStringAsync("/api/v1/courses/23259/assignments?include[]=submission&per_page=100");
+            string response = await http.GetStringAsync("/api/v1/courses/23259/assignments?include[]=submission&per_page=100");
             Console.WriteLine("=== CANVAS ANTWORT ===");
-            //Console.WriteLine(response);
+            Console.WriteLine(response);
             Console.WriteLine("======================");
         }
         catch (Exception ex)

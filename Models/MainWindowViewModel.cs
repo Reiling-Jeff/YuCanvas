@@ -19,6 +19,11 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly DashboardViewModel _dashboard = new();
     private readonly AssignmentsViewModel _assignments = new();
     private readonly TopBarViewModel _topBarViewModel = TopBarView.GetViewModel();
+    private readonly SideBarViewModel _sideBarViewModel = SidebarView.GetViewModel();
+
+    public DashboardViewModel Dashboard => _dashboard;
+
+    public AssignmentsViewModel Assignments => _assignments;
 
     public MainWindowViewModel()
     {
@@ -43,31 +48,49 @@ public partial class MainWindowViewModel : ObservableObject
 
     private async Task LoadFromCacheAsync()
     {
+        
+        Console.WriteLine("=== LoadFromCache Start ===");
         List<Course> cachedCourses = await CacheService.LoadCoursesAsync();
         StudentData cachedStudentData = await CacheService.LoadStudentDataAsync();
         _dashboard.ApplyCachedCourses(cachedCourses);
         _assignments.Load(cachedCourses);
         _topBarViewModel.Load(cachedStudentData);
+        Console.WriteLine($"F, sideBar null? {_sideBarViewModel == null}");
+        _sideBarViewModel.Load(cachedStudentData);
+        Console.WriteLine("=== LoadFromCache DONE ===");
     }
 
     private async Task LoadFromCanvasAsync()
     {
+        Console.WriteLine("=== LoadFromCanvas START ===");
         try
         {
             string baseUrl = Program.Configuration["Canvas:BaseUrl"]!;
             string token   = Program.Configuration["Canvas:Token"]!;
-
+            Console.WriteLine(1);
             CanvasService service = new CanvasService(baseUrl, token);
             List<CanvasCourse> canvasCourses = await service.GetCoursesAsync();
             StudentData studentData = await service.GetStudentDataAsync();
-
-            foreach (CanvasCourse c in canvasCourses)
-                c.Assignments = await service.GetAssignmentsAsync(c.Id);
+            Console.WriteLine(2);
+            await Task.WhenAll(canvasCourses.Select(async c =>
+            {
+                try
+                {
+                    c.Assignments = await service.GetAssignmentsAsync(c.Id);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Kurs {c.Id} fehlgeschlagen: {ex.Message}");
+                    c.Assignments = new List<CanvasAssignment>();
+                }
+            }));
+            Console.WriteLine(3);
 
             _dashboard.ApplyCanvasCourses(canvasCourses);
             _assignments.Load(canvasCourses);
             _topBarViewModel.Load(studentData);
-
+            _sideBarViewModel.Load(studentData);
+            
             await CacheService.SaveCoursesAsync(_dashboard.Courses.ToList());
             await CacheService.SaveStudentDataAsync(studentData);
         }
@@ -76,11 +99,7 @@ public partial class MainWindowViewModel : ObservableObject
             Console.WriteLine(e);
             _dashboard.MarkSyncFailed();
         }
+        
+        Console.WriteLine("=== LoadFromCanvas END ===");
     }
-
-    [RelayCommand]
-    private void ShowDashboard() => CurrentPage = _dashboard;
-
-    [RelayCommand]
-    private void ShowAssignments() => CurrentPage = _assignments;
 }

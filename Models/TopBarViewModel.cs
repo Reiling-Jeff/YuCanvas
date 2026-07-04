@@ -9,7 +9,7 @@ namespace YuCanvas.Models;
 public partial class TopBarViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string _welcomeText = "";
+    private string _welcomeText = "Willkommen zurück, n/a";
 
     public void Load(StudentData studentData)
     {

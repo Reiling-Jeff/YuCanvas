@@ -14,7 +14,16 @@ public class CanvasService
 
     public CanvasService(string baseUrl, string token)
     {
-        _http = new HttpClient { BaseAddress = new Uri(baseUrl) };
+        if (string.IsNullOrWhiteSpace(baseUrl))
+            throw new InvalidOperationException("Canvas:BaseUrl ist nicht konfiguriert.");
+        if (!Uri.TryCreate(baseUrl, UriKind.Absolute, out Uri? uri))
+            throw new InvalidOperationException($"Canvas:BaseUrl ist keine gültige URL: '{baseUrl}'.");
+
+        _http = new HttpClient
+        {
+            BaseAddress = uri,
+            Timeout = TimeSpan.FromSeconds(15)
+        };
         _http.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", token);
     }
