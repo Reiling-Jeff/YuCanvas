@@ -21,7 +21,15 @@ public partial class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         _currentPage = _dashboard;
+        _assignments.AssignmentSelected += ShowAssignmentDetail;
         _ = InitAsync();
+    }
+    
+    private void ShowAssignmentDetail(CanvasAssignment assignment)
+    {
+        AssignmentDetailViewModel detail = new AssignmentDetailViewModel(assignment);
+        detail.BackRequested += () => CurrentPage = _assignments;
+        CurrentPage = detail;
     }
 
     private async Task InitAsync()

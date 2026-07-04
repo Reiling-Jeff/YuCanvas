@@ -18,23 +18,29 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Classes="glass" Padding="18,16" CornerRadius="16">
-                            <Grid ColumnDefinitions="*,Auto">
-                                <StackPanel Grid.Column="0" Spacing="4" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding Name}" FontSize="14.5"
-                                               FontWeight="SemiBold"
-                                               Foreground="{StaticResource TextPrimaryBrush}" />
-                                    <TextBlock Text="{Binding CourseName}" Classes="caption" />
-                                </StackPanel>
-                                <Border Grid.Column="1" Classes="pill"
-                                        Background="#1F000000" BorderThickness="0"
-                                        VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding StatusText}" FontSize="12"
-                                               FontWeight="SemiBold"
-                                               Foreground="{Binding StatusColor}" />
-                                </Border>
-                            </Grid>
-                        </Border>
+                        <Button Command="{Binding $parent[ItemsControl].((vm:AssignmentsViewModel)DataContext).OpenAssignmentCommand}"
+                                CommandParameter="{Binding}"
+                                Classes="cardbutton"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch">
+                            <Border Classes="glass" Padding="18,16" CornerRadius="16">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <StackPanel Grid.Column="0" Spacing="4" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}" FontSize="14.5"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{StaticResource TextPrimaryBrush}" />
+                                        <TextBlock Text="{Binding CourseName}" Classes="caption" />
+                                    </StackPanel>
+                                    <Border Grid.Column="1" Classes="pill"
+                                            Background="#1F000000" BorderThickness="0"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding StatusText}" FontSize="12"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{Binding StatusColor}" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

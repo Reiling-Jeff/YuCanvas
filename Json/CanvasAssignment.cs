@@ -20,6 +20,16 @@ public class CanvasAssignment
 
     [JsonPropertyName("due_at")]
     public DateTime? DueAt { get; set; }
+    
+    [JsonPropertyName("description")]
+    public string? Description { get; set; }
+
+    [JsonPropertyName("points_possible")]
+    public double? PointsPossible { get; set; }
+
+    [JsonPropertyName("html_url")]
+    public string? HtmlUrl { get; set; }
+
 
     [JsonPropertyName("submission")]
     public CanvasSubmission? Submission { get; set; }

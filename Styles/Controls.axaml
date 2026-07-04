@@ -18,6 +18,17 @@
             </Transitions>
         </Setter>
     </Style>
+    
+    <Style Selector="Button.cardbutton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+    <Style Selector="Button.cardbutton:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
 
     <Style Selector="Button.accent /template/ ContentPresenter">
         <Setter Property="CornerRadius" Value="14" />

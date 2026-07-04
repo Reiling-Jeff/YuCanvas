@@ -1,13 +1,23 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Avalonia.Media;
+using CommunityToolkit.Mvvm.Input;
 using YuCanvas.Json;
 
 namespace YuCanvas.Models;
 
-public class AssignmentsViewModel
+public partial class AssignmentsViewModel
 {
     public ObservableCollection<AssignmentItem> Assignments { get; } = new();
+    
+    public event Action<CanvasAssignment>? AssignmentSelected;
+
+    [RelayCommand]
+    private void OpenAssignment(AssignmentItem item)
+    {
+        AssignmentSelected?.Invoke(item.Source);
+    }
 
     public void Load(List<CanvasCourse> courses)
     {
@@ -25,7 +35,8 @@ public class AssignmentsViewModel
                     Name        = a.Name,
                     CourseName  = course.Name,
                     StatusText  = StatusFor(a),
-                    StatusColor = ColorFor(a)
+                    StatusColor = ColorFor(a),
+                    Source      = a
                 });
             }
         }
