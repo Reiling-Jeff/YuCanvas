@@ -15,11 +15,18 @@ public static class CacheService
         "YuCanvas",
         "courses.json");
     
+    [Obsolete("Assignments now saved in courses.json", true)]
     private static readonly string _assignmentsFile = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "YuCanvas",
         "assignments.json");
-
+    
+    private static readonly string _studentDataFile = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "YuCanvas",
+        "studentData.json");
+    
+    [Obsolete("Assignments now saved in courses.json", true)]
     public static async Task SaveAssignmentsAsync(List<CanvasAssignment> assignments)
     {
         Directory.CreateDirectory(Path.GetDirectoryName(_assignmentsFile)!);
@@ -27,6 +34,7 @@ public static class CacheService
         await File.WriteAllTextAsync(_assignmentsFile, json);
     }
     
+    [Obsolete("Assignments now saved in courses.json", true)]
     public static async Task<List<CanvasAssignment>> LoadAssignmentsAsync()
     {
         if (!File.Exists(_assignmentsFile))
