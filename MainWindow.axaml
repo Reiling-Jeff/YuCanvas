@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:YuCanvas.Controls"
         xmlns:vm="clr-namespace:YuCanvas.Models"
+        xmlns:md="https://github.com/whistyun/Markdown.Avalonia"
         x:DataType="viewModels:MainWindowViewModel"
         xmlns:views="clr-namespace:YuCanvas.Views"
         xmlns:viewModels="clr-namespace:YuCanvas.Models.ViewModels"
@@ -32,5 +33,28 @@
                 <ContentControl Grid.Row="1" Content="{Binding CurrentPage}" />
             </Grid>
         </Grid>
+        
+        <Border Background="#C70B1120" IsVisible="{Binding Settings.IsChangelogOpen}">
+            <Border Classes="glass" MinWidth="480" MaxWidth="620" MaxHeight="560"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    ClipToBounds="True">
+                <Grid RowDefinitions="Auto,Auto,*">
+                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="24,18,14,14">
+                        <StackPanel Grid.Column="0" Spacing="2" VerticalAlignment="Center">
+                            <TextBlock Text="Änderungen" Classes="h2" />
+                            <TextBlock Text="{Binding Settings.LatestVersionLabel}" Classes="caption" />
+                        </StackPanel>
+                        <Button Grid.Column="1" Classes="iconbtn"
+                                Command="{Binding Settings.CloseChangelogCommand}">
+                            <TextBlock Text="✕" />
+                        </Button>
+                    </Grid>
+                    <Rectangle Grid.Row="1" Height="1"
+                               Fill="{StaticResource GlassStrokeBrush}" Margin="24,0" />
+                    <md:MarkdownScrollViewer Grid.Row="2" Margin="24,14,24,20"
+                                             Markdown="{Binding Settings.ChangelogText}" />
+                </Grid>
+            </Border>
+        </Border>
     </Panel>
 </Window>

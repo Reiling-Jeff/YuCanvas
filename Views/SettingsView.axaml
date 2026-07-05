@@ -1,228 +1,202 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:md="https://github.com/whistyun/Markdown.Avalonia"
              xmlns:viewModels="clr-namespace:YuCanvas.Models.ViewModels"
              x:Class="YuCanvas.Views.SettingsView"
              x:DataType="viewModels:SettingsViewModel">
 
-    <Panel>
-        <ScrollViewer Padding="40,24,40,32">
-            <StackPanel Spacing="20">
+    <ScrollViewer Padding="40,24,40,32">
+        <StackPanel Spacing="20">
 
-                <StackPanel Spacing="14" MaxWidth="620" HorizontalAlignment="Left">
-                    <TextBlock Text="Einstellungen" Classes="h1" />
-                    <Grid>
-                        <TextBox Classes="search" Text="{Binding SearchQuery}"
-                                 Watermark="Einstellungen durchsuchen …"
-                                 Padding="42,11,14,11" />
-                        <TextBlock Text="⌕" FontSize="17" Foreground="{StaticResource TextMutedBrush}"
-                                   VerticalAlignment="Center" Margin="15,0,0,0"
-                                   HorizontalAlignment="Left" IsHitTestVisible="False" />
-                    </Grid>
+            <StackPanel Spacing="14" MaxWidth="620" HorizontalAlignment="Left">
+                <TextBlock Text="Einstellungen" Classes="h1" />
+                <Grid>
+                    <TextBox Classes="search" Text="{Binding SearchQuery}"
+                             Watermark="Einstellungen durchsuchen …"
+                             Padding="42,11,14,11" />
+                    <TextBlock Text="⌕" FontSize="17" Foreground="{StaticResource TextMutedBrush}"
+                               VerticalAlignment="Center" Margin="15,0,0,0"
+                               HorizontalAlignment="Left" IsHitTestVisible="False" />
+                </Grid>
+            </StackPanel>
+
+            <WrapPanel Orientation="Horizontal">
+
+                <!-- KONTO -->
+                <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
+                            IsVisible="{Binding ShowAccount}">
+                    <TextBlock Text="KONTO" Classes="eyebrow" />
+                    <Border Classes="glass" Padding="8" CornerRadius="16">
+                        <StackPanel>
+                            <Grid ColumnDefinitions="160,*" Margin="14,12">
+                                <TextBlock Grid.Column="0" Text="Name" Classes="body"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="{Binding AccountName}" Classes="body"
+                                           FontWeight="Medium" VerticalAlignment="Center" />
+                            </Grid>
+                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
+                            <Grid ColumnDefinitions="160,*" Margin="14,12">
+                                <TextBlock Grid.Column="0" Text="Nutzer-ID" Classes="body"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="{Binding AccountId}" Classes="body"
+                                           FontWeight="Medium" VerticalAlignment="Center" />
+                            </Grid>
+                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
+                            <Grid ColumnDefinitions="160,*" Margin="14,12">
+                                <TextBlock Grid.Column="0" Text="Sprache" Classes="body"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="{Binding AccountLocale}" Classes="body"
+                                           FontWeight="Medium" VerticalAlignment="Center" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
 
-                <WrapPanel Orientation="Horizontal">
-
-                    <!-- KONTO -->
-                    <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
-                                IsVisible="{Binding ShowAccount}">
-                        <TextBlock Text="KONTO" Classes="eyebrow" />
-                        <Border Classes="glass" Padding="8" CornerRadius="16">
-                            <StackPanel>
-                                <Grid ColumnDefinitions="160,*" Margin="14,12">
-                                    <TextBlock Grid.Column="0" Text="Name" Classes="body"
-                                               Foreground="{StaticResource TextSecondaryBrush}"
-                                               VerticalAlignment="Center" />
-                                    <TextBlock Grid.Column="1" Text="{Binding AccountName}" Classes="body"
-                                               FontWeight="Medium" VerticalAlignment="Center" />
-                                </Grid>
-                                <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
-                                <Grid ColumnDefinitions="160,*" Margin="14,12">
-                                    <TextBlock Grid.Column="0" Text="Nutzer-ID" Classes="body"
-                                               Foreground="{StaticResource TextSecondaryBrush}"
-                                               VerticalAlignment="Center" />
-                                    <TextBlock Grid.Column="1" Text="{Binding AccountId}" Classes="body"
-                                               FontWeight="Medium" VerticalAlignment="Center" />
-                                </Grid>
-                                <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
-                                <Grid ColumnDefinitions="160,*" Margin="14,12">
-                                    <TextBlock Grid.Column="0" Text="Sprache" Classes="body"
-                                               Foreground="{StaticResource TextSecondaryBrush}"
-                                               VerticalAlignment="Center" />
-                                    <TextBlock Grid.Column="1" Text="{Binding AccountLocale}" Classes="body"
-                                               FontWeight="Medium" VerticalAlignment="Center" />
-                                </Grid>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-
-                    <!-- VERHALTEN -->
-                    <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
-                                IsVisible="{Binding ShowBehavior}">
-                        <TextBlock Text="VERHALTEN" Classes="eyebrow" />
-                        <Border Classes="glass" Padding="8" CornerRadius="16">
-                            <StackPanel>
-                                <Grid ColumnDefinitions="*,Auto" Margin="14,12">
-                                    <StackPanel Grid.Column="0" Spacing="2">
-                                        <TextBlock Text="Automatisch synchronisieren" Classes="body"
-                                                   FontWeight="Medium" />
-                                        <TextBlock Text="Beim Start automatisch von Canvas laden" Classes="caption" />
-                                    </StackPanel>
-                                    <ToggleSwitch Grid.Column="1" IsChecked="{Binding AutoSync}"
-                                                  VerticalAlignment="Center" />
-                                </Grid>
-                                <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
-                                <Grid ColumnDefinitions="*,Auto" Margin="14,12">
-                                    <StackPanel Grid.Column="0" Spacing="2">
-                                        <TextBlock Text="Mit Dashboard starten" Classes="body" FontWeight="Medium" />
-                                        <TextBlock Text="Beim Öffnen direkt das Dashboard zeigen" Classes="caption" />
-                                    </StackPanel>
-                                    <ToggleSwitch Grid.Column="1" IsChecked="{Binding StartOnDashboard}"
-                                                  VerticalAlignment="Center" />
-                                </Grid>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-
-                    <!-- CANVAS-VERBINDUNG -->
-                    <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
-                                IsVisible="{Binding ShowConnection}">
-                        <TextBlock Text="CANVAS-VERBINDUNG" Classes="eyebrow" />
-                        <Border Classes="glass" Padding="18" CornerRadius="16">
-                            <StackPanel Spacing="16">
-                                <StackPanel Spacing="6">
-                                    <TextBlock Text="Canvas-URL" Classes="caption" />
-                                    <TextBox Classes="search" Text="{Binding CanvasBaseUrl}"
-                                             Watermark="https://deine-hochschule.instructure.com" />
+                <!-- VERHALTEN -->
+                <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
+                            IsVisible="{Binding ShowBehavior}">
+                    <TextBlock Text="VERHALTEN" Classes="eyebrow" />
+                    <Border Classes="glass" Padding="8" CornerRadius="16">
+                        <StackPanel>
+                            <Grid ColumnDefinitions="*,Auto" Margin="14,12">
+                                <StackPanel Grid.Column="0" Spacing="2">
+                                    <TextBlock Text="Automatisch synchronisieren" Classes="body"
+                                               FontWeight="Medium" />
+                                    <TextBlock Text="Beim Start automatisch von Canvas laden" Classes="caption" />
                                 </StackPanel>
-                                <StackPanel Spacing="6">
-                                    <TextBlock Text="Zugriffstoken" Classes="caption" />
-                                    <TextBox Classes="search" Text="{Binding CanvasToken}"
-                                             PasswordChar="•" Watermark="Dein Canvas-Token" />
-                                    <TextBlock Text="Wird unverschlüsselt lokal gespeichert."
-                                               FontSize="11" Foreground="{StaticResource WarnBrush}" />
+                                <ToggleSwitch Grid.Column="1" IsChecked="{Binding AutoSync}"
+                                              VerticalAlignment="Center" />
+                            </Grid>
+                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
+                            <Grid ColumnDefinitions="*,Auto" Margin="14,12">
+                                <StackPanel Grid.Column="0" Spacing="2">
+                                    <TextBlock Text="Mit Dashboard starten" Classes="body" FontWeight="Medium" />
+                                    <TextBlock Text="Beim Öffnen direkt das Dashboard zeigen" Classes="caption" />
                                 </StackPanel>
+                                <ToggleSwitch Grid.Column="1" IsChecked="{Binding StartOnDashboard}"
+                                              VerticalAlignment="Center" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- CANVAS-VERBINDUNG -->
+                <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
+                            IsVisible="{Binding ShowConnection}">
+                    <TextBlock Text="CANVAS-VERBINDUNG" Classes="eyebrow" />
+                    <Border Classes="glass" Padding="18" CornerRadius="16">
+                        <StackPanel Spacing="16">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="Canvas-URL" Classes="caption" />
+                                <TextBox Classes="search" Text="{Binding CanvasBaseUrl}"
+                                         Watermark="https://deine-hochschule.instructure.com" />
                             </StackPanel>
-                        </Border>
-                    </StackPanel>
-
-                    <!-- AKTUALISIERUNGEN -->
-                    <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
-                                IsVisible="{Binding ShowUpdates}">
-                        <TextBlock Text="AKTUALISIERUNGEN" Classes="eyebrow" />
-                        <Border Classes="glass" Padding="18" CornerRadius="16">
-                            <StackPanel Spacing="16">
-
-                                <Grid ColumnDefinitions="*,Auto">
-                                    <StackPanel Grid.Column="0" Spacing="2">
-                                        <TextBlock Text="Installierte Version" Classes="body" FontWeight="Medium" />
-                                        <TextBlock Text="{Binding CurrentVersionLabel}" Classes="caption" />
-                                    </StackPanel>
-
-                                    <Border Grid.Column="1" Classes="pill" VerticalAlignment="Center"
-                                            Background="#1FFBBF24" BorderBrush="#00000000"
-                                            IsVisible="{Binding IsUpdateAvailable}">
-                                        <TextBlock Text="Update verfügbar" FontSize="11" FontWeight="SemiBold"
-                                                   Foreground="{StaticResource WarnBrush}" />
-                                    </Border>
-
-                                    <Border Grid.Column="1" Classes="pill" VerticalAlignment="Center"
-                                            Background="#1F34D399" BorderBrush="#00000000"
-                                            IsVisible="{Binding !IsUpdateAvailable}">
-                                        <TextBlock Text="Aktuell" FontSize="11" FontWeight="SemiBold"
-                                                   Foreground="{StaticResource SuccessBrush}" />
-                                    </Border>
-                                </Grid>
-
-                                <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}"
-                                           IsVisible="{Binding IsUpdateAvailable}" />
-
-                                <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsUpdateAvailable}">
-                                    <StackPanel Grid.Column="0" Spacing="2">
-                                        <TextBlock Text="Neue Version" Classes="body" FontWeight="Medium" />
-                                        <TextBlock Text="{Binding LatestVersionLabel}" Classes="caption" />
-                                    </StackPanel>
-                                    <Button Grid.Column="1" Classes="ghost" VerticalAlignment="Center"
-                                            Command="{Binding OpenChangelogCommand}">
-                                        <TextBlock Text="Änderungen ansehen" FontSize="13" />
-                                    </Button>
-                                </Grid>
-
-                                <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" />
-
-                                <Grid ColumnDefinitions="*,Auto">
-                                    <StackPanel Grid.Column="0" Spacing="2" VerticalAlignment="Center">
-                                        <TextBlock Text="Nach Updates suchen" Classes="body" FontWeight="Medium" />
-                                        <TextBlock Text="{Binding UpdateStatusText}" Classes="caption" />
-                                    </StackPanel>
-                                    <Button Grid.Column="1" Classes="ghost" Command="{Binding CheckForUpdatesCommand}"
-                                            VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding CheckUpdatesButtonText}" FontSize="13" />
-                                    </Button>
-                                </Grid>
-
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="Zugriffstoken" Classes="caption" />
+                                <TextBox Classes="search" Text="{Binding CanvasToken}"
+                                         PasswordChar="•" Watermark="Dein Canvas-Token" />
+                                <TextBlock Text="Wird unverschlüsselt lokal gespeichert."
+                                           FontSize="11" Foreground="{StaticResource WarnBrush}" />
                             </StackPanel>
-                        </Border>
-                    </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
 
-                    <!-- DATEN -->
-                    <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
-                                IsVisible="{Binding ShowData}">
-                        <TextBlock Text="DATEN" Classes="eyebrow" />
-                        <Border Classes="glass" Padding="18" CornerRadius="16">
+                <!-- AKTUALISIERUNGEN -->
+                <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
+                            IsVisible="{Binding ShowUpdates}">
+                    <TextBlock Text="AKTUALISIERUNGEN" Classes="eyebrow" />
+                    <Border Classes="glass" Padding="18" CornerRadius="16">
+                        <StackPanel Spacing="16">
+
                             <Grid ColumnDefinitions="*,Auto">
-                                <StackPanel Grid.Column="0" Spacing="2" VerticalAlignment="Center">
-                                    <TextBlock Text="Zwischenspeicher leeren" Classes="body" FontWeight="Medium" />
-                                    <TextBlock Text="Löscht die lokal gespeicherten Kursdaten" Classes="caption" />
+                                <StackPanel Grid.Column="0" Spacing="2">
+                                    <TextBlock Text="Installierte Version" Classes="body" FontWeight="Medium" />
+                                    <TextBlock Text="{Binding CurrentVersionLabel}" Classes="caption" />
                                 </StackPanel>
-                                <Button Grid.Column="1" Classes="ghost" Command="{Binding ClearCacheCommand}"
-                                        VerticalAlignment="Center">
-                                    <TextBlock Text="Cache leeren" FontSize="13" />
+
+                                <Border Grid.Column="1" Classes="pill" VerticalAlignment="Center"
+                                        Background="#1FFBBF24" BorderBrush="#00000000"
+                                        IsVisible="{Binding IsUpdateAvailable}">
+                                    <TextBlock Text="Update verfügbar" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="{StaticResource WarnBrush}" />
+                                </Border>
+
+                                <Border Grid.Column="1" Classes="pill" VerticalAlignment="Center"
+                                        Background="#1F34D399" BorderBrush="#00000000"
+                                        IsVisible="{Binding !IsUpdateAvailable}">
+                                    <TextBlock Text="Aktuell" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="{StaticResource SuccessBrush}" />
+                                </Border>
+                            </Grid>
+
+                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}"
+                                       IsVisible="{Binding IsUpdateAvailable}" />
+
+                            <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsUpdateAvailable}">
+                                <StackPanel Grid.Column="0" Spacing="2">
+                                    <TextBlock Text="Neue Version" Classes="body" FontWeight="Medium" />
+                                    <TextBlock Text="{Binding LatestVersionLabel}" Classes="caption" />
+                                </StackPanel>
+                                <Button Grid.Column="1" Classes="ghost" VerticalAlignment="Center"
+                                        Command="{Binding OpenChangelogCommand}">
+                                    <TextBlock Text="Änderungen ansehen" FontSize="13" />
                                 </Button>
                             </Grid>
-                        </Border>
-                    </StackPanel>
 
-                </WrapPanel>
+                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" />
 
-                <!-- KEINE TREFFER -->
-                <Border Classes="glass" Padding="24" CornerRadius="16" Width="540"
-                        HorizontalAlignment="Left" IsVisible="{Binding NoResults}">
-                    <TextBlock Text="Keine Einstellungen gefunden." Classes="body"
-                               HorizontalAlignment="Center" Foreground="{StaticResource TextMutedBrush}" />
-                </Border>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel Grid.Column="0" Spacing="2" VerticalAlignment="Center">
+                                    <TextBlock Text="Nach Updates suchen" Classes="body" FontWeight="Medium" />
+                                    <TextBlock Text="{Binding UpdateStatusText}" Classes="caption" />
+                                </StackPanel>
+                                <Button Grid.Column="1" Classes="ghost" Command="{Binding CheckForUpdatesCommand}"
+                                        VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding CheckUpdatesButtonText}" FontSize="13" />
+                                </Button>
+                            </Grid>
 
-                <!-- SPEICHERN -->
-                <StackPanel Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
-                    <Button Classes="accent" Command="{Binding SaveCommand}">
-                        <TextBlock Text="Speichern" FontSize="13.5" />
-                    </Button>
-                    <TextBlock Text="{Binding StatusText}" Classes="caption" VerticalAlignment="Center" />
-                </StackPanel>
-            </StackPanel>
-        </ScrollViewer>
-        <Border Background="#C70B1120" IsVisible="{Binding IsChangelogOpen}">
-            <Border Classes="glass" MinWidth="480" MaxWidth="620" MaxHeight="560"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                    ClipToBounds="True">
-                <Grid RowDefinitions="Auto,Auto,*">
-                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="24,18,14,14">
-                        <StackPanel Grid.Column="0" Spacing="2" VerticalAlignment="Center">
-                            <TextBlock Text="Änderungen" Classes="h2" />
-                            <TextBlock Text="{Binding LatestVersionLabel}" Classes="caption" />
                         </StackPanel>
-                        <Button Grid.Column="1" Classes="iconbtn"
-                                Command="{Binding CloseChangelogCommand}">
-                            <TextBlock Text="✕" />
-                        </Button>
-                    </Grid>
-                    <Rectangle Grid.Row="1" Height="1"
-                               Fill="{StaticResource GlassStrokeBrush}" Margin="24,0" />
-                    <md:MarkdownScrollViewer Grid.Row="2" Margin="24,14,24,20"
-                                             Markdown="{Binding ChangelogText}" />
-                </Grid>
-            </Border>
-        </Border>
+                    </Border>
+                </StackPanel>
 
-    </Panel>
+                <!-- DATEN -->
+                <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
+                            IsVisible="{Binding ShowData}">
+                    <TextBlock Text="DATEN" Classes="eyebrow" />
+                    <Border Classes="glass" Padding="18" CornerRadius="16">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackPanel Grid.Column="0" Spacing="2" VerticalAlignment="Center">
+                                <TextBlock Text="Zwischenspeicher leeren" Classes="body" FontWeight="Medium" />
+                                <TextBlock Text="Löscht die lokal gespeicherten Kursdaten" Classes="caption" />
+                            </StackPanel>
+                            <Button Grid.Column="1" Classes="ghost" Command="{Binding ClearCacheCommand}"
+                                    VerticalAlignment="Center">
+                                <TextBlock Text="Cache leeren" FontSize="13" />
+                            </Button>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+
+            </WrapPanel>
+
+            <!-- KEINE TREFFER -->
+            <Border Classes="glass" Padding="24" CornerRadius="16" Width="540"
+                    HorizontalAlignment="Left" IsVisible="{Binding NoResults}">
+                <TextBlock Text="Keine Einstellungen gefunden." Classes="body"
+                           HorizontalAlignment="Center" Foreground="{StaticResource TextMutedBrush}" />
+            </Border>
+
+            <!-- SPEICHERN -->
+            <StackPanel Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
+                <Button Classes="accent" Command="{Binding SaveCommand}">
+                    <TextBlock Text="Speichern" FontSize="13.5" />
+                </Button>
+                <TextBlock Text="{Binding StatusText}" Classes="caption" VerticalAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
