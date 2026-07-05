@@ -5,5 +5,5 @@ namespace YuCanvas.Media;
 /// </summary>
 public static class AppVersion
 {
-    public const string Current = "0.1-28W01S";
+    public const string Current = "0.1-28W02S";
 }
