@@ -109,7 +109,6 @@ public partial class DashboardViewModel : ObservableObject
         }
 
         ProgressInPercentage = courses.Count > 0 ? overallProgress / courses.Count : 0;
-        LastSyncText = "Synchronisiert...";
     }
 
     public void ApplyCanvasCourses(List<Course> canvasCourses)

@@ -35,6 +35,7 @@ public partial class MainWindowViewModel : ObservableObject
         _sideBarViewModel.DashboardRequested   += () => SetPage(_dashboard, "dashboard");
         _sideBarViewModel.AssignmentsRequested += () => SetPage(_assignments, "assignments");
         _sideBarViewModel.SettingsRequested    += () => SetPage(_settings, "settings");
+        _topBarViewModel.SyncRequested         += () => _ = SyncAsync();
 
         SetPage(_dashboard, "dashboard");
 
@@ -53,6 +54,17 @@ public partial class MainWindowViewModel : ObservableObject
         detail.BackRequested += () => SetPage(_assignments, "assignments");
         CurrentPage = detail;
     }
+
+    private async Task SyncAsync()
+    {
+        _dashboard.LastSyncText = "Synchronisiert...";
+        _dashboard.PassedSync = false;
+        SyncResult synced = await _syncService.SyncFromCanvasAsync(_appSettings);
+        if (synced.Success)
+            ApplyResult(synced, false);
+        else
+            _dashboard.MarkSyncFailed();
+    }
     
     private async Task InitAsync()
     {
@@ -64,20 +76,12 @@ public partial class MainWindowViewModel : ObservableObject
 
         if (!_settings.AutoSync)
         {
-            Dashboard.LastSyncText = "Automatisches Synchronisieren ist ausgeschaltet.";
-            Dashboard.PassedSync = false; 
+            _dashboard.LastSyncText = "Automatisches Synchronisieren ist ausgeschaltet.";
+            _dashboard.PassedSync = false; 
             return;
         }
 
-        SyncResult synced = await _syncService.SyncFromCanvasAsync(_appSettings);
-        if (synced.Success)
-        {
-            ApplyResult(synced, false);
-        }
-        else
-        {
-            _dashboard.MarkSyncFailed();
-        }
+        await SyncAsync();
     }
 
     private void ApplyResult(SyncResult result, bool isFromCache)
