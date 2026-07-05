@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using YuCanvas.Controls;
 using YuCanvas.Json;
+using YuCanvas.Media;
 using YuCanvas.Service;
 
 namespace YuCanvas.Models;

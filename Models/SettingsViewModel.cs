@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using YuCanvas.Json;
+using YuCanvas.Media;
 using YuCanvas.Service;
 
 namespace YuCanvas.Models;

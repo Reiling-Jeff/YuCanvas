@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using YuCanvas.Media;
 using YuCanvas.Models;
 
 namespace YuCanvas.Service;

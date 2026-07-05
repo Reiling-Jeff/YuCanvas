@@ -1,4 +1,4 @@
-namespace YuCanvas.Models;
+namespace YuCanvas.Media;
 
 public class AppSettings
 {
