@@ -72,24 +72,12 @@ public partial class DashboardViewModel : ObservableObject
     
     // --- Your Courses ---
     public ObservableCollection<Course> Courses { get; } = new();
-    
-    public ObservableCollection<Deadline> Deadlines { get; } = new()
-    {
-        new Deadline { Title = "Übung 6 abgeben", Course = "Verteilte Systeme",
-            DueLabel = "Sa 23:59", Relative = "in 2 Tagen",
-            AccentColor = new SolidColorBrush(Color.Parse("#FB7185")) },
-        new Deadline { Title = "Quiz Kapitel 4",  Course = "Datenbanksysteme",
-            DueLabel = "Mo 12:00", Relative = "in 4 Tagen",
-            AccentColor = new SolidColorBrush(Color.Parse("#FBBF24")) },
-        new Deadline { Title = "Projektabgabe",   Course = "Algorithmen",
-            DueLabel = "12. Jul",  Relative = "in 9 Tagen",
-            AccentColor = new SolidColorBrush(Color.Parse("#38BDF8")) },
-    };
-    
+
+    public ObservableCollection<Deadline> Deadlines { get; } = new();
     public ObservableCollection<Announcement> Announcements { get; } = new()
     {
-        new Announcement { Title = "Klausurtermine online",         Meta = "Verteilte Systeme · vor 2 Std", IsUnread = true },
-        new Announcement { Title = "Neue Materialien in Modul 5",   Meta = "Datenbanksysteme · gestern",    IsUnread = false },
+        //new Announcement { Title = "Klausurtermine online",         Meta = "Verteilte Systeme · vor 2 Std", IsUnread = true },
+        //new Announcement { Title = "Neue Materialien in Modul 5",   Meta = "Datenbanksysteme · gestern",    IsUnread = false },
     };
     
     // --- Load Data ---
