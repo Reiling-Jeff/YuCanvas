@@ -47,6 +47,13 @@ public partial class MainWindowViewModel : ObservableObject
         SyncResult cached = await _syncService.LoadFromCacheAsync();
         ApplyResult(cached, isFromCache: true);
 
+        if (!_settings.AutoSync)
+        {
+            Dashboard.LastSyncText = "Automatisches Synchronisieren ist ausgeschaltet.";
+            Dashboard.PassedSync = false; 
+            return;
+        }
+
         SyncResult synced = await _syncService.SyncFromCanvasAsync(_appSettings);
         if (synced.Success)
         {
