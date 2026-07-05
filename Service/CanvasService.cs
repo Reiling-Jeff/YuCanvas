@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using YuCanvas.Json;
+using YuCanvas.Media;
 
 namespace YuCanvas.Service;
 
@@ -28,11 +29,11 @@ public class CanvasService
             new AuthenticationHeaderValue("Bearer", token);
     }
 
-    public async Task<List<CanvasCourse>> GetCoursesAsync()
+    public async Task<List<Course>> GetCoursesAsync()
     {
-        List<CanvasCourse>? result = await _http.GetFromJsonAsync<List<CanvasCourse>>(
+        List<Course>? result = await _http.GetFromJsonAsync<List<Course>>(
             "/api/v1/courses?enrollment_state=active&include[]=teachers");
-        return result ?? new List<CanvasCourse>();
+        return result ?? new List<Course>();
     }
     
     public async Task<StudentData> GetStudentDataAsync()

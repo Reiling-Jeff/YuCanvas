@@ -112,24 +112,19 @@ public partial class DashboardViewModel : ObservableObject
         LastSyncText = "Synchronisiert...";
     }
 
-    public void ApplyCanvasCourses(List<CanvasCourse> canvasCourses)
+    public void ApplyCanvasCourses(List<Course> canvasCourses)
     {
         Courses.Clear();
         int overallProgress = 0;
 
-        foreach (CanvasCourse c in canvasCourses)
+        foreach (Course c in canvasCourses)
         {
             int progress = CalculateBasicProgress(c.Assignments!);
             overallProgress += progress;
 
-            Courses.Add(new Course
-            {
-                Code        = ShortCode(c.CourseCode),
-                Name        = c.Name,
-                Lecturer    = c.Teachers.FirstOrDefault()?.DisplayName ?? "Unbekannt",
-                Progress    = progress,
-                Assignments = c.Assignments
-            });
+            c.Progress = progress;
+
+            Courses.Add(c);
         }
 
         LoadCardValues(canvasCourses);
@@ -168,19 +163,6 @@ public partial class DashboardViewModel : ObservableObject
 
         int done = basics.Count(a => a.Submission?.WorkflowState == "graded");
         return (int)Math.Round(done * 100.0 / basics.Count);
-    }
-
-    private void LoadCardValues(List<CanvasCourse> courses)
-    {
-        List<CanvasAssignment> assignments = new List<CanvasAssignment>();
-
-        foreach (CanvasCourse course in courses)
-        {
-            if (course.Assignments != null)
-                assignments.AddRange(course.Assignments);
-        }
-        
-        LoadCardValues(assignments);
     }
     
     private void LoadCardValues(List<Course> courses)

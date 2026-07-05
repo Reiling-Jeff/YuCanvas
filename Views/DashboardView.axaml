@@ -160,7 +160,7 @@
 
                                             <StackPanel Spacing="4">
                                                 <TextBlock Text="{Binding Name}" Classes="h3" />
-                                                <TextBlock Text="{Binding Lecturer}" Classes="caption" />
+                                                <TextBlock Text="{Binding Teachers[0].DisplayName}" Classes="caption" />
                                             </StackPanel>
 
                                             <StackPanel Spacing="7">

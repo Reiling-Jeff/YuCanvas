@@ -12,7 +12,6 @@ public class SyncResult
 {
     public bool Success { get; set; }
     public List<Course> Courses { get; set; } = new();
-    public List<CanvasCourse> CanvasCourses { get; set; } = new();
     public StudentData? StudentData { get; set; }
 }
 
@@ -53,7 +52,7 @@ public class SyncService
 
             CanvasService service = new CanvasService(baseUrl, token);
 
-            List<CanvasCourse> canvasCourses = await service.GetCoursesAsync();
+            List<Course> canvasCourses = await service.GetCoursesAsync();
             StudentData studentData = await service.GetStudentDataAsync();
 
             await Task.WhenAll(canvasCourses.Select(async c =>
@@ -70,11 +69,12 @@ public class SyncService
             }));
 
             await CacheService.SaveStudentDataAsync(studentData);
+            await CacheService.SaveCoursesAsync(canvasCourses);
 
             return new SyncResult
             {
                 Success = true,
-                CanvasCourses = canvasCourses,
+                Courses = canvasCourses,
                 StudentData = studentData
             };
         }

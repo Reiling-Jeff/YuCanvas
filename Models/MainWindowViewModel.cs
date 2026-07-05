@@ -57,7 +57,7 @@ public partial class MainWindowViewModel : ObservableObject
         SyncResult synced = await _syncService.SyncFromCanvasAsync(_appSettings);
         if (synced.Success)
         {
-            ApplyResult(synced, isFromCache: false);
+            ApplyResult(synced, false);
         }
         else
         {
@@ -74,8 +74,8 @@ public partial class MainWindowViewModel : ObservableObject
         }
         else
         {
-            _dashboard.ApplyCanvasCourses(result.CanvasCourses);
-            _assignments.Load(result.CanvasCourses);
+            _dashboard.ApplyCanvasCourses(result.Courses);
+            _assignments.Load(result.Courses);
         }
 
         if (result.StudentData == null) return;

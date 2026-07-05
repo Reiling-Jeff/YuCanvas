@@ -19,29 +19,6 @@ public partial class AssignmentsViewModel
     {
         AssignmentSelected?.Invoke(item.Source);
     }
-
-    public void Load(List<CanvasCourse> courses)
-    {
-        Assignments.Clear();
-
-        foreach (CanvasCourse course in courses)
-        {
-            if (course.Assignments == null)
-                continue;
-
-            foreach (CanvasAssignment a in course.Assignments)
-            {
-                Assignments.Add(new AssignmentItem
-                {
-                    Name        = a.Name,
-                    CourseName  = course.Name,
-                    StatusText  = StatusFor(a),
-                    StatusColor = ColorFor(a),
-                    Source      = a
-                });
-            }
-        }
-    }
     
     public void Load(List<Course> courses)
     {
