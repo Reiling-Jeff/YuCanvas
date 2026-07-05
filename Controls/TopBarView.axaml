@@ -44,7 +44,7 @@
                              Margin="0,8,8,0" />
                 </Panel>
             </Button>
-            <Button Classes="accent" Padding="18,11">
+            <Button Classes="accent" Padding="18,11" Command="{Binding TriggerSync}">
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <TextBlock Text="+" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" />
                     <TextBlock Text="Synchronisieren" FontSize="13.5" VerticalAlignment="Center" />

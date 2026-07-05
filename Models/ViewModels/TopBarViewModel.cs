@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using YuCanvas.Json;
 
 namespace YuCanvas.Models.ViewModels;
@@ -8,10 +9,14 @@ public partial class TopBarViewModel : ObservableObject
     [ObservableProperty]
     private string _welcomeText = "Willkommen zurück, n/a";
 
+    public event Action SyncRequested;
+
     public void Load(StudentData studentData)
     {
         WelcomeText = $"Willkommen zurück, {SplitName(studentData).FirstName}";
     }
+
+    public void TriggerSync() => SyncRequested?.Invoke();
     
     private static (string FirstName, string LastName) SplitName(StudentData user)
     {
