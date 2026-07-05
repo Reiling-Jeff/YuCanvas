@@ -238,36 +238,39 @@
                         </StackPanel>
                     </Border>
 
-                    <Border Classes="glass" Padding="20">
+                    <Border Classes="glass disabled" Padding="20">
                         <StackPanel Spacing="14">
-                            <TextBlock Text="Letzte Ankündigungen" Classes="h3" />
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <TextBlock Grid.Column="0" Text="Letzte Ankündigungen" Foreground="{StaticResource TextMutedBrush}" Classes="h3" />
 
-                            <ItemsControl ItemsSource="{Binding Announcements}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Spacing="14" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
+                                <components:Badge Grid.Column="2" Label="Soon"/>
+                                <ItemsControl Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding Announcements}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Spacing="14" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
 
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
 
-                                        <StackPanel Spacing="3">
-                                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                                <Ellipse Width="7" Height="7" VerticalAlignment="Center"
-                                                         Fill="{StaticResource AccentPurpleBrightBrush}"
-                                                         IsVisible="{Binding IsUnread}" />
-                                                <Ellipse Width="7" Height="7" VerticalAlignment="Center"
-                                                         IsVisible="{Binding !IsUnread}" />
-                                                <TextBlock Text="{Binding Title}" FontSize="13.5" FontWeight="SemiBold"
-                                                           Foreground="{StaticResource TextPrimaryBrush}" />
+                                            <StackPanel Spacing="3">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <Ellipse Width="7" Height="7" VerticalAlignment="Center"
+                                                             Fill="{StaticResource AccentPurpleBrightBrush}"
+                                                             IsVisible="{Binding IsUnread}" />
+                                                    <Ellipse Width="7" Height="7" VerticalAlignment="Center"
+                                                             IsVisible="{Binding !IsUnread}" />
+                                                    <TextBlock Text="{Binding Title}" FontSize="13.5" FontWeight="SemiBold"
+                                                               Foreground="{StaticResource TextPrimaryBrush}" />
+                                                </StackPanel>
+                                                <TextBlock Text="{Binding Meta}" Classes="caption" Margin="15,0,0,0" />
                                             </StackPanel>
-                                            <TextBlock Text="{Binding Meta}" Classes="caption" Margin="15,0,0,0" />
-                                        </StackPanel>
 
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
                         </StackPanel>
                     </Border>
                 </StackPanel>

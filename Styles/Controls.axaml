@@ -166,6 +166,11 @@
         <Setter Property="CornerRadius" Value="20" />
         <Setter Property="BoxShadow" Value="0 8 28 0 #40060B18" />
     </Style>
+    
+    <Style Selector="Border.glass.disabled">
+        <Setter Property="Background" Value="{StaticResource GlassGradient}" />
+        <Setter Property="Opacity" Value="0.30" />
+    </Style>
 
     <Style Selector="Border.card">
         <Setter Property="Background" Value="{StaticResource GlassGradient}" />
