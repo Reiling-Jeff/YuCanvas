@@ -16,6 +16,7 @@ public partial class SettingsViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(ShowBehavior))]
     [NotifyPropertyChangedFor(nameof(ShowData))]
     [NotifyPropertyChangedFor(nameof(ShowConnection))]
+    [NotifyPropertyChangedFor(nameof(ShowUpdates))]
     [NotifyPropertyChangedFor(nameof(NoResults))]
     private string _searchQuery = "";
 
@@ -30,6 +31,12 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty] private string _canvasToken = "";
 
     [ObservableProperty] private string _statusText = "";
+
+    [ObservableProperty] private string _currentVersionLabel = $"Version {AppVersion.Current}";
+    [ObservableProperty] private string _latestVersionLabel = "";
+    [ObservableProperty] private bool _isUpdateAvailable;
+    [ObservableProperty] private string _updateStatusText = "Noch nicht geprüft.";
+    [ObservableProperty] private string _checkUpdatesButtonText = "Suchen";
 
     private AppSettings _settings = new();
 
@@ -51,8 +58,9 @@ public partial class SettingsViewModel : ObservableObject
     public bool ShowBehavior   => Matches("verhalten", "sync", "synchronisieren", "automatisch", "dashboard", "start");
     public bool ShowData       => Matches("daten", "cache", "zwischenspeicher", "leeren", "löschen");
     public bool ShowConnection => Matches("canvas", "verbindung", "url", "token", "zugriff", "anmeldung");
+    public bool ShowUpdates    => Matches("update", "aktualisierung", "version", "neu", "release");
 
-    public bool NoResults => !ShowAccount && !ShowBehavior && !ShowData && !ShowConnection;
+    public bool NoResults => !ShowAccount && !ShowBehavior && !ShowData && !ShowConnection && !ShowUpdates;
 
     public async Task InitAsync()
     {
@@ -61,6 +69,8 @@ public partial class SettingsViewModel : ObservableObject
         StartOnDashboard = _settings.StartOnDashboard;
         CanvasBaseUrl = _settings.CanvasBaseUrl;
         CanvasToken = _settings.CanvasToken;
+
+        _ = CheckForUpdatesCommand.ExecuteAsync(null);
     }
 
     public void ApplyUser(StudentData user)
@@ -79,6 +89,29 @@ public partial class SettingsViewModel : ObservableObject
         _settings.CanvasToken = CanvasToken.Trim();
         await SettingsService.SaveAsync(_settings);
         StatusText = "Gespeichert.";
+    }
+
+    [RelayCommand]
+    private async Task CheckForUpdates()
+    {
+        CheckUpdatesButtonText = "Suche …";
+        UpdateStatusText = "Suche nach Updates …";
+
+        UpdateCheckResult result = await UpdateService.CheckAsync();
+
+        CheckUpdatesButtonText = "Suchen";
+
+        if (!result.Success)
+        {
+            UpdateStatusText = "Prüfung fehlgeschlagen – offline?";
+            return;
+        }
+
+        IsUpdateAvailable = result.IsUpdateAvailable;
+        LatestVersionLabel = $"Version {result.LatestVersion}";
+        UpdateStatusText = result.IsUpdateAvailable
+            ? "Neue Version gefunden."
+            : $"Zuletzt geprüft: {DateTime.Now:HH:mm}";
     }
 
     [RelayCommand]

@@ -48,6 +48,11 @@
     <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerRose}" />
     <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource InfoCyan}" />
 
+    <!-- Fehlten bisher, wurden aber von Badge.axaml referenziert -> Absturz beim Rendern.
+         Werte entsprechen dem ursprünglichen inline Beta-Pill (#1F6B7899 / TextMuted). -->
+    <SolidColorBrush x:Key="AccentButtonBackground" Color="#1F6B7899" />
+    <SolidColorBrush x:Key="AccentButtonForeground" Color="{StaticResource TextMuted}" />
+
     <LinearGradientBrush x:Key="AccentGradient" StartPoint="0%,0%" EndPoint="100%,100%">
         <GradientStop Color="#A78BFA" Offset="0" />
         <GradientStop Color="#7C3AED" Offset="1" />
