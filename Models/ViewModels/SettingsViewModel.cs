@@ -37,6 +37,9 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty] private bool _isUpdateAvailable;
     [ObservableProperty] private string _updateStatusText = "Noch nicht geprüft.";
     [ObservableProperty] private string _checkUpdatesButtonText = "Suchen";
+    
+    [ObservableProperty] private bool _isChangelogOpen;
+    [ObservableProperty] private string _changelogText = "";
 
     private AppSettings _settings = new();
 
@@ -113,6 +116,30 @@ public partial class SettingsViewModel : ObservableObject
             ? "Neue Version gefunden."
             : $"Zuletzt geprüft: {DateTime.Now:HH:mm}";
     }
+
+    private bool _changelogLoaded;
+
+    [RelayCommand]
+    private async Task OpenChangelog()
+    {
+        IsChangelogOpen = true;
+        if (_changelogLoaded) return;
+
+        ChangelogText = "Lade Änderungen …";
+        string? md = await UpdateService.FetchChangelogAsync();
+
+        if (md is null)
+        {
+            ChangelogText = "Changelog konnte nicht geladen werden. Bist du offline?";
+            return;
+        }
+
+        ChangelogText = md;
+        _changelogLoaded = true;
+    }
+
+    [RelayCommand]
+    private void CloseChangelog() => IsChangelogOpen = false;
 
     [RelayCommand]
     private void ClearCache()

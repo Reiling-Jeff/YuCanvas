@@ -14,8 +14,8 @@ public class UpdateCheckResult
 
 public static class UpdateService
 {
-    private const string VersionUrl =
-        "https://raw.githubusercontent.com/Reiling-Jeff/YuCanvas/main/VERSION";
+    private const string VersionUrl = "https://raw.githubusercontent.com/Reiling-Jeff/YuCanvas/main/VERSION";
+    private const string ChangelogUrl = "https://raw.githubusercontent.com/Reiling-Jeff/YuCanvas/main/CHANGELOG.md";
 
     public static async Task<UpdateCheckResult> CheckAsync()
     {
@@ -37,6 +37,20 @@ public static class UpdateService
         catch
         {
             return new UpdateCheckResult { Success = false };
+        }
+    }
+
+    public static async Task<string?> FetchChangelogAsync()
+    {
+        try
+        {
+            using HttpClient http = new() { Timeout = TimeSpan.FromSeconds(8) };
+            string text = await http.GetStringAsync(ChangelogUrl);
+            return string.IsNullOrWhiteSpace(text) ? null : text;
+        }
+        catch
+        {
+            return null;
         }
     }
 }
