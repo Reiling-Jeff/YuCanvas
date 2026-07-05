@@ -35,7 +35,7 @@
         </Grid>
         
         <Border Background="#C70B1120" IsVisible="{Binding Settings.IsChangelogOpen}">
-            <Border Classes="glass" MinWidth="480" MaxWidth="620" MaxHeight="560"
+            <Border Classes="glass" MinWidth="480" MaxWidth="1000" MaxHeight="700"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
                     ClipToBounds="True">
                 <Grid RowDefinitions="Auto,Auto,*">
