@@ -128,6 +128,16 @@
         <Setter Property="Background" Value="#141E38" />
         <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
     </Style>
+    
+    <Style Selector="Button.navitem.disabled">
+        <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+        <Setter Property="Opacity" Value="0.55" />
+    </Style>
+
+    <Style Selector="Button.navitem.disabled:pointerover">
+        <Setter Property="Background" Value="#0FFFFFFF" />
+        <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+    </Style>
 
     <Style Selector="Button.navitem.active">
         <Setter Property="Background" Value="#242A6B" />

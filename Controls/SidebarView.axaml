@@ -2,7 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm ="clr-namespace:YuCanvas.Models"
+             xmlns:vm="clr-namespace:YuCanvas.Models"
+             xmlns:conv="clr-namespace:Avalonia.Data.Converters;assembly=Avalonia.Base"
              x:DataType="vm:SideBarViewModel"
              mc:Ignorable="d" d:DesignWidth="260" d:DesignHeight="820"
              x:Class="YuCanvas.Controls.SidebarView">
@@ -55,59 +56,107 @@
                         </Grid>
                     </Button>
 
-                    <Button Classes="navitem">
-                        <StackPanel Orientation="Horizontal" Spacing="14">
-                            <TextBlock Text="◎" FontSize="16" VerticalAlignment="Center" />
-                            <TextBlock Text="Noten" VerticalAlignment="Center" />
-                        </StackPanel>
+                    <Button Classes="navitem disabled"
+                            Command="{Binding ShowComingSoonCommand}"
+                            CommandParameter="Noten">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
+                                <TextBlock Text="◎" FontSize="16" VerticalAlignment="Center" />
+                                <TextBlock Text="Noten" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
+                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
+                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextMutedBrush}" />
+                            </Border>
+                        </Grid>
                     </Button>
 
-                    <Button Classes="navitem">
-                        <StackPanel Orientation="Horizontal" Spacing="14">
-                            <TextBlock Text="▤" FontSize="16" VerticalAlignment="Center" />
-                            <TextBlock Text="Kalender" VerticalAlignment="Center" />
-                        </StackPanel>
+                    <Button Classes="navitem disabled"
+                            Command="{Binding ShowComingSoonCommand}"
+                            CommandParameter="Kalender">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
+                                <TextBlock Text="▤" FontSize="16" VerticalAlignment="Center" />
+                                <TextBlock Text="Kalender" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
+                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
+                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextMutedBrush}" />
+                            </Border>
+                        </Grid>
                     </Button>
 
-                    <Button Classes="navitem">
-                        <StackPanel Orientation="Horizontal" Spacing="14">
-                            <TextBlock Text="❏" FontSize="16" VerticalAlignment="Center" />
-                            <TextBlock Text="Module" VerticalAlignment="Center" />
-                        </StackPanel>
+                    <Button Classes="navitem disabled"
+                            Command="{Binding ShowComingSoonCommand}"
+                            CommandParameter="Module">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
+                                <TextBlock Text="❏" FontSize="16" VerticalAlignment="Center" />
+                                <TextBlock Text="Module" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
+                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
+                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextMutedBrush}" />
+                            </Border>
+                        </Grid>
                     </Button>
 
-                    <Button Classes="navitem">
+                    <Button Classes="navitem disabled"
+                            Command="{Binding ShowComingSoonCommand}"
+                            CommandParameter="Ankündigungen">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
                                 <TextBlock Text="◭" FontSize="16" VerticalAlignment="Center" />
                                 <TextBlock Text="Ankündigungen" VerticalAlignment="Center" />
                             </StackPanel>
-                            <Ellipse Grid.Column="2" Width="8" Height="8"
-                                     Fill="{StaticResource DangerBrush}" VerticalAlignment="Center" />
+                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
+                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
+                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextMutedBrush}" />
+                            </Border>
                         </Grid>
                     </Button>
 
-                    <Button Classes="navitem">
-                        <StackPanel Orientation="Horizontal" Spacing="14">
-                            <TextBlock Text="⬇" FontSize="16" VerticalAlignment="Center" />
-                            <TextBlock Text="Dateien" VerticalAlignment="Center" />
-                        </StackPanel>
+                    <Button Classes="navitem disabled"
+                            Command="{Binding ShowComingSoonCommand}"
+                            CommandParameter="Dateien">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
+                                <TextBlock Text="⬇" FontSize="16" VerticalAlignment="Center" />
+                                <TextBlock Text="Dateien" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
+                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
+                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextMutedBrush}" />
+                            </Border>
+                        </Grid>
                     </Button>
 
-                    <Button Classes="navitem">
+                    <Button Classes="navitem disabled"
+                            Command="{Binding ShowComingSoonCommand}"
+                            CommandParameter="Nachrichten">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
                                 <TextBlock Text="✉" FontSize="16" VerticalAlignment="Center" />
                                 <TextBlock Text="Nachrichten" VerticalAlignment="Center" />
                             </StackPanel>
-                            <Border Grid.Column="2" Classes="pill" Background="#2E2A6B"
+                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
                                     BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
-                                <TextBlock Text="3" FontSize="11" FontWeight="SemiBold"
-                                           Foreground="{StaticResource AccentPurpleBrightBrush}" />
+                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextMutedBrush}" />
                             </Border>
                         </Grid>
                     </Button>
                 </StackPanel>
+
+                <TextBlock Text="{Binding ComingSoonMessage}" Classes="caption"
+                           Foreground="{StaticResource WarnBrush}"
+                           Margin="10,0,10,0" TextWrapping="Wrap"
+                           IsVisible="{Binding ComingSoonMessage, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}" />
             </StackPanel>
 
             <Border Grid.Row="2" Classes="glass" CornerRadius="16" Padding="14">

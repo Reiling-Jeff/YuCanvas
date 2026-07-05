@@ -7,6 +7,10 @@ namespace YuCanvas.Models;
 
 public partial class SideBarViewModel : ObservableObject
 {
+    
+    [ObservableProperty]
+    private string _comingSoonMessage = "";
+    
     [ObservableProperty]
     private string _studentName = "n/a";
 
@@ -33,6 +37,12 @@ public partial class SideBarViewModel : ObservableObject
         IsDashboardActive   = pageKey == "dashboard";
         IsAssignmentsActive = pageKey == "assignments";
         IsSettingsActive    = pageKey == "settings";
+    }
+
+    [RelayCommand]
+    private void ShowComingSoon(string featureName)
+    {
+        ComingSoonMessage = $"{featureName} ist noch nicht verfügbar.";
     }
 
     [RelayCommand]
