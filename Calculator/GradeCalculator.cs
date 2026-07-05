@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
+using YuCanvas.Models.ViewModels;
 
 namespace YuCanvas.Calculator;
 
 public static class GradeCalculator
 {
-    private static readonly List<(int MinPoints, string Grade)> Thresholds = new()
+    public static readonly IReadOnlyList<(int MinPoints, string Grade)> DefaultThresholds = new List<(int, string)>
     {
         (64, "1++"),
         (54, "1+"),
@@ -24,11 +24,37 @@ public static class GradeCalculator
 
     public static string GetGrade(int pointsAboveBasics)
     {
-        foreach ((int minPoints, string grade) in Thresholds)
+        IReadOnlyList<(int MinPoints, string Grade)> thresholds = GetActiveThresholds();
+
+        foreach ((int minPoints, string grade) in thresholds)
         {
             if (pointsAboveBasics >= minPoints)
                 return grade;
         }
-        return "3-";
+
+        return thresholds.Count > 0 ? thresholds[^1].Grade : "n/a";
+    }
+
+    private static IReadOnlyList<(int MinPoints, string Grade)> GetActiveThresholds()
+    {
+        List<GradeThresholdEntry>? custom = SettingsViewModel.Settings.GradeThresholdEntries;
+        if (custom is not { Count: > 0 })
+            return DefaultThresholds;
+
+        List<(int MinPoints, string Grade)> parsed = new();
+        foreach (GradeThresholdEntry entry in custom)
+        {
+            if (string.IsNullOrWhiteSpace(entry.Label))
+                continue;
+            if (!int.TryParse(entry.MinPoints, out int minPoints))
+                continue;
+            parsed.Add((minPoints, entry.Label.Trim()));
+        }
+
+        if (parsed.Count == 0)
+            return DefaultThresholds;
+
+        parsed.Sort((a, b) => b.MinPoints.CompareTo(a.MinPoints));
+        return parsed;
     }
 }

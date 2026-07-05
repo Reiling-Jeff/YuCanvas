@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using YuCanvas.Media;
 using YuCanvas.Models;
+using YuCanvas.Models.ViewModels;
 
 namespace YuCanvas.Service;
 

@@ -4,7 +4,9 @@
              x:Class="YuCanvas.Views.SettingsView"
              x:DataType="viewModels:SettingsViewModel">
 
-    <ScrollViewer Padding="40,24,40,32">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto"
+                  Padding="40,24,40,32">
         <StackPanel Spacing="20">
 
             <StackPanel Spacing="14" MaxWidth="620" HorizontalAlignment="Left">
@@ -100,6 +102,90 @@
                                 <TextBlock Text="Wird unverschlüsselt lokal gespeichert."
                                            FontSize="11" Foreground="{StaticResource WarnBrush}" />
                             </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- SAMMELFRISTEN -->
+                <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
+                            IsVisible="{Binding ShowCollectionDeadlines}">
+                    <TextBlock Text="SAMMELFRISTEN" Classes="eyebrow" />
+                    <Border Classes="glass" Padding="8" CornerRadius="16">
+                        <StackPanel>
+
+                            <StackPanel Margin="14,12" Spacing="2">
+                                <TextBlock Text="Sammel-Aufgaben-IDs" Classes="body" FontWeight="Medium" />
+                                <TextBlock Text="Deren Deadline gilt für einen ganzen Block."
+                                           Classes="caption" />
+                            </StackPanel>
+
+                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
+
+                            <ItemsControl ItemsSource="{Binding CollectionDeadlines}" Margin="14,6">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="*,Auto" Margin="0,4">
+                                            <TextBlock Grid.Column="0" Text="{Binding }" Classes="body"
+                                                       FontFamily="Monospace" VerticalAlignment="Center" />
+                                            <Button Grid.Column="1" Classes="ghost"
+                                                    Command="{Binding $parent[ItemsControl].((viewModels:SettingsViewModel)DataContext).RemoveCollectionIdCommand}"
+                                                    CommandParameter="{Binding}">
+                                                <TextBlock Text="Entfernen" FontSize="12" />
+                                            </Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
+
+                            <Grid ColumnDefinitions="*,Auto" Margin="14,12">
+                                <TextBox Grid.Column="0" Classes="search" Text="{Binding NewCollectionId}"
+                                         Watermark="Neue Aufgaben-ID …" Margin="0,0,10,0" />
+                                <Button Grid.Column="1" Classes="ghost"
+                                        Command="{Binding AddCollectionIdCommand}" VerticalAlignment="Center">
+                                    <TextBlock Text="Hinzufügen" FontSize="13" />
+                                </Button>
+                            </Grid>
+
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- NOTENSCHEMA -->
+                <StackPanel Spacing="10" Width="540" Margin="0,0,20,20"
+                            IsVisible="{Binding ShowGradeScheme}">
+                    <TextBlock Text="NOTENSCHEMA" Classes="eyebrow" />
+                    <Border Classes="glass" Padding="8" CornerRadius="16">
+                        <StackPanel>
+
+                            <Grid ColumnDefinitions="80,*,*" Margin="14,10">
+                                <TextBlock Grid.Column="0" Text="Note" Classes="caption" />
+                                <TextBlock Grid.Column="1" Text="Mindestpunkte" Classes="caption" />
+                                <TextBlock Grid.Column="2" Text="Mindest-%" Classes="caption" />
+                            </Grid>
+
+                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
+
+                            <ItemsControl ItemsSource="{Binding GradeThresholds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Grid ColumnDefinitions="80,*,*" Margin="14,8">
+                                                <TextBlock Grid.Column="0" Text="{Binding Label}" Classes="body"
+                                                           FontWeight="Medium" VerticalAlignment="Center" />
+                                                <TextBox Grid.Column="1" Classes="search" Text="{Binding MinPoints}"
+                                                         Watermark="–" Margin="0,0,10,0" />
+                                                <TextBox Grid.Column="2" Classes="search" Text="{Binding MinPercent}"
+                                                         Watermark="–" />
+                                            </Grid>
+                                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}"
+                                                       Margin="14,0" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
                         </StackPanel>
                     </Border>
                 </StackPanel>

@@ -29,8 +29,7 @@ public class CanvasAssignment
 
     [JsonPropertyName("html_url")]
     public string? HtmlUrl { get; set; }
-
-
+    
     [JsonPropertyName("submission")]
     public CanvasSubmission? Submission { get; set; }
 }

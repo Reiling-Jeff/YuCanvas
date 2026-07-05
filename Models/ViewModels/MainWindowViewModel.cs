@@ -68,8 +68,8 @@ public partial class MainWindowViewModel : ObservableObject
     
     private async Task InitAsync()
     {
-        _appSettings = await SettingsService.LoadAsync();
         await _settings.InitAsync();
+        _appSettings = SettingsViewModel.Settings;
 
         SyncResult cached = await _syncService.LoadFromCacheAsync();
         ApplyResult(cached, isFromCache: true);

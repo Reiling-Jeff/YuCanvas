@@ -16,11 +16,7 @@ public partial class DashboardViewModel : ObservableObject
 {
     private CanvasAssignment? _heroAssignment;
     private int _overallProgress;
-    
-    private static readonly HashSet<long> _basicCollectiveDeadlineIds = new()
-    {
-        176092
-    };
+    private static AppSettings AppSettings => SettingsViewModel.Settings;
     
     public event Action<CanvasAssignment>? AssignmentSelected;
 
@@ -238,7 +234,7 @@ public partial class DashboardViewModel : ObservableObject
 
         deadline = next.DueAt!.Value;
 
-        if (_basicCollectiveDeadlineIds.Contains(next.Id))
+        if (AppSettings.CollectionDeadlineEntries.Contains(next.Id))
         {
             CanvasAssignment? nextBasic = assignments
                 .Where(a => Regex.IsMatch(a.Name, @"^B\d+\.\d+"))
@@ -260,26 +256,26 @@ public partial class DashboardViewModel : ObservableObject
     {
         List<CanvasAssignment> entries = new List<CanvasAssignment>();
 
-        foreach (CanvasAssignment a in assignments)
+        foreach (CanvasAssignment assignment in assignments)
         {
-            if (a.DueAt == null)
+            if (assignment.DueAt == null)
                 continue;
 
-            if (_basicCollectiveDeadlineIds.Contains(a.Id))
+            if (AppSettings.CollectionDeadlineEntries.Contains(assignment.Id))
             {
                 IOrderedEnumerable<CanvasAssignment> openBasics = assignments
                     .Where(b => Regex.IsMatch(b.Name, @"^B\d+\.\d+"))
-                    .Where(b => b.Submission?.WorkflowState != "graded" && b.Id != a.Id)
+                    .Where(b => b.Submission?.WorkflowState != "graded" && b.Id != assignment.Id)
                     .OrderBy(b => b.Position);
 
                 foreach (CanvasAssignment basic in openBasics)
-                    basic.DueAt = a.DueAt;
+                    basic.DueAt = assignment.DueAt;
                 
                 entries.AddRange(openBasics);
             }
             else
             {
-                entries.Add(a);
+                entries.Add(assignment);
             }
         }
 
