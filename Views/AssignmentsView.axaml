@@ -1,8 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:YuCanvas.Models"
+             xmlns:viewModels="clr-namespace:YuCanvas.Models.ViewModels"
              x:Class="YuCanvas.Views.AssignmentsView"
-             x:DataType="vm:AssignmentsViewModel">
+             x:DataType="viewModels:AssignmentsViewModel">
 
     <ScrollViewer Padding="32,20,32,32">
         <StackPanel Spacing="20">
@@ -18,7 +19,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Command="{Binding $parent[ItemsControl].((vm:AssignmentsViewModel)DataContext).OpenAssignmentCommand}"
+                        <Button Command="{Binding $parent[ItemsControl].((viewModels:AssignmentsViewModel)DataContext).OpenAssignmentCommand}"
                                 CommandParameter="{Binding}"
                                 Classes="cardbutton"
                                 HorizontalAlignment="Stretch"

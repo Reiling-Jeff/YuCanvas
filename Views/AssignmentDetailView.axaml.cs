@@ -3,6 +3,7 @@ using Avalonia.Controls.Documents;
 using Avalonia.Markup.Xaml;
 using YuCanvas.Media;
 using YuCanvas.Models;
+using AssignmentDetailViewModel = YuCanvas.Models.ViewModels.AssignmentDetailViewModel;
 
 namespace YuCanvas.Views;
 

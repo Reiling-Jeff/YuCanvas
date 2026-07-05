@@ -3,7 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:YuCanvas.Models"
-             x:DataType="vm:DashboardViewModel"
+             xmlns:viewModels="clr-namespace:YuCanvas.Models.ViewModels"
+             xmlns:components="using:YuCanvas.Views.Components"
+             x:DataType="viewModels:DashboardViewModel"
              mc:Ignorable="d" d:DesignWidth="1040" d:DesignHeight="1200"
              x:Class="YuCanvas.Views.DashboardView">
 
@@ -45,8 +47,11 @@
                             <Button Classes="accent" Command="{Binding OpenHeroAssignmentCommand}">
                                 <TextBlock Text="Zur Aufgabe" FontSize="13.5" />
                             </Button>
-                            <Button Classes="ghost" HorizontalContentAlignment="Center">
-                                <TextBlock Text="Alle Deadlines" FontSize="13" />
+                            <Button Classes="ghost disabled" HorizontalContentAlignment="Stretch">
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <TextBlock Grid.Column="0" Text="Alle Deadlines" FontSize="13" Padding="0, 0 ,10,0" />
+                                    <components:Badge Grid.Column="2" Label="Soon"/>
+                                </Grid>
                             </Button>
                         </StackPanel>
                     </Grid>
@@ -203,7 +208,7 @@
 
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Button Command="{Binding $parent[ItemsControl].((vm:DashboardViewModel)DataContext).OpenDeadlineCommand}"
+                                        <Button Command="{Binding $parent[ItemsControl].((viewModels:DashboardViewModel)DataContext).OpenDeadlineCommand}"
                                                 CommandParameter="{Binding}"
                                                 Classes="cardbutton"
                                                 HorizontalAlignment="Stretch"

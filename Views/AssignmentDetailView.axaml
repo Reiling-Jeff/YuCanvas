@@ -1,8 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:YuCanvas.Models"
+             xmlns:viewModels="clr-namespace:YuCanvas.Models.ViewModels"
              x:Class="YuCanvas.Views.AssignmentDetailView"
-             x:DataType="vm:AssignmentDetailViewModel">
+             x:DataType="viewModels:AssignmentDetailViewModel">
 
     <ScrollViewer Padding="32,20,32,32">
         <StackPanel Spacing="20">

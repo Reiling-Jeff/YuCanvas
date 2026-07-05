@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using YuCanvas.Models;
+using MainWindowViewModel = YuCanvas.Models.ViewModels.MainWindowViewModel;
 
 namespace YuCanvas;
 

@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:YuCanvas.Models"
              xmlns:conv="clr-namespace:Avalonia.Data.Converters;assembly=Avalonia.Base"
-             x:DataType="vm:SideBarViewModel"
+             xmlns:components="using:YuCanvas.Views.Components"
+             xmlns:viewModels="clr-namespace:YuCanvas.Models.ViewModels"
+             x:DataType="viewModels:SideBarViewModel"
              mc:Ignorable="d" d:DesignWidth="260" d:DesignHeight="820"
              x:Class="YuCanvas.Controls.SidebarView">
 
@@ -34,121 +36,105 @@
                     <TextBlock Text="MENÜ" Classes="eyebrow" Margin="10,0,0,8" />
 
                     <Button Classes="navitem" Classes.active="{Binding IsDashboardActive}"
-                            Command="{Binding ShowDashboardCommand}">
-                        <StackPanel Orientation="Horizontal" Spacing="14">
-                            <TextBlock Text="◈" FontSize="16" VerticalAlignment="Center" />
-                            <TextBlock Text="Dashboard" VerticalAlignment="Center" />
-                        </StackPanel>
+                            Command="{Binding ShowDashboardCommand}" 
+                            HorizontalContentAlignment="Stretch">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
+                                <TextBlock Text="◈" FontSize="16" VerticalAlignment="Center" />
+                                <TextBlock Text="Dashboard" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <components:Badge Grid.Column="2" VerticalAlignment="Center" />
+                        </Grid>
                     </Button>
 
                     <Button Classes="navitem" Classes.active="{Binding IsAssignmentsActive}"
-                            Command="{Binding ShowAssignmentsCommand}">
-                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            Command="{Binding ShowAssignmentsCommand}"
+                            HorizontalContentAlignment="Stretch">
+                        <Grid ColumnDefinitions="Auto,*,Auto,*,Auto">
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
                                 <TextBlock Text="✎" FontSize="16" VerticalAlignment="Center" />
                                 <TextBlock Text="Aufgaben" VerticalAlignment="Center" />
                             </StackPanel>
-                            <Border Grid.Column="2" Classes="pill" Background="#2E2A6B"
-                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
+                            <Border Grid.Column="2" Classes="pill" Background="#2E2A6B" IsVisible="True"
+                                    BorderBrush="#00000000" VerticalAlignment="Center">
                                 <TextBlock Text="5" FontSize="11" FontWeight="SemiBold"
                                            Foreground="{StaticResource AccentPurpleBrightBrush}" />
                             </Border>
+                            
+                            <components:Badge Grid.Column="4"/>
                         </Grid>
                     </Button>
 
                     <Button Classes="navitem disabled"
                             Command="{Binding ShowComingSoonCommand}"
-                            CommandParameter="Noten">
+                            CommandParameter="Noten"
+                            HorizontalContentAlignment="Stretch">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
                                 <TextBlock Text="◎" FontSize="16" VerticalAlignment="Center" />
                                 <TextBlock Text="Noten" VerticalAlignment="Center" />
                             </StackPanel>
-                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
-                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
-                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextMutedBrush}" />
-                            </Border>
+                            <components:Badge Grid.Column="2" Label="Soon"/>
                         </Grid>
                     </Button>
 
                     <Button Classes="navitem disabled"
                             Command="{Binding ShowComingSoonCommand}"
-                            CommandParameter="Kalender">
+                            CommandParameter="Kalender" HorizontalContentAlignment="Stretch">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
                                 <TextBlock Text="▤" FontSize="16" VerticalAlignment="Center" />
                                 <TextBlock Text="Kalender" VerticalAlignment="Center" />
                             </StackPanel>
-                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
-                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
-                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextMutedBrush}" />
-                            </Border>
+                            <components:Badge Grid.Column="2" Label="Soon"/>
                         </Grid>
                     </Button>
 
                     <Button Classes="navitem disabled"
                             Command="{Binding ShowComingSoonCommand}"
-                            CommandParameter="Module">
+                            CommandParameter="Module" HorizontalContentAlignment="Stretch">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
                                 <TextBlock Text="❏" FontSize="16" VerticalAlignment="Center" />
                                 <TextBlock Text="Module" VerticalAlignment="Center" />
                             </StackPanel>
-                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
-                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
-                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextMutedBrush}" />
-                            </Border>
+                            <components:Badge Grid.Column="2" Label="Soon"/>
                         </Grid>
                     </Button>
 
                     <Button Classes="navitem disabled"
                             Command="{Binding ShowComingSoonCommand}"
-                            CommandParameter="Ankündigungen">
+                            CommandParameter="Ankündigungen" HorizontalContentAlignment="Stretch">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
                                 <TextBlock Text="◭" FontSize="16" VerticalAlignment="Center" />
                                 <TextBlock Text="Ankündigungen" VerticalAlignment="Center" />
                             </StackPanel>
-                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
-                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
-                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextMutedBrush}" />
-                            </Border>
+                            <components:Badge Grid.Column="2" Label="Soon"/>
                         </Grid>
                     </Button>
 
                     <Button Classes="navitem disabled"
                             Command="{Binding ShowComingSoonCommand}"
-                            CommandParameter="Dateien">
+                            CommandParameter="Dateien" HorizontalContentAlignment="Stretch">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
                                 <TextBlock Text="⬇" FontSize="16" VerticalAlignment="Center" />
                                 <TextBlock Text="Dateien" VerticalAlignment="Center" />
                             </StackPanel>
-                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
-                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
-                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextMutedBrush}" />
-                            </Border>
+                            <components:Badge Grid.Column="2" Label="Soon"/>
                         </Grid>
                     </Button>
 
                     <Button Classes="navitem disabled"
                             Command="{Binding ShowComingSoonCommand}"
-                            CommandParameter="Nachrichten">
+                            CommandParameter="Nachrichten" HorizontalContentAlignment="Stretch">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
                                 <TextBlock Text="✉" FontSize="16" VerticalAlignment="Center" />
                                 <TextBlock Text="Nachrichten" VerticalAlignment="Center" />
                             </StackPanel>
-                            <Border Grid.Column="2" Classes="pill" Background="#1F6B7899"
-                                    BorderBrush="#00000000" Padding="8,2" VerticalAlignment="Center">
-                                <TextBlock Text="Bald" FontSize="10.5" FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextMutedBrush}" />
-                            </Border>
+                            <components:Badge Grid.Column="2" Label="Soon"/>
                         </Grid>
                     </Button>
                 </StackPanel>

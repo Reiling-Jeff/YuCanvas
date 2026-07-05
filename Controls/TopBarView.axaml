@@ -3,7 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm ="clr-namespace:YuCanvas.Models"
-             x:DataType="vm:TopBarViewModel"
+             xmlns:viewModels="clr-namespace:YuCanvas.Models.ViewModels"
+             x:DataType="viewModels:TopBarViewModel"
              mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="76"
              x:Class="YuCanvas.Controls.TopBarView">
 

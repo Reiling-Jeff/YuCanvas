@@ -77,6 +77,16 @@
         <Setter Property="BorderBrush" Value="{StaticResource AccentPurpleBrush}" />
         <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
     </Style>
+    
+    <Style Selector="Button.ghost.disabled">
+        <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+        <Setter Property="Opacity" Value="0.55" />
+    </Style>
+
+    <Style Selector="Button.ghost.disabled:pointerover">
+        <Setter Property="Background" Value="#0FFFFFFF" />
+        <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+    </Style>
 
     <Style Selector="Button.ghost:pressed">
         <Setter Property="Background" Value="#308B5CF6" />

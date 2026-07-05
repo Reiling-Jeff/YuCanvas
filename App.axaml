@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:YuCanvas.Models"
              xmlns:views="clr-namespace:YuCanvas.Views"
+             xmlns:viewModels="clr-namespace:YuCanvas.Models.ViewModels"
              x:Class="YuCanvas.App"
              RequestedThemeVariant="Dark">
 
@@ -14,16 +15,16 @@
     </Application.Resources>
     
     <Application.DataTemplates>
-        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+        <DataTemplate DataType="{x:Type viewModels:DashboardViewModel}">
             <views:DashboardView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:AssignmentsViewModel}">
+        <DataTemplate DataType="{x:Type viewModels:AssignmentsViewModel}">
             <views:AssignmentsView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:AssignmentDetailViewModel}">
+        <DataTemplate DataType="{x:Type viewModels:AssignmentDetailViewModel}">
             <views:AssignmentDetailView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+        <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
             <views:SettingsView />
         </DataTemplate>
     </Application.DataTemplates>

@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using YuCanvas.Json;
 using YuCanvas.Media;
 
-namespace YuCanvas.Models;
+namespace YuCanvas.Models.ViewModels;
 
 public partial class AssignmentsViewModel
 {

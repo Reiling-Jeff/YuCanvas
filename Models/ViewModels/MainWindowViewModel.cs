@@ -5,7 +5,7 @@ using YuCanvas.Json;
 using YuCanvas.Media;
 using YuCanvas.Service;
 
-namespace YuCanvas.Models;
+namespace YuCanvas.Models.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
@@ -49,7 +49,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     private void ShowAssignmentDetail(CanvasAssignment assignment)
     {
-        var detail = new AssignmentDetailViewModel(assignment);
+        var detail = new ViewModels.AssignmentDetailViewModel(assignment);
         detail.BackRequested += () => SetPage(_assignments, "assignments");
         CurrentPage = detail;
     }

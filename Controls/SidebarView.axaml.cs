@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using YuCanvas.Models;
+using SideBarViewModel = YuCanvas.Models.ViewModels.SideBarViewModel;
 
 namespace YuCanvas.Controls;
 

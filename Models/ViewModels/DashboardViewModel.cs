@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
-using Avalonia.Media;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using YuCanvas.Calculator;
 using YuCanvas.Json;
 using YuCanvas.Media;
 
-namespace YuCanvas.Models;
+namespace YuCanvas.Models.ViewModels;
 
 public partial class DashboardViewModel : ObservableObject
 {

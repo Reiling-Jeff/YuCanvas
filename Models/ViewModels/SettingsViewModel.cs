@@ -7,7 +7,7 @@ using YuCanvas.Json;
 using YuCanvas.Media;
 using YuCanvas.Service;
 
-namespace YuCanvas.Models;
+namespace YuCanvas.Models.ViewModels;
 
 public partial class SettingsViewModel : ObservableObject
 {

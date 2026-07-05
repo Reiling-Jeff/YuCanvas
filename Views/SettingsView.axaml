@@ -1,8 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:YuCanvas.Models"
+             xmlns:viewModels="clr-namespace:YuCanvas.Models.ViewModels"
              x:Class="YuCanvas.Views.SettingsView"
-             x:DataType="vm:SettingsViewModel">
+             x:DataType="viewModels:SettingsViewModel">
 
     <ScrollViewer Padding="40,24,40,32">
         <StackPanel Spacing="20">

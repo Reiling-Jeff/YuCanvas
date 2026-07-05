@@ -1,10 +1,12 @@
 using System;
+<<<<<<< Updated upstream:Models/TopBarViewModel.cs
 using System.Collections.Generic;
+=======
+>>>>>>> Stashed changes:Models/ViewModels/TopBarViewModel.cs
 using CommunityToolkit.Mvvm.ComponentModel;
 using YuCanvas.Json;
-using YuCanvas.Media;
 
-namespace YuCanvas.Models;
+namespace YuCanvas.Models.ViewModels;
 
 public partial class TopBarViewModel : ObservableObject
 {

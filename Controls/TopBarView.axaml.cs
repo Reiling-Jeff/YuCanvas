@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using YuCanvas.Models;
+using TopBarViewModel = YuCanvas.Models.ViewModels.TopBarViewModel;
 
 namespace YuCanvas.Controls;
 
