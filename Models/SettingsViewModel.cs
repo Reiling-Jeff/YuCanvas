@@ -78,7 +78,7 @@ public partial class SettingsViewModel : ObservableObject
         _settings.CanvasBaseUrl = CanvasBaseUrl.Trim();
         _settings.CanvasToken = CanvasToken.Trim();
         await SettingsService.SaveAsync(_settings);
-        StatusText = "Gespeichert. Zum Übernehmen neu synchronisieren.";
+        StatusText = "Gespeichert.";
     }
 
     [RelayCommand]
@@ -93,7 +93,7 @@ public partial class SettingsViewModel : ObservableObject
             if (File.Exists(cacheFile))
                 File.Delete(cacheFile);
 
-            StatusText = "Cache geleert. Beim nächsten Start wird frisch geladen.";
+            StatusText = "Cache geleert.";
         }
         catch (Exception e)
         {
