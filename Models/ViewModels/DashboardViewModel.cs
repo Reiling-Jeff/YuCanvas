@@ -15,6 +15,7 @@ namespace YuCanvas.Models.ViewModels;
 public partial class DashboardViewModel : ObservableObject
 {
     private CanvasAssignment? _heroAssignment;
+    private int _overallProgress;
     
     private static readonly HashSet<long> _basicCollectiveDeadlineIds = new()
     {
@@ -101,37 +102,39 @@ public partial class DashboardViewModel : ObservableObject
         LoadCardValues(courses);
 
         Courses.Clear();
-        int overallProgress = 0;
-        foreach (Course c in courses)
-        {
-            overallProgress += c.Progress;
-            Courses.Add(c);
-        }
+        _overallProgress = 0;
+        
+        ApplyCourses(courses.ToArray());
 
-        ProgressInPercentage = courses.Count > 0 ? overallProgress / courses.Count : 0;
+        ProgressInPercentage = courses.Count > 0 ? _overallProgress / courses.Count : 0;
         LastSyncText = "Synchronisiert...";
     }
 
     public void ApplyCanvasCourses(List<Course> canvasCourses)
     {
         Courses.Clear();
-        int overallProgress = 0;
+        _overallProgress = 0; 
+        
+        ApplyCourses(canvasCourses.ToArray());
 
-        foreach (Course c in canvasCourses)
+        LoadCardValues(canvasCourses);
+
+        ProgressInPercentage = canvasCourses.Count > 0 ? _overallProgress / canvasCourses.Count : 0;
+        PassedSync = true;
+        LastSyncText = $"Letzte Synchronisierung · {DateTime.Now:dd.MM.yyyy HH:mm}";
+    }
+
+    private void ApplyCourses(Course[] courses)
+    {
+        foreach (Course c in courses)
         {
             int progress = CalculateBasicProgress(c.Assignments!);
-            overallProgress += progress;
+            _overallProgress += progress;
 
             c.Progress = progress;
 
             Courses.Add(c);
         }
-
-        LoadCardValues(canvasCourses);
-
-        ProgressInPercentage = canvasCourses.Count > 0 ? overallProgress / canvasCourses.Count : 0;
-        PassedSync = true;
-        LastSyncText = $"Letzte Synchronisierung · {DateTime.Now:dd.MM.yyyy HH:mm}";
     }
 
     public void MarkSyncFailed()
