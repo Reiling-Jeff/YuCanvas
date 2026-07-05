@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.Input;
 using YuCanvas.Json;
@@ -37,6 +38,7 @@ public partial class AssignmentsViewModel
                     CourseName  = course.Name,
                     StatusText  = StatusFor(a),
                     StatusColor = ColorFor(a),
+                    DueAt       = a.DueAt, 
                     Source      = a
                 });
             }

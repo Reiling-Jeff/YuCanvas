@@ -1,3 +1,4 @@
+using System;
 using Avalonia.Media;
 using YuCanvas.Json;
 
@@ -9,5 +10,6 @@ public class AssignmentItem
     public string CourseName { get; set; } = "";
     public string StatusText { get; set; } = "";
     public IBrush StatusColor { get; set; } = Brushes.Gray;
+    public DateTime? DueAt { get; set; }
     public CanvasAssignment Source { get; set; } = null!;
 }
