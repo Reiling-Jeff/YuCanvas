@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using YuCanvas.Controls;
 using YuCanvas.Json;
-using YuCanvas.Media;
 using YuCanvas.Service;
 
 namespace YuCanvas.Models;
@@ -21,13 +16,12 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly TopBarViewModel _topBarViewModel = TopBarView.GetViewModel();
     private readonly SideBarViewModel _sideBarViewModel = SidebarView.GetViewModel();
     private readonly SettingsViewModel _settings = new();
+    private readonly SyncService _syncService = new();
 
-    private AppSettings _appSettings;
+    private AppSettings _appSettings = new();
 
     public DashboardViewModel Dashboard => _dashboard;
-
     public AssignmentsViewModel Assignments => _assignments;
-
     public SettingsViewModel Settings => _settings;
 
     public MainWindowViewModel()
@@ -37,7 +31,7 @@ public partial class MainWindowViewModel : ObservableObject
         _dashboard.AssignmentSelected += ShowAssignmentDetail;
         _ = InitAsync();
     }
-    
+
     private void ShowAssignmentDetail(CanvasAssignment assignment)
     {
         AssignmentDetailViewModel detail = new AssignmentDetailViewModel(assignment);
@@ -49,83 +43,38 @@ public partial class MainWindowViewModel : ObservableObject
     {
         _appSettings = await SettingsService.LoadAsync();
         await _settings.InitAsync();
-        
-        await LoadFromCacheAsync();
-        await LoadFromCanvasAsync();
-    }
 
-    private async Task LoadFromCacheAsync()
-    {
-        
-        Console.WriteLine("=== LoadFromCache Start ===");
-        List<Course> cachedCourses = await CacheService.LoadCoursesAsync();
-        StudentData cachedStudentData = await CacheService.LoadStudentDataAsync();
-        _dashboard.ApplyCachedCourses(cachedCourses);
-        _assignments.Load(cachedCourses);
-        _topBarViewModel.Load(cachedStudentData);
-        _sideBarViewModel.Load(cachedStudentData);
-        _settings.ApplyUser(cachedStudentData);
-        Console.WriteLine("=== LoadFromCache DONE ===");
-    }
+        SyncResult cached = await _syncService.LoadFromCacheAsync();
+        ApplyResult(cached, isFromCache: true);
 
-    private async Task LoadFromCanvasAsync()
-    {
-        Console.WriteLine("=== LoadFromCanvas START ===");
-        try
+        SyncResult synced = await _syncService.SyncFromCanvasAsync(_appSettings);
+        if (synced.Success)
         {
-            string baseUrl = _settings.CanvasBaseUrl;
-            string token   = _settings.CanvasToken;
-
-            if (string.IsNullOrWhiteSpace(baseUrl) || string.IsNullOrWhiteSpace(token))
-            {
-                baseUrl = Program.Configuration["Canvas:BaseUrl"] ?? "";
-                token   = Program.Configuration["Canvas:Token"] ?? "";
-
-                _settings.CanvasBaseUrl = baseUrl;
-                _settings.CanvasToken   = token;
-                await SettingsService.SaveAsync(_appSettings);
-            }
-
-            if (string.IsNullOrWhiteSpace(baseUrl) || string.IsNullOrWhiteSpace(token))
-            {
-                _dashboard.MarkSyncFailed();
-                return;
-            }
-            Console.WriteLine(1);
-            await _settings.InitAsync();
-            CanvasService service = new CanvasService(baseUrl, token);
-            List<CanvasCourse> canvasCourses = await service.GetCoursesAsync();
-            StudentData studentData = await service.GetStudentDataAsync();
-            Console.WriteLine(2);
-            await Task.WhenAll(canvasCourses.Select(async c =>
-            {
-                try
-                {
-                    c.Assignments = await service.GetAssignmentsAsync(c.Id);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Kurs {c.Id} fehlgeschlagen: {ex.Message}");
-                    c.Assignments = new List<CanvasAssignment>();
-                }
-            }));
-            Console.WriteLine(3);
-
-            _dashboard.ApplyCanvasCourses(canvasCourses);
-            _assignments.Load(canvasCourses);
-            _topBarViewModel.Load(studentData);
-            _sideBarViewModel.Load(studentData);
-            _settings.ApplyUser(studentData);
-            
-            await CacheService.SaveCoursesAsync(_dashboard.Courses.ToList());
-            await CacheService.SaveStudentDataAsync(studentData);
+            ApplyResult(synced, isFromCache: false);
         }
-        catch (Exception e)
+        else
         {
-            Console.WriteLine(e);
             _dashboard.MarkSyncFailed();
         }
+    }
+
+    private void ApplyResult(SyncResult result, bool isFromCache)
+    {
+        if (isFromCache)
+        {
+            _dashboard.ApplyCachedCourses(result.Courses);
+            _assignments.Load(result.Courses);
+        }
+        else
+        {
+            _dashboard.ApplyCanvasCourses(result.CanvasCourses);
+            _assignments.Load(result.CanvasCourses);
+        }
+
+        if (result.StudentData == null) return;
         
-        Console.WriteLine("=== LoadFromCanvas END ===");
+        _topBarViewModel.Load(result.StudentData);
+        _sideBarViewModel.Load(result.StudentData);
+        _settings.ApplyUser(result.StudentData);
     }
 }
