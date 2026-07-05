@@ -28,18 +28,32 @@ public partial class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         _currentPage = _dashboard;
+
         _assignments.AssignmentSelected += ShowAssignmentDetail;
         _dashboard.AssignmentSelected += ShowAssignmentDetail;
+
+        _sideBarViewModel.DashboardRequested   += () => SetPage(_dashboard, "dashboard");
+        _sideBarViewModel.AssignmentsRequested += () => SetPage(_assignments, "assignments");
+        _sideBarViewModel.SettingsRequested    += () => SetPage(_settings, "settings");
+
+        SetPage(_dashboard, "dashboard");
+
         _ = InitAsync();
+    }
+
+    private void SetPage(object page, string pageKey)
+    {
+        CurrentPage = page;
+        _sideBarViewModel.SetActivePage(pageKey);
     }
 
     private void ShowAssignmentDetail(CanvasAssignment assignment)
     {
-        AssignmentDetailViewModel detail = new AssignmentDetailViewModel(assignment);
-        detail.BackRequested += () => CurrentPage = _assignments;
+        var detail = new AssignmentDetailViewModel(assignment);
+        detail.BackRequested += () => SetPage(_assignments, "assignments");
         CurrentPage = detail;
     }
-
+    
     private async Task InitAsync()
     {
         _appSettings = await SettingsService.LoadAsync();

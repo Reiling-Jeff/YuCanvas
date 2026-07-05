@@ -10,22 +10,37 @@ public partial class SideBarViewModel : ObservableObject
     [ObservableProperty]
     private string _studentName = "n/a";
 
-    private static MainWindowViewModel? _mainWindowViewModel;
-    private static MainWindowViewModel MainVm => _mainWindowViewModel ??= MainWindow.GetViewModel();
+    [ObservableProperty]
+    private bool _isDashboardActive;
+
+    [ObservableProperty]
+    private bool _isAssignmentsActive;
+
+    [ObservableProperty]
+    private bool _isSettingsActive;
+
+    public event Action? DashboardRequested;
+    public event Action? AssignmentsRequested;
+    public event Action? SettingsRequested;
 
     public void Load(StudentData studentData)
     {
-        Console.WriteLine(studentData.Name);
         StudentName = studentData.Name;
     }
-    
-    
-    [RelayCommand]
-    private void ShowDashboard() => MainVm.CurrentPage = MainVm.Dashboard;
+
+    public void SetActivePage(string pageKey)
+    {
+        IsDashboardActive   = pageKey == "dashboard";
+        IsAssignmentsActive = pageKey == "assignments";
+        IsSettingsActive    = pageKey == "settings";
+    }
 
     [RelayCommand]
-    private void ShowAssignments() => MainVm.CurrentPage = MainVm.Assignments;
-    
+    private void ShowDashboard() => DashboardRequested?.Invoke();
+
     [RelayCommand]
-    private void ShowSettings() => MainVm.CurrentPage = MainVm.Settings;
+    private void ShowAssignments() => AssignmentsRequested?.Invoke();
+
+    [RelayCommand]
+    private void ShowSettings() => SettingsRequested?.Invoke();
 }

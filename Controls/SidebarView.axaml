@@ -32,14 +32,16 @@
                 <StackPanel Spacing="4">
                     <TextBlock Text="MENÜ" Classes="eyebrow" Margin="10,0,0,8" />
 
-                    <Button Classes="navitem active" Command="{Binding ShowDashboardCommand}">
+                    <Button Classes="navitem" Classes.active="{Binding IsDashboardActive}"
+                            Command="{Binding ShowDashboardCommand}">
                         <StackPanel Orientation="Horizontal" Spacing="14">
                             <TextBlock Text="◈" FontSize="16" VerticalAlignment="Center" />
                             <TextBlock Text="Dashboard" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
 
-                    <Button Classes="navitem" Command="{Binding ShowAssignmentsCommand}">
+                    <Button Classes="navitem" Classes.active="{Binding IsAssignmentsActive}"
+                            Command="{Binding ShowAssignmentsCommand}">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
                                 <TextBlock Text="✎" FontSize="16" VerticalAlignment="Center" />
@@ -124,7 +126,8 @@
                                        Foreground="{StaticResource TextMutedBrush}" />
                         </StackPanel>
                     </StackPanel>
-                    <Button Classes="ghost" HorizontalAlignment="Stretch"
+                    <Button Classes="ghost" Classes.active="{Binding IsSettingsActive}"
+                            HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Center" Padding="0,9"
                             Command="{Binding ShowSettingsCommand}">
                         <TextBlock Text="Einstellungen" FontSize="13" />
