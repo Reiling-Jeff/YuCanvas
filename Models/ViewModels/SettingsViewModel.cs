@@ -103,7 +103,7 @@ public partial class SettingsViewModel : ObservableObject
 
         if (!result.Success)
         {
-            UpdateStatusText = "Prüfung fehlgeschlagen – offline?";
+            UpdateStatusText = "Prüfung fehlgeschlagen";
             return;
         }
 
