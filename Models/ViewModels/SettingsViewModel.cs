@@ -72,7 +72,7 @@ public partial class SettingsViewModel : ObservableObject
     }
 
     public bool ShowAccount    => Matches("konto", "account", "name", "nutzer", "id", "sprache", "profil");
-    public bool ShowBehavior   => Matches("verhalten", "sync", "synchronisieren", "automatisch", "dashboard", "start");
+    public bool ShowBehavior   => Matches("verhalten", "sync", "synchronisieren", "automatisch", "start");
     public bool ShowData       => Matches("daten", "cache", "zwischenspeicher", "leeren", "löschen");
     public bool ShowConnection => Matches("canvas", "verbindung", "url", "token", "zugriff", "anmeldung");
     public bool ShowUpdates    => Matches("update", "aktualisierung", "version", "neu", "release");
@@ -87,7 +87,6 @@ public partial class SettingsViewModel : ObservableObject
     {
         _settings = await SettingsService.LoadAsync();
         AutoSync = _settings.AutoSync;
-        StartOnDashboard = _settings.StartOnDashboard;
         CanvasBaseUrl = _settings.CanvasBaseUrl;
         CanvasToken = _settings.CanvasToken;
 
@@ -125,7 +124,6 @@ public partial class SettingsViewModel : ObservableObject
     private async Task Save()
     {
         _settings.AutoSync = AutoSync;
-        _settings.StartOnDashboard = StartOnDashboard;
         _settings.CanvasBaseUrl = CanvasBaseUrl.Trim();
         _settings.CanvasToken = CanvasToken.Trim();
         _settings.GradeThresholdEntries = GradeThresholds.ToList();

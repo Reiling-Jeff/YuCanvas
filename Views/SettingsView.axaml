@@ -73,15 +73,6 @@
                                 <ToggleSwitch Grid.Column="1" IsChecked="{Binding AutoSync}"
                                               VerticalAlignment="Center" />
                             </Grid>
-                            <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" Margin="14,0" />
-                            <Grid ColumnDefinitions="*,Auto" Margin="14,12">
-                                <StackPanel Grid.Column="0" Spacing="2">
-                                    <TextBlock Text="Mit Dashboard starten" Classes="body" FontWeight="Medium" />
-                                    <TextBlock Text="Beim Öffnen direkt das Dashboard zeigen" Classes="caption" />
-                                </StackPanel>
-                                <ToggleSwitch Grid.Column="1" IsChecked="{Binding StartOnDashboard}"
-                                              VerticalAlignment="Center" />
-                            </Grid>
                         </StackPanel>
                     </Border>
                 </StackPanel>
