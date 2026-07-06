@@ -4,10 +4,12 @@
              x:Class="YuCanvas.Views.SettingsView"
              x:DataType="viewModels:SettingsViewModel">
 
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                  VerticalScrollBarVisibility="Auto"
-                  Padding="40,24,40,32">
-        <StackPanel Spacing="20">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollViewer Grid.Row="0"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Padding="0,0,8,0">
+            <StackPanel Spacing="20" Margin="40,24,32,24">
 
             <StackPanel Spacing="14" MaxWidth="620" HorizontalAlignment="Left">
                 <TextBlock Text="Einstellungen" Classes="h1" />
@@ -276,13 +278,20 @@
                            HorizontalAlignment="Center" Foreground="{StaticResource TextMutedBrush}" />
             </Border>
 
-            <!-- SPEICHERN -->
+        </StackPanel>
+        </ScrollViewer>
+
+        <!-- SPEICHERN -->
+        <Border Grid.Row="1"
+                BorderBrush="{StaticResource GlassStrokeBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="40,14,40,18">
             <StackPanel Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
                 <Button Classes="accent" Command="{Binding SaveCommand}">
                     <TextBlock Text="Speichern" FontSize="13.5" />
                 </Button>
                 <TextBlock Text="{Binding StatusText}" Classes="caption" VerticalAlignment="Center" />
             </StackPanel>
-        </StackPanel>
-    </ScrollViewer>
+        </Border>
+    </Grid>
 </UserControl>
