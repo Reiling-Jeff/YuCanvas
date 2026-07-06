@@ -31,10 +31,17 @@
                         </StackPanel>
                     </Grid>
                     <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" />
-                    <StackPanel Spacing="3">
-                        <TextBlock Text="Deadline" Classes="caption" />
-                        <TextBlock Text="{Binding DeadlineText}" Classes="body" />
-                    </StackPanel>
+                    <Grid ColumnDefinitions="*,*">
+                        <StackPanel Grid.Column="0" Spacing="3">
+                            <TextBlock Text="Deadline" Classes="caption" />
+                            <TextBlock Text="{Binding DeadlineText}" Classes="body" />
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="1" Spacing="3">
+                            <TextBlock Text="ID" Classes="caption" />
+                            <SelectableTextBlock Text="{Binding Id}" Classes="body" />
+                        </StackPanel>
+                    </Grid>
                     <StackPanel Spacing="3">
                         <TextBlock Text="Bewertung" Classes="caption" />
                         <TextBlock Text="{Binding GradeText}" Classes="body" />

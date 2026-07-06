@@ -16,6 +16,8 @@ public partial class AssignmentDetailViewModel : ObservableObject
 
     public string Name => _assignment.Name;
 
+    public long Id => _assignment.Id;
+
     public string DeadlineText => _assignment.DueAt.HasValue
         ? $"Fällig am {_assignment.DueAt.Value:dd.MM.yyyy} um {_assignment.DueAt.Value:HH:mm} Uhr"
         : "Keine Deadline";

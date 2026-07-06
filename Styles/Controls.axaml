@@ -287,6 +287,26 @@
     <Style Selector="TextBox.search:pointerover /template/ Border#PART_BorderElement">
         <Setter Property="Background" Value="#00FFFFFF" />
     </Style>
+    
+    <Style Selector="SelectableTextBlock.search">
+        <Setter Property="Background" Value="#141D33" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+        <Setter Property="Padding" Value="14,11" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.22" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="SelectableTextBlock.search:focus">
+        <Setter Property="Background" Value="#17203A" />
+    </Style>
+
+    <Style Selector="SelectableTextBlock.search:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="#00FFFFFF" />
+    </Style>
 
     <Style Selector="ProgressBar.thin">
         <Setter Property="Height" Value="8" />
