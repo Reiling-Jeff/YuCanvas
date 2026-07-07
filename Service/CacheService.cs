@@ -10,54 +10,44 @@ namespace YuCanvas.Service;
 
 public static class CacheService
 {
+    private static readonly JsonSerializerOptions WriteOptions = new() { WriteIndented = true };
+
     private static readonly string _coursesFile = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "YuCanvas",
         "courses.json");
-    
-    [Obsolete("Assignments now saved in courses.json", true)]
-    private static readonly string _assignmentsFile = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "YuCanvas",
-        "assignments.json");
-    
+
     private static readonly string _studentDataFile = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "YuCanvas",
         "studentData.json");
-    
-    [Obsolete("Assignments now saved in courses.json", true)]
-    public static async Task SaveAssignmentsAsync(List<CanvasAssignment> assignments)
-    {
-        Directory.CreateDirectory(Path.GetDirectoryName(_assignmentsFile)!);
-        string json = JsonSerializer.Serialize(assignments);
-        await File.WriteAllTextAsync(_assignmentsFile, json);
-    }
-    
-    [Obsolete("Assignments now saved in courses.json", true)]
-    public static async Task<List<CanvasAssignment>> LoadAssignmentsAsync()
-    {
-        if (!File.Exists(_assignmentsFile))
-            return new List<CanvasAssignment>();
 
-        string json = await File.ReadAllTextAsync(_assignmentsFile);
-        return JsonSerializer.Deserialize<List<CanvasAssignment>>(json) ?? new List<CanvasAssignment>();
-    }
-    
     public static async Task SaveCoursesAsync(List<Course> courses)
     {
-        Directory.CreateDirectory(Path.GetDirectoryName(_coursesFile)!);
-        JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
-        string json = JsonSerializer.Serialize(courses, options);
-        await File.WriteAllTextAsync(_coursesFile, json);
+        try
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(_coursesFile)!);
+            string json = JsonSerializer.Serialize(courses, WriteOptions);
+            await File.WriteAllTextAsync(_coursesFile, json);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
-    
+
     public static async Task SaveStudentDataAsync(StudentData studentData)
     {
-        Directory.CreateDirectory(Path.GetDirectoryName(_studentDataFile)!);
-        JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
-        string json = JsonSerializer.Serialize(studentData, options);
-        await File.WriteAllTextAsync(_studentDataFile, json);
+        try
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(_studentDataFile)!);
+            string json = JsonSerializer.Serialize(studentData, WriteOptions);
+            await File.WriteAllTextAsync(_studentDataFile, json);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     public static async Task<List<Course>> LoadCoursesAsync()
@@ -65,16 +55,32 @@ public static class CacheService
         if (!File.Exists(_coursesFile))
             return new List<Course>();
 
-        string json = await File.ReadAllTextAsync(_coursesFile);
-        return JsonSerializer.Deserialize<List<Course>>(json) ?? new List<Course>();
+        try
+        {
+            string json = await File.ReadAllTextAsync(_coursesFile);
+            return JsonSerializer.Deserialize<List<Course>>(json) ?? new List<Course>();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new List<Course>();
+        }
     }
-    
+
     public static async Task<StudentData> LoadStudentDataAsync()
     {
         if (!File.Exists(_studentDataFile))
             return new StudentData();
 
-        string json = await File.ReadAllTextAsync(_studentDataFile);
-        return JsonSerializer.Deserialize<StudentData>(json) ?? new StudentData();
+        try
+        {
+            string json = await File.ReadAllTextAsync(_studentDataFile);
+            return JsonSerializer.Deserialize<StudentData>(json) ?? new StudentData();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new StudentData();
+        }
     }
 }
