@@ -9,15 +9,18 @@ public partial class TopBarViewModel : ObservableObject
     [ObservableProperty]
     private string _welcomeText = "Willkommen zurück, n/a";
 
-    public event Action SyncRequested;
+    public event Action? SyncRequested;
 
     public void Load(StudentData studentData)
     {
-        WelcomeText = $"Willkommen zurück, {SplitName(studentData).FirstName}";
+        string firstName = SplitName(studentData).FirstName;
+        WelcomeText = string.IsNullOrWhiteSpace(firstName)
+            ? "Willkommen zurück!"
+            : $"Willkommen zurück, {firstName}";
     }
 
     public void TriggerSync() => SyncRequested?.Invoke();
-    
+
     private static (string FirstName, string LastName) SplitName(StudentData user)
     {
         string sortable = user.SortableName;

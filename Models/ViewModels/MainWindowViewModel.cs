@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using YuCanvas.Controls;
@@ -50,7 +51,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     private void ShowAssignmentDetail(CanvasAssignment assignment)
     {
-        var detail = new ViewModels.AssignmentDetailViewModel(assignment);
+        AssignmentDetailViewModel detail = new AssignmentDetailViewModel(assignment);
         detail.BackRequested += () => SetPage(_assignments, "assignments");
         CurrentPage = detail;
     }
@@ -59,29 +60,46 @@ public partial class MainWindowViewModel : ObservableObject
     {
         _dashboard.LastSyncText = "Synchronisiert...";
         _dashboard.PassedSync = false;
-        SyncResult synced = await _syncService.SyncFromCanvasAsync(_appSettings);
-        if (synced.Success)
-            ApplyResult(synced, false);
-        else
+
+        try
+        {
+            SyncResult synced = await _syncService.SyncFromCanvasAsync(_appSettings);
+            if (synced.Success)
+                ApplyResult(synced, false);
+            else
+                _dashboard.MarkSyncFailed(synced.FailureReason);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
             _dashboard.MarkSyncFailed();
+        }
     }
-    
+
     private async Task InitAsync()
     {
-        await _settings.InitAsync();
-        _appSettings = SettingsViewModel.Settings;
-
-        SyncResult cached = await _syncService.LoadFromCacheAsync();
-        ApplyResult(cached, isFromCache: true);
-
-        if (!_settings.AutoSync)
+        try
         {
-            _dashboard.LastSyncText = "Automatisches Synchronisieren ist ausgeschaltet.";
-            _dashboard.PassedSync = false; 
-            return;
-        }
+            await _settings.InitAsync();
+            _appSettings = SettingsViewModel.Settings;
 
-        await SyncAsync();
+            SyncResult cached = await _syncService.LoadFromCacheAsync();
+            ApplyResult(cached, isFromCache: true);
+
+            if (!_settings.AutoSync)
+            {
+                _dashboard.LastSyncText = "Automatisches Synchronisieren ist ausgeschaltet.";
+                _dashboard.PassedSync = false;
+                return;
+            }
+
+            await SyncAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            _dashboard.MarkSyncFailed();
+        }
     }
 
     private void ApplyResult(SyncResult result, bool isFromCache)
@@ -98,7 +116,7 @@ public partial class MainWindowViewModel : ObservableObject
         }
 
         if (result.StudentData == null) return;
-        
+
         _topBarViewModel.Load(result.StudentData);
         _sideBarViewModel.Load(result.StudentData);
         _settings.ApplyUser(result.StudentData);
