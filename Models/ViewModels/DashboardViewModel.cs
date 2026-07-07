@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,9 +14,8 @@ namespace YuCanvas.Models.ViewModels;
 public partial class DashboardViewModel : ObservableObject
 {
     private CanvasAssignment? _heroAssignment;
-    private int _overallProgress;
     private static AppSettings AppSettings => SettingsViewModel.Settings;
-    
+
     public event Action<CanvasAssignment>? AssignmentSelected;
 
     [RelayCommand]
@@ -33,16 +31,14 @@ public partial class DashboardViewModel : ObservableObject
         if (_heroAssignment != null)
             AssignmentSelected?.Invoke(_heroAssignment);
     }
-    
-    // --- Top Card ---
-    
+
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SyncPassedColor))]
-    private bool _passedSync = false;
-    
-    public IBrush SyncPassedColor => _passedSync 
-                                     ? new SolidColorBrush(Color.Parse("#34D399")) 
-                                     : new SolidColorBrush(Color.Parse("#FB7185"));
+    private bool _passedSync;
+
+    public IBrush SyncPassedColor => _passedSync
+        ? new SolidColorBrush(Color.Parse("#34D399"))
+        : new SolidColorBrush(Color.Parse("#FB7185"));
 
     [ObservableProperty]
     private string _lastSyncText = "n/a";
@@ -50,109 +46,78 @@ public partial class DashboardViewModel : ObservableObject
     private string _nextAssignmentDeadline = "n/a";
     [ObservableProperty]
     private string _nextAssignmentText = "n/a";
-    
-    // --- Overview Cards ---
+
     [ObservableProperty]
     private string _averageGrade = "n/a";
     [ObservableProperty]
-    private string _diffAverageGradeLastSemester = "+0,3 zum Vorsemester";
+    private string _averageGradeSubText = "";
     [ObservableProperty]
-    private int _remainingAssignments = 0;
+    private int _remainingAssignments;
     [ObservableProperty]
-    private string _deadlinesThisWeekText = "2 fällig diese Woche";
+    private string _deadlinesThisWeekText = "0 fällig diese Woche";
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ProgressInPercentageText))]
-    private static int _progressInPercentage = 0;
-    
+    private int _progressInPercentage;
+
     public string ProgressInPercentageText => $"{_progressInPercentage}%";
-    
-    // --- Your Courses ---
+
     public ObservableCollection<Course> Courses { get; } = new();
 
     public ObservableCollection<Deadline> Deadlines { get; } = new();
-    public ObservableCollection<Announcement> Announcements { get; } = new()
-    {
-        //new Announcement { Title = "Klausurtermine online",         Meta = "Verteilte Systeme · vor 2 Std", IsUnread = true },
-        //new Announcement { Title = "Neue Materialien in Modul 5",   Meta = "Datenbanksysteme · gestern",    IsUnread = false },
-    };
-    
-    // --- Load Data ---
-    
+    public ObservableCollection<Announcement> Announcements { get; } = new();
+
     public void ApplyCachedCourses(List<Course> courses)
     {
         if (courses.Count == 0)
             return;
 
-        LoadCardValues(courses);
-
-        Courses.Clear();
-        _overallProgress = 0;
-        
-        ApplyCourses(courses.ToArray());
-
-        ProgressInPercentage = courses.Count > 0 ? _overallProgress / courses.Count : 0;
+        Apply(courses);
         LastSyncText = "Synchronisiert...";
     }
 
     public void ApplyCanvasCourses(List<Course> canvasCourses)
     {
-        Courses.Clear();
-        _overallProgress = 0; 
-        
-        ApplyCourses(canvasCourses.ToArray());
-
-        LoadCardValues(canvasCourses);
-
-        ProgressInPercentage = canvasCourses.Count > 0 ? _overallProgress / canvasCourses.Count : 0;
+        Apply(canvasCourses);
         PassedSync = true;
         LastSyncText = $"Letzte Synchronisierung · {DateTime.Now:dd.MM.yyyy HH:mm}";
     }
 
-    private void ApplyCourses(Course[] courses)
-    {
-        foreach (Course c in courses)
-        {
-            int progress = CalculateBasicProgress(c.Assignments!);
-            _overallProgress += progress;
-
-            c.Progress = progress;
-
-            Courses.Add(c);
-        }
-    }
-
-    public void MarkSyncFailed()
+    public void MarkSyncFailed(string? reason = null)
     {
         PassedSync = false;
-        LastSyncText = "Sync failed. Contact mail@yuuto.me";
+        LastSyncText = reason ?? "Sync failed. Contact mail@yuuto.me";
     }
 
-    private static int CalculatePointsAboveBasics(List<CanvasAssignment> assignments)
+    private void Apply(List<Course> courses)
     {
-        int points = 0;
-        foreach (CanvasAssignment a in assignments)
+        Dictionary<long, string> groupNames = AssignmentClassifier.BuildGroupLookup(courses);
+
+        Courses.Clear();
+
+        int doneOverall = 0;
+        int totalOverall = 0;
+
+        foreach (Course course in courses)
         {
-            if (a.Submission?.WorkflowState != "graded")
-                continue;
+            List<CanvasAssignment> assignments = course.Assignments ?? new List<CanvasAssignment>();
+            List<CanvasAssignment> relevant = AssignmentClassifier.GetProgressRelevant(assignments, groupNames);
 
-            if (Regex.IsMatch(a.Name, @"^I\d+\.\d+"))
-                points += 2;
-            else if (Regex.IsMatch(a.Name, @"^A\d+\.\d+"))
-                points += 4;
+            int done = relevant.Count(AssignmentClassifier.IsGraded);
+            course.Progress = relevant.Count > 0 ? (int)Math.Round(done * 100.0 / relevant.Count) : 0;
+
+            doneOverall += done;
+            totalOverall += relevant.Count;
+
+            Courses.Add(course);
         }
-        return points;
-    }
-    
-    private int CalculateBasicProgress(List<CanvasAssignment> assignments)
-    {
-        List<CanvasAssignment> basics = assignments.Where(a => IsBasic(a.Name)).ToList();
-        if (basics.Count == 0) return 0;
 
-        int done = basics.Count(a => a.Submission?.WorkflowState == "graded");
-        return (int)Math.Round(done * 100.0 / basics.Count);
+        ProgressInPercentage = totalOverall > 0 ? (int)Math.Round(doneOverall * 100.0 / totalOverall) : 0;
+        RemainingAssignments = totalOverall - doneOverall;
+
+        LoadCardValues(courses, groupNames);
     }
-    
-    private void LoadCardValues(List<Course> courses)
+
+    private void LoadCardValues(List<Course> courses, Dictionary<long, string> groupNames)
     {
         List<CanvasAssignment> assignments = new List<CanvasAssignment>();
 
@@ -161,65 +126,58 @@ public partial class DashboardViewModel : ObservableObject
             if (course.Assignments != null)
                 assignments.AddRange(course.Assignments);
         }
-        
-        LoadCardValues(assignments);
-    }
 
-    private void LoadCardValues(List<CanvasAssignment> assignments)
-    {
-        if (TryGetNextDeadline(assignments, out DateTime deadline, out CanvasAssignment? next))
+        if (TryGetNextDeadline(assignments, groupNames, out DateTime deadline, out CanvasAssignment? next) && next != null)
         {
-            if (next != null)
-            {
-                NextAssignmentDeadline = $"Deine nächste Deadline ist {FormatDeadline(deadline)}";
-                NextAssignmentText = $"Abgabe „{next.Name}“ bis {deadline:dd.MM.yy} um {deadline:HH:mm} Uhr.";
-                _heroAssignment = next;
-            }
-            else
-            {
-                _heroAssignment = null;
-            }
+            NextAssignmentDeadline = $"Deine nächste Deadline ist {FormatDeadline(deadline)}";
+            NextAssignmentText = $"Abgabe „{next.Name}“ bis {deadline:dd.MM.yy} um {deadline:HH:mm} Uhr.";
+            _heroAssignment = next;
         }
-        
-        List<CanvasAssignment> assignmentsWithDeadline = GetAllDeadlines(assignments);
+        else
+        {
+            NextAssignmentDeadline = "Aktuell keine anstehende Deadline";
+            NextAssignmentText = "Sobald eine Abgabe fällig wird, erscheint sie hier.";
+            _heroAssignment = null;
+        }
+
+        List<(CanvasAssignment Assignment, DateTime DueAt)> upcoming = GetAllDeadlines(assignments, groupNames);
 
         Deadlines.Clear();
-        
-        foreach (CanvasAssignment canvasAssignment in assignmentsWithDeadline )
+
+        foreach ((CanvasAssignment assignment, DateTime dueAt) in upcoming)
         {
-            Deadlines.Add(new Deadline { 
-                Title    = canvasAssignment.Name, 
-                Course   = canvasAssignment.Course,
-                DueLabel = canvasAssignment.DueAt!.Value.ToString("dd.MM.yy HH:mm"), 
-                Relative = FormatDeadline(canvasAssignment.DueAt.Value),
-                Source   = canvasAssignment
+            Deadlines.Add(new Deadline
+            {
+                Title    = assignment.Name,
+                Course   = assignment.Course,
+                DueLabel = dueAt.ToString("dd.MM.yy HH:mm"),
+                Relative = FormatDeadline(dueAt),
+                Source   = assignment
             });
         }
-        
-        List<CanvasAssignment> basics = assignments.Where(a => IsBasic(a.Name)).ToList();
-        if (basics.Count == 0) return;
-        
-        RemainingAssignments = basics.Count(a => a.Submission?.WorkflowState == "unsubmitted");
-        int abovePoints = CalculatePointsAboveBasics(assignments);
-        AverageGrade = GradeCalculator.GetGrade(abovePoints);
+
+        DateTime now = DateTime.Now;
+        int dueThisWeek = upcoming.Count(e => e.DueAt >= now && e.DueAt <= now.AddDays(7));
+        DeadlinesThisWeekText = dueThisWeek == 1
+            ? "1 fällig diese Woche"
+            : $"{dueThisWeek} fällig diese Woche";
+
+        if (AssignmentClassifier.HasGradeRelevant(assignments, groupNames))
+        {
+            int points = AssignmentClassifier.CalculatePoints(assignments, groupNames);
+            AverageGrade = GradeCalculator.GetGrade(points);
+            AverageGradeSubText = points == 1
+                ? "1 Punkt über Basics"
+                : $"{points} Punkte über Basics";
+        }
+        else
+        {
+            AverageGrade = "n/a";
+            AverageGradeSubText = "Keine notenrelevanten Aufgaben";
+        }
     }
 
-    private static string FormatDeadline(DateTime deadline)
-    {
-        TimeSpan remaining = deadline - DateTime.Now;
-
-        if (remaining.TotalDays < 0)
-            return "überfällig";
-        if (remaining.TotalDays < 1)
-            return "heute fällig";
-
-        int days = (int)remaining.TotalDays;
-        return days == 1 ? "in 1 Tag" : $"in {days} Tagen";
-    }
-    
-    private static bool IsBasic(string name) => Regex.IsMatch(name, @"^B\d+\.\d+");
-
-    public static bool TryGetNextDeadline(List<CanvasAssignment> assignments, out DateTime deadline, out CanvasAssignment? assignment)
+    private static bool TryGetNextDeadline(List<CanvasAssignment> assignments, Dictionary<long, string> groupNames, out DateTime deadline, out CanvasAssignment? assignment)
     {
         deadline = default;
         assignment = null;
@@ -236,13 +194,12 @@ public partial class DashboardViewModel : ObservableObject
 
         if (AppSettings.CollectionDeadlineEntries.Contains(next.Id))
         {
-            CanvasAssignment? nextBasic = assignments
-                .Where(a => Regex.IsMatch(a.Name, @"^B\d+\.\d+"))
-                .Where(a => a.Submission?.WorkflowState != "graded")
+            assignment = assignments
+                .Where(a => AssignmentClassifier.Categorize(a, groupNames) == AssignmentCategory.Basic)
+                .Where(a => !AssignmentClassifier.IsGraded(a))
                 .OrderBy(a => a.Position)
-                .FirstOrDefault();
-
-            assignment = nextBasic;
+                .ThenBy(a => a.Id)
+                .FirstOrDefault() ?? next;
         }
         else
         {
@@ -251,10 +208,11 @@ public partial class DashboardViewModel : ObservableObject
 
         return true;
     }
-    
-    public static List<CanvasAssignment> GetAllDeadlines(List<CanvasAssignment> assignments)
+
+    private static List<(CanvasAssignment Assignment, DateTime DueAt)> GetAllDeadlines(List<CanvasAssignment> assignments, Dictionary<long, string> groupNames)
     {
-        List<CanvasAssignment> entries = new List<CanvasAssignment>();
+        List<(CanvasAssignment Assignment, DateTime DueAt)> entries = new();
+        HashSet<long> seen = new();
 
         foreach (CanvasAssignment assignment in assignments)
         {
@@ -263,28 +221,38 @@ public partial class DashboardViewModel : ObservableObject
 
             if (AppSettings.CollectionDeadlineEntries.Contains(assignment.Id))
             {
-                IOrderedEnumerable<CanvasAssignment> openBasics = assignments
-                    .Where(b => Regex.IsMatch(b.Name, @"^B\d+\.\d+"))
-                    .Where(b => b.Submission?.WorkflowState != "graded" && b.Id != assignment.Id)
-                    .OrderBy(b => b.Position);
+                IEnumerable<CanvasAssignment> openBasics = assignments
+                    .Where(b => b.Id != assignment.Id)
+                    .Where(b => AssignmentClassifier.Categorize(b, groupNames) == AssignmentCategory.Basic)
+                    .Where(b => !AssignmentClassifier.IsGraded(b))
+                    .OrderBy(b => b.Position)
+                    .ThenBy(b => b.Id);
 
                 foreach (CanvasAssignment basic in openBasics)
-                    basic.DueAt = assignment.DueAt;
-                
-                entries.AddRange(openBasics);
+                {
+                    if (seen.Add(basic.Id))
+                        entries.Add((basic, assignment.DueAt.Value));
+                }
             }
-            else
+            else if (seen.Add(assignment.Id))
             {
-                entries.Add(assignment);
+                entries.Add((assignment, assignment.DueAt.Value));
             }
         }
 
         return entries.OrderBy(e => e.DueAt).ToList();
     }
 
-    private static string ShortCode(string courseCode)
+    private static string FormatDeadline(DateTime deadline)
     {
-        if (string.IsNullOrWhiteSpace(courseCode)) return "??";
-        return courseCode.Length >= 2 ? courseCode[..2].ToUpper() : courseCode.ToUpper();
+        TimeSpan remaining = deadline - DateTime.Now;
+
+        if (remaining.TotalDays < 0)
+            return "überfällig";
+        if (remaining.TotalDays < 1)
+            return "heute fällig";
+
+        int days = (int)remaining.TotalDays;
+        return days == 1 ? "in 1 Tag" : $"in {days} Tagen";
     }
 }

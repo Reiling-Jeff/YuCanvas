@@ -12,7 +12,7 @@ namespace YuCanvas.Models.ViewModels;
 public partial class AssignmentsViewModel
 {
     public ObservableCollection<AssignmentItem> Assignments { get; } = new();
-    
+
     public event Action<CanvasAssignment>? AssignmentSelected;
 
     [RelayCommand]
@@ -20,7 +20,7 @@ public partial class AssignmentsViewModel
     {
         AssignmentSelected?.Invoke(item.Source);
     }
-    
+
     public void Load(List<Course> courses)
     {
         Assignments.Clear();
@@ -30,7 +30,11 @@ public partial class AssignmentsViewModel
             if (course.Assignments == null)
                 continue;
 
-            foreach (CanvasAssignment a in course.Assignments)
+            IEnumerable<CanvasAssignment> ordered = course.Assignments
+                .OrderBy(a => a.Position)
+                .ThenBy(a => a.Id);
+
+            foreach (CanvasAssignment a in ordered)
             {
                 Assignments.Add(new AssignmentItem
                 {
@@ -38,7 +42,7 @@ public partial class AssignmentsViewModel
                     CourseName  = course.Name,
                     StatusText  = StatusFor(a),
                     StatusColor = ColorFor(a),
-                    DueAt       = a.DueAt, 
+                    DueAt       = a.DueAt,
                     Source      = a
                 });
             }
@@ -48,18 +52,20 @@ public partial class AssignmentsViewModel
     private static string StatusFor(CanvasAssignment a) =>
         a.Submission?.WorkflowState switch
         {
-            "graded"      => "Bewertet",
-            "submitted"   => "Abgegeben",
-            "unsubmitted" => "Offen",
-            _             => "—"
+            "graded"         => "Bewertet",
+            "submitted"      => "Abgegeben",
+            "pending_review" => "Wird geprüft",
+            "unsubmitted"    => "Offen",
+            _                => "—"
         };
 
     private static IBrush ColorFor(CanvasAssignment a) =>
         a.Submission?.WorkflowState switch
         {
-            "graded"      => new SolidColorBrush(Color.Parse("#34D399")),
-            "submitted"   => new SolidColorBrush(Color.Parse("#38BDF8")),
-            "unsubmitted" => new SolidColorBrush(Color.Parse("#FBBF24")),
-            _             => new SolidColorBrush(Color.Parse("#6B7899"))
+            "graded"         => new SolidColorBrush(Color.Parse("#34D399")),
+            "submitted"      => new SolidColorBrush(Color.Parse("#38BDF8")),
+            "pending_review" => new SolidColorBrush(Color.Parse("#38BDF8")),
+            "unsubmitted"    => new SolidColorBrush(Color.Parse("#FBBF24")),
+            _                => new SolidColorBrush(Color.Parse("#6B7899"))
         };
 }

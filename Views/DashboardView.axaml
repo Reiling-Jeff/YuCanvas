@@ -71,7 +71,7 @@
                         </Grid>
                         <TextBlock Text="{Binding AverageGrade}" FontSize="30" FontWeight="Bold"
                                    Foreground="{StaticResource TextPrimaryBrush}" />
-                        <TextBlock Text="{Binding DiffAverageGradeLastSemester}" FontSize="12"
+                        <TextBlock Text="{Binding AverageGradeSubText}" FontSize="12"
                                    Foreground="{StaticResource SuccessBrush}" />
                     </StackPanel>
                 </Border>
@@ -158,14 +158,14 @@
 
                                             <Border Width="46" Height="46" CornerRadius="13"
                                                     Background="#242A6B" HorizontalAlignment="Left">
-                                                <TextBlock Text="{Binding Code}" FontSize="16" FontWeight="Bold"
+                                                <TextBlock Text="{Binding ShortCode}" FontSize="16" FontWeight="Bold"
                                                            Foreground="{StaticResource AccentPurpleBrightBrush}"
                                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
                                             </Border>
 
                                             <StackPanel Spacing="4">
                                                 <TextBlock Text="{Binding Name}" Classes="h3" />
-                                                <TextBlock Text="{Binding Teachers[0].DisplayName}" Classes="caption" />
+                                                <TextBlock Text="{Binding TeacherName}" Classes="caption" />
                                             </StackPanel>
 
                                             <StackPanel Spacing="7">

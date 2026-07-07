@@ -28,10 +28,11 @@ public partial class AssignmentDetailViewModel : ObservableObject
 
     public string StatusText => _assignment.Submission?.WorkflowState switch
     {
-        "graded"      => "Bewertet",
-        "submitted"   => "Abgegeben",
-        "unsubmitted" => "Offen",
-        _             => "—"
+        "graded"         => "Bewertet",
+        "submitted"      => "Abgegeben",
+        "pending_review" => "Wird geprüft",
+        "unsubmitted"    => "Offen",
+        _                => "—"
     };
 
     public string GradeText
