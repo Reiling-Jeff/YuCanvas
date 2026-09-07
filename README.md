@@ -79,7 +79,7 @@ rohe Daten, `Models` entscheidet, was damit passiert, `Views` zeigt es an.**
 
 ### Voraussetzungen
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download) oder neuer
+- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 - Ein Canvas-Konto
 - Ein persönliches Canvas-Token
 
@@ -93,6 +93,7 @@ rohe Daten, `Models` entscheidet, was damit passiert, `Views` zeigt es an.**
 
 ```bash
 git clone https://github.com/Reiling-Jeff/YuCanvas.git
+cd YuCanvas
 ```
 
 > Gehe vorher im Terminal mit `cd` in einen Ordner, in dem du YuCanvas ablegen möchtest.
