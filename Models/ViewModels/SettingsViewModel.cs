@@ -1,10 +1,12 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using YuCanvas.Json;
 using YuCanvas.Media;
+using YuCanvas.Models;
 using YuCanvas.Service;
 
 namespace YuCanvas.Models.ViewModels;
@@ -17,6 +19,7 @@ public partial class SettingsViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(ShowData))]
     [NotifyPropertyChangedFor(nameof(ShowConnection))]
     [NotifyPropertyChangedFor(nameof(ShowUpdates))]
+    [NotifyPropertyChangedFor(nameof(ShowDesign))]
     [NotifyPropertyChangedFor(nameof(NoResults))]
     private string _searchQuery = "";
 
@@ -41,6 +44,26 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty] private bool _isChangelogOpen;
     [ObservableProperty] private string _changelogText = "";
 
+    // --- Color scheme ---
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsAmberSelected))]
+    [NotifyPropertyChangedFor(nameof(IsCopperSelected))]
+    [NotifyPropertyChangedFor(nameof(IsSageSelected))]
+    [NotifyPropertyChangedFor(nameof(IsInkSelected))]
+    [NotifyPropertyChangedFor(nameof(IsCherrySelected))]
+    [NotifyPropertyChangedFor(nameof(IsCustomSelected))]
+    private string _themeSchemeId = "amber";
+
+    [ObservableProperty] private Color _customAccentColor = Color.Parse("#E2A63C");
+    [ObservableProperty] private string _customThemeName = "Eigenes Schema";
+
+    public bool IsAmberSelected  => ThemeSchemeId == "amber";
+    public bool IsCopperSelected => ThemeSchemeId == "copper";
+    public bool IsSageSelected   => ThemeSchemeId == "sage";
+    public bool IsInkSelected    => ThemeSchemeId == "ink";
+    public bool IsCherrySelected => ThemeSchemeId == "cherry";
+    public bool IsCustomSelected => ThemeSchemeId == "custom";
+
     private AppSettings _settings = new();
 
     private bool Matches(params string[] keywords)
@@ -62,8 +85,9 @@ public partial class SettingsViewModel : ObservableObject
     public bool ShowData       => Matches("daten", "cache", "zwischenspeicher", "leeren", "löschen");
     public bool ShowConnection => Matches("canvas", "verbindung", "url", "token", "zugriff", "anmeldung");
     public bool ShowUpdates    => Matches("update", "aktualisierung", "version", "neu", "release");
+    public bool ShowDesign     => Matches("design", "farbe", "farbschema", "theme", "aussehen", "akzent");
 
-    public bool NoResults => !ShowAccount && !ShowBehavior && !ShowData && !ShowConnection && !ShowUpdates;
+    public bool NoResults => !ShowAccount && !ShowBehavior && !ShowData && !ShowConnection && !ShowUpdates && !ShowDesign;
 
     public async Task InitAsync()
     {
@@ -72,6 +96,11 @@ public partial class SettingsViewModel : ObservableObject
         StartOnDashboard = _settings.StartOnDashboard;
         CanvasBaseUrl = _settings.CanvasBaseUrl;
         CanvasToken = _settings.CanvasToken;
+
+        ThemeSchemeId = _settings.ThemeSchemeId;
+        CustomThemeName = _settings.CustomThemeName;
+        if (Color.TryParse(_settings.CustomAccentHex, out Color accent))
+            CustomAccentColor = accent;
 
         _ = CheckForUpdatesCommand.ExecuteAsync(null);
     }
@@ -92,6 +121,39 @@ public partial class SettingsViewModel : ObservableObject
         _settings.CanvasToken = CanvasToken.Trim();
         await SettingsService.SaveAsync(_settings);
         StatusText = "Gespeichert.";
+    }
+
+    [RelayCommand]
+    private async Task SelectPreset(string id)
+    {
+        ThemeSchemeId = id;
+        ColorScheme scheme = ThemeService.FindPreset(id);
+        ThemeService.Apply(scheme);
+
+        _settings.ThemeSchemeId = id;
+        await SettingsService.SaveAsync(_settings);
+        StatusText = $"Farbschema „{scheme.Name}“ übernommen.";
+    }
+
+    [RelayCommand]
+    private async Task ApplyCustomTheme()
+    {
+        ThemeSchemeId = "custom";
+        string name = string.IsNullOrWhiteSpace(CustomThemeName) ? "Eigenes Schema" : CustomThemeName.Trim();
+        ColorScheme scheme = ThemeService.Generate("custom", name, CustomAccentColor);
+        ThemeService.Apply(scheme);
+
+        _settings.ThemeSchemeId = "custom";
+        _settings.CustomAccentHex = CustomAccentColor.ToString();
+        _settings.CustomThemeName = name;
+        await SettingsService.SaveAsync(_settings);
+        StatusText = $"Eigenes Farbschema „{name}“ gespeichert.";
+    }
+
+    partial void OnCustomAccentColorChanged(Color value)
+    {
+        // Live preview only — ApplyCustomTheme() is what persists the choice.
+        ThemeService.Apply(ThemeService.Generate("preview", CustomThemeName, value));
     }
 
     [RelayCommand]

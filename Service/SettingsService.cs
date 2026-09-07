@@ -30,6 +30,27 @@ public static class SettingsService
         }
     }
 
+    /// <summary>
+    /// True synchronous read for use before the Avalonia dispatcher is pumping
+    /// (e.g. OnFrameworkInitializationCompleted) — blocking on LoadAsync() there
+    /// would deadlock on its captured continuation.
+    /// </summary>
+    public static AppSettings LoadSync()
+    {
+        if (!File.Exists(SettingsFile))
+            return new AppSettings();
+
+        try
+        {
+            string json = File.ReadAllText(SettingsFile);
+            return JsonSerializer.Deserialize<AppSettings>(json) ?? new AppSettings();
+        }
+        catch
+        {
+            return new AppSettings();
+        }
+    }
+
     public static async Task SaveAsync(AppSettings settings)
     {
         Directory.CreateDirectory(Path.GetDirectoryName(SettingsFile)!);
