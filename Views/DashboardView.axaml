@@ -13,34 +13,39 @@
                   VerticalScrollBarVisibility="Auto" Padding="0,0,8,0">
         <StackPanel Margin="32,10,32,32" Spacing="26">
 
-            <Border CornerRadius="24" ClipToBounds="True" Height="188"
-                    BorderBrush="{StaticResource GlassStrokeBrightBrush}" BorderThickness="1">
+            <Border CornerRadius="10" ClipToBounds="True" Height="176"
+                    Background="{DynamicResource BgRaisedBrush}"
+                    BorderBrush="{DynamicResource HairlineBrush}" BorderThickness="1"
+                    BoxShadow="{StaticResource ShadowFlat}">
                 <Panel>
-                    <Border Background="{StaticResource HeroGradient}" />
-                    <Border Background="{StaticResource GlowPurple}" Width="420" Height="420"
-                            HorizontalAlignment="Right" VerticalAlignment="Top"
-                            Margin="0,-160,-90,0" />
-                    <Border Background="{StaticResource GlowPurple}" Width="300" Height="300"
-                            Opacity="0.5" HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                            Margin="-120,0,0,-160" />
-                    <Grid ColumnDefinitions="*,Auto" Margin="32,28">
+                    <!-- ruled-paper texture, standing in for a glow/blur -->
+                    <StackPanel IsHitTestVisible="False" VerticalAlignment="Stretch">
+                        <Rectangle Height="1" Fill="{DynamicResource TextPrimaryBrush}" Opacity="0.05" Margin="0,27,0,0" />
+                        <Rectangle Height="1" Fill="{DynamicResource TextPrimaryBrush}" Opacity="0.05" Margin="0,27,0,0" />
+                        <Rectangle Height="1" Fill="{DynamicResource TextPrimaryBrush}" Opacity="0.05" Margin="0,27,0,0" />
+                        <Rectangle Height="1" Fill="{DynamicResource TextPrimaryBrush}" Opacity="0.05" Margin="0,27,0,0" />
+                        <Rectangle Height="1" Fill="{DynamicResource TextPrimaryBrush}" Opacity="0.05" Margin="0,27,0,0" />
+                    </StackPanel>
+                    <Border Width="4" Background="{DynamicResource AccentBrush}"
+                            HorizontalAlignment="Left" VerticalAlignment="Stretch" />
+                    <Grid ColumnDefinitions="*,Auto" Margin="36,28,32,28">
                         <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="14"
                                     MaxWidth="520" HorizontalAlignment="Left">
-                            <Border Classes="pill" Background="#332A6B"
-                                    BorderBrush="#4A3D9E" HorizontalAlignment="Left">
+                            <Border Classes="pill" Background="{DynamicResource BgInsetBrush}"
+                                    BorderBrush="{DynamicResource HairlineBrush}" HorizontalAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="8">
                                     <Ellipse Width="7" Height="7" Fill="{Binding SyncPassedColor}"
                                              VerticalAlignment="Center" />
                                     <TextBlock Text="{Binding LastSyncText}"
-                                               FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                                               FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" />
                                 </StackPanel>
                             </Border>
                             <TextBlock Text="{Binding NextAssignmentDeadline}"
-                                       FontSize="24" FontWeight="Bold"
-                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       FontSize="23" FontWeight="Bold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}"
                                        TextWrapping="Wrap" />
                             <TextBlock Text="{Binding NextAssignmentText}"
-                                       Classes="body" Foreground="#C4CEE6" />
+                                       Classes="body" />
                         </StackPanel>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center"
                                     Spacing="10" HorizontalAlignment="Right">
@@ -63,16 +68,16 @@
                     <StackPanel Spacing="10">
                         <Grid ColumnDefinitions="*,Auto">
                             <TextBlock Grid.Column="0" Text="Ø Note" Classes="caption" />
-                            <Border Grid.Column="1" Width="34" Height="34" CornerRadius="10"
-                                    Background="#1F34D399">
-                                <TextBlock Text="◎" FontSize="15" Foreground="{StaticResource SuccessBrush}"
+                            <Border Grid.Column="1" Width="34" Height="34" CornerRadius="8"
+                                    Background="{DynamicResource BgInsetBrush}"
+                                    BorderBrush="{DynamicResource HairlineBrush}" BorderThickness="1">
+                                <TextBlock Text="◎" FontSize="15" Foreground="{DynamicResource SuccessBrush}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                         </Grid>
-                        <TextBlock Text="{Binding AverageGrade}" FontSize="30" FontWeight="Bold"
-                                   Foreground="{StaticResource TextPrimaryBrush}" />
+                        <TextBlock Text="{Binding AverageGrade}" Classes="figure" FontSize="30" />
                         <TextBlock Text="{Binding DiffAverageGradeLastSemester}" FontSize="12"
-                                   Foreground="{StaticResource SuccessBrush}" />
+                                   Foreground="{DynamicResource SuccessBrush}" />
                     </StackPanel>
                 </Border>
 
@@ -80,16 +85,16 @@
                     <StackPanel Spacing="10">
                         <Grid ColumnDefinitions="*,Auto">
                             <TextBlock Grid.Column="0" Text="Offene Aufgaben" Classes="caption" />
-                            <Border Grid.Column="1" Width="34" Height="34" CornerRadius="10"
-                                    Background="#1FFBBF24">
-                                <TextBlock Text="✎" FontSize="15" Foreground="{StaticResource WarnBrush}"
+                            <Border Grid.Column="1" Width="34" Height="34" CornerRadius="8"
+                                    Background="{DynamicResource BgInsetBrush}"
+                                    BorderBrush="{DynamicResource HairlineBrush}" BorderThickness="1">
+                                <TextBlock Text="✎" FontSize="15" Foreground="{DynamicResource WarnBrush}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                         </Grid>
-                        <TextBlock Text="{Binding RemainingAssignments}" FontSize="30" FontWeight="Bold"
-                                   Foreground="{StaticResource TextPrimaryBrush}" />
+                        <TextBlock Text="{Binding RemainingAssignments}" Classes="figure" FontSize="30" />
                         <TextBlock Text="{Binding DeadlinesThisWeekText}" FontSize="12"
-                                   Foreground="{StaticResource WarnBrush}" />
+                                   Foreground="{DynamicResource WarnBrush}" />
                     </StackPanel>
                 </Border>
                 
@@ -99,14 +104,14 @@
                 <!--             <TextBlock Grid.Column="0" Text="Aktive Kurse" Classes="caption" /> -->
                 <!--             <Border Grid.Column="1" Width="34" Height="34" CornerRadius="10" -->
                 <!--                     Background="#1F8B5CF6"> -->
-                <!--                 <TextBlock Text="❏" FontSize="15" Foreground="{StaticResource AccentPurpleBrightBrush}" -->
+                <!--                 <TextBlock Text="❏" FontSize="15" Foreground="{DynamicResource AccentPurpleBrightBrush}" -->
                 <!--                            HorizontalAlignment="Center" VerticalAlignment="Center" /> -->
                 <!--             </Border> -->
                 <!--         </Grid> -->
                 <!--         <TextBlock Text="6" FontSize="30" FontWeight="Bold" -->
-                <!--                    Foreground="{StaticResource TextPrimaryBrush}" /> -->
+                <!--                    Foreground="{DynamicResource TextPrimaryBrush}" /> -->
                 <!--         <TextBlock Text="18 SWS gesamt" FontSize="12" -->
-                <!--                    Foreground="{StaticResource TextMutedBrush}" /> -->
+                <!--                    Foreground="{DynamicResource TextMutedBrush}" /> -->
                 <!--     </StackPanel> -->
                 <!-- </Border> -->
 
@@ -114,14 +119,14 @@
                     <StackPanel Spacing="10">
                         <Grid ColumnDefinitions="*,Auto">
                             <TextBlock Grid.Column="0" Text="Fortschritt" Classes="caption" />
-                            <Border Grid.Column="1" Width="34" Height="34" CornerRadius="10"
-                                    Background="#1F38BDF8">
-                                <TextBlock Text="◈" FontSize="15" Foreground="{StaticResource InfoBrush}"
+                            <Border Grid.Column="1" Width="34" Height="34" CornerRadius="8"
+                                    Background="{DynamicResource BgInsetBrush}"
+                                    BorderBrush="{DynamicResource HairlineBrush}" BorderThickness="1">
+                                <TextBlock Text="◈" FontSize="15" Foreground="{DynamicResource InfoBrush}"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                         </Grid>
-                        <TextBlock Text="{Binding ProgressInPercentageText}" FontSize="30" FontWeight="Bold"
-                                   Foreground="{StaticResource TextPrimaryBrush}" />
+                        <TextBlock Text="{Binding ProgressInPercentageText}" Classes="figure" FontSize="30" />
                         <ProgressBar Classes="thin" Value="{Binding ProgressInPercentage}" Maximum="100" />
                     </StackPanel>
                 </Border>
@@ -151,15 +156,17 @@
 
                                 <Border Classes="coursecard" Width="300" Margin="0,0,16,16">
                                     <Panel>
-                                        <Border Background="{StaticResource GlassGradient}" />
-                                        <Border Height="6" VerticalAlignment="Top"
-                                                Background="{StaticResource AccentGradient}" />
-                                        <StackPanel Margin="20,22,20,20" Spacing="16">
+                                        <Border Height="4" VerticalAlignment="Top"
+                                                Background="{DynamicResource AccentBrush}" />
+                                        <StackPanel Margin="20,24,20,20" Spacing="16">
 
-                                            <Border Width="46" Height="46" CornerRadius="13"
-                                                    Background="#242A6B" HorizontalAlignment="Left">
-                                                <TextBlock Text="{Binding Code}" FontSize="16" FontWeight="Bold"
-                                                           Foreground="{StaticResource AccentPurpleBrightBrush}"
+                                            <Border Width="46" Height="46" CornerRadius="8"
+                                                    Background="{DynamicResource BgInsetBrush}"
+                                                    BorderBrush="{DynamicResource HairlineBrush}" BorderThickness="1"
+                                                    HorizontalAlignment="Left">
+                                                <TextBlock Text="{Binding Code}" FontSize="15" FontWeight="Bold"
+                                                           FontFamily="monospace"
+                                                           Foreground="{DynamicResource AccentBrightBrush}"
                                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
                                             </Border>
 
@@ -171,10 +178,10 @@
                                             <StackPanel Spacing="7">
                                                 <Grid ColumnDefinitions="*,Auto">
                                                     <TextBlock Grid.Column="0" Text="Fortschritt" FontSize="11.5"
-                                                               Foreground="{StaticResource TextMutedBrush}" />
+                                                               Foreground="{DynamicResource TextMutedBrush}" />
                                                     <TextBlock Grid.Column="1" Text="{Binding Progress}" FontSize="11.5"
                                                                FontWeight="SemiBold"
-                                                               Foreground="{StaticResource TextSecondaryBrush}" />
+                                                               Foreground="{DynamicResource TextSecondaryBrush}" />
                                                 </Grid>
                                                 <ProgressBar Classes="thin" Value="{Binding Progress}" Maximum="100" />
                                             </StackPanel>
@@ -196,7 +203,7 @@
                                 <TextBlock Grid.Column="0" Text="Anstehende Deadlines" Classes="h3"
                                            VerticalAlignment="Center" />
                                 <TextBlock Grid.Column="1" Text="▤" FontSize="15"
-                                           Foreground="{StaticResource AccentPurpleBrightBrush}" />
+                                           Foreground="{DynamicResource AccentBrightBrush}" />
                             </Grid>
 
                             <ItemsControl ItemsSource="{Binding Deadlines}">
@@ -219,7 +226,7 @@
                                                             Background="{Binding AccentColor}" Margin="0,0,14,0" />
                                                     <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center">
                                                         <TextBlock Text="{Binding Title}" FontSize="13.5" FontWeight="SemiBold"
-                                                                   Foreground="{StaticResource TextPrimaryBrush}" />
+                                                                   Foreground="{DynamicResource TextPrimaryBrush}" />
                                                         <TextBlock Text="{Binding Course}" Classes="caption" />
                                                     </StackPanel>
                                                     <StackPanel Grid.Column="2" VerticalAlignment="Center"
@@ -227,7 +234,7 @@
                                                         <TextBlock Text="{Binding DueLabel}" FontSize="12.5" FontWeight="SemiBold"
                                                                    Foreground="{Binding AccentColor}" HorizontalAlignment="Right" />
                                                         <TextBlock Text="{Binding Relative}" FontSize="11"
-                                                                   Foreground="{StaticResource TextMutedBrush}" HorizontalAlignment="Right" />
+                                                                   Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Right" />
                                                     </StackPanel>
                                                 </Grid>
                                             </Border>
@@ -255,12 +262,12 @@
                                         <StackPanel Spacing="3">
                                             <StackPanel Orientation="Horizontal" Spacing="8">
                                                 <Ellipse Width="7" Height="7" VerticalAlignment="Center"
-                                                         Fill="{StaticResource AccentPurpleBrightBrush}"
+                                                         Fill="{DynamicResource AccentBrightBrush}"
                                                          IsVisible="{Binding IsUnread}" />
                                                 <Ellipse Width="7" Height="7" VerticalAlignment="Center"
                                                          IsVisible="{Binding !IsUnread}" />
                                                 <TextBlock Text="{Binding Title}" FontSize="13.5" FontWeight="SemiBold"
-                                                           Foreground="{StaticResource TextPrimaryBrush}" />
+                                                           Foreground="{DynamicResource TextPrimaryBrush}" />
                                             </StackPanel>
                                             <TextBlock Text="{Binding Meta}" Classes="caption" Margin="15,0,0,0" />
                                         </StackPanel>

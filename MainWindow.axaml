@@ -13,19 +13,10 @@
         Title="YuCanvas"
         Width="1320" Height="860"
         MinWidth="1040" MinHeight="680"
-        Background="{StaticResource BgDeepBrush}"
-        TransparencyLevelHint="AcrylicBlur"
+        Background="{DynamicResource BgDeepBrush}"
         ExtendClientAreaToDecorationsHint="False">
 
     <Panel>
-        <Border Background="{StaticResource AppBackground}" />
-        <Border Background="{StaticResource GlowPurple}" Width="700" Height="700"
-                Opacity="0.35" HorizontalAlignment="Right" VerticalAlignment="Top"
-                Margin="0,-320,-220,0" />
-        <Border Background="{StaticResource GlowPurple}" Width="560" Height="560"
-                Opacity="0.22" HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                Margin="-260,0,0,-260" />
-
         <Grid ColumnDefinitions="260,*">
             <controls:SidebarView Grid.Column="0" />
             <Grid Grid.Column="1" RowDefinitions="Auto,*">
@@ -33,8 +24,8 @@
                 <ContentControl Grid.Row="1" Content="{Binding CurrentPage}" />
             </Grid>
         </Grid>
-        
-        <Border Background="#C70B1120" IsVisible="{Binding Settings.IsChangelogOpen}">
+
+        <Border Background="#CC121110" IsVisible="{Binding Settings.IsChangelogOpen}">
             <Border Classes="glass" MinWidth="480" MaxWidth="1000" MaxHeight="700"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
                     ClipToBounds="True">
@@ -50,7 +41,7 @@
                         </Button>
                     </Grid>
                     <Rectangle Grid.Row="1" Height="1"
-                               Fill="{StaticResource GlassStrokeBrush}" Margin="24,0" />
+                               Fill="{DynamicResource HairlineBrush}" Margin="24,0" />
                     <md:MarkdownScrollViewer Grid.Row="2" Margin="24,14,24,20"
                                              Markdown="{Binding Settings.ChangelogText}" />
                 </Grid>

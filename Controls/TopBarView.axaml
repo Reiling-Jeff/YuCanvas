@@ -21,7 +21,7 @@
             <Grid>
                 <TextBox Classes="search" Watermark="Kurse, Aufgaben, Dateien suchen …"
                          Padding="42,11,14,11" />
-                <TextBlock Text="⌕" FontSize="17" Foreground="{StaticResource TextMutedBrush}"
+                <TextBlock Text="⌕" FontSize="17" Foreground="{DynamicResource TextMutedBrush}"
                            VerticalAlignment="Center" Margin="15,0,0,0"
                            HorizontalAlignment="Left" IsHitTestVisible="False" />
             </Grid>
@@ -39,9 +39,10 @@
                 <Panel>
                     <TextBlock Text="◭" FontSize="16" HorizontalAlignment="Center"
                                VerticalAlignment="Center" />
-                    <Ellipse Width="8" Height="8" Fill="{StaticResource AccentPurpleBrightBrush}"
+                    <Ellipse Width="7" Height="7" Fill="{DynamicResource AccentBrush}"
+                             Stroke="{DynamicResource BgBaseBrush}" StrokeThickness="1.5"
                              HorizontalAlignment="Right" VerticalAlignment="Top"
-                             Margin="0,8,8,0" />
+                             Margin="0,7,7,0" />
                 </Panel>
             </Button>
             <Button Classes="accent" Padding="18,11">

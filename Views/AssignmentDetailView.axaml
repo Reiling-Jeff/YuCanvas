@@ -18,7 +18,7 @@
 
             <TextBlock Text="{Binding Name}" Classes="h1" TextWrapping="Wrap" />
 
-            <Border Classes="glass" Padding="22" CornerRadius="18">
+            <Border Classes="glass" Padding="22" CornerRadius="10">
                 <StackPanel Spacing="14">
                     <Grid ColumnDefinitions="*,*">
                         <StackPanel Grid.Column="0" Spacing="3">
@@ -30,7 +30,7 @@
                             <TextBlock Text="{Binding PointsText}" Classes="h3" />
                         </StackPanel>
                     </Grid>
-                    <Rectangle Height="1" Fill="{StaticResource GlassStrokeBrush}" />
+                    <Rectangle Height="1" Fill="{DynamicResource HairlineBrush}" />
                     <StackPanel Spacing="3">
                         <TextBlock Text="Deadline" Classes="caption" />
                         <TextBlock Text="{Binding DeadlineText}" Classes="body" />
@@ -43,11 +43,9 @@
             </Border>
 
             <TextBlock Text="Beschreibung" Classes="h2" />
-            <Border Classes="glass" Padding="22" CornerRadius="18">
-                <Border Classes="glass" Padding="22" CornerRadius="18">
-                    <TextBlock x:Name="DescriptionBlock" Classes="body" TextWrapping="Wrap"
-                               MaxWidth="820" HorizontalAlignment="Left" />
-                </Border>
+            <Border Classes="glass" Padding="22" CornerRadius="10">
+                <TextBlock x:Name="DescriptionBlock" Classes="body" TextWrapping="Wrap"
+                           MaxWidth="820" HorizontalAlignment="Left" />
             </Border>
 
             <Button Classes="accent" Command="{Binding OpenInBrowserCommand}"

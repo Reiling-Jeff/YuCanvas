@@ -10,25 +10,26 @@
              mc:Ignorable="d" d:DesignWidth="260" d:DesignHeight="820"
              x:Class="YuCanvas.Controls.SidebarView">
 
-    <Border Background="{StaticResource SidebarGradient}"
-            BorderBrush="{StaticResource GlassStrokeBrush}"
+    <Border Background="{DynamicResource BgSidebarBrush}"
+            BorderBrush="{DynamicResource HairlineBrush}"
             BorderThickness="0,0,1,0">
         <Grid RowDefinitions="Auto,*,Auto" Margin="16,22,16,20">
 
             <StackPanel Grid.Row="0" Spacing="26">
                 <StackPanel Orientation="Horizontal" Spacing="12" Margin="8,0,0,0">
-                    <Border Width="42" Height="42" CornerRadius="13"
-                            Background="{StaticResource AccentGradient}"
-                            BoxShadow="0 6 18 0 #557C3AED">
-                        <TextBlock Text="Y" FontSize="22" FontWeight="Bold"
-                                   Foreground="White"
+                    <Border Width="42" Height="42" CornerRadius="8"
+                            Background="{DynamicResource AccentBrush}"
+                            BoxShadow="{StaticResource ShadowFlat}">
+                        <TextBlock Text="Y" FontSize="20" FontWeight="Bold"
+                                   FontFamily="monospace"
+                                   Foreground="{DynamicResource InkOnAccentBrush}"
                                    HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <StackPanel VerticalAlignment="Center" Spacing="1">
                         <TextBlock Text="YuCanvas" FontSize="18" FontWeight="Bold"
-                                   Foreground="{StaticResource TextPrimaryBrush}" />
+                                   Foreground="{DynamicResource TextPrimaryBrush}" />
                         <TextBlock Text="Learning Hub" FontSize="11"
-                                   Foreground="{StaticResource TextMutedBrush}" />
+                                   Foreground="{DynamicResource TextMutedBrush}" />
                     </StackPanel>
                 </StackPanel>
 
@@ -55,10 +56,12 @@
                                 <TextBlock Text="✎" FontSize="16" VerticalAlignment="Center" />
                                 <TextBlock Text="Aufgaben" VerticalAlignment="Center" />
                             </StackPanel>
-                            <Border Grid.Column="2" Classes="pill" Background="#2E2A6B" IsVisible="True"
-                                    BorderBrush="#00000000" VerticalAlignment="Center">
+                            <Border Grid.Column="2" Classes="pill" Background="{DynamicResource BgInsetBrush}"
+                                    IsVisible="True"
+                                    BorderBrush="{DynamicResource HairlineBrush}" VerticalAlignment="Center">
                                 <TextBlock Text="5" FontSize="11" FontWeight="SemiBold"
-                                           Foreground="{StaticResource AccentPurpleBrightBrush}" />
+                                           FontFamily="monospace"
+                                           Foreground="{DynamicResource AccentBrightBrush}" />
                             </Border>
                             
                             <components:Badge Grid.Column="4"/>
@@ -140,25 +143,27 @@
                 </StackPanel>
 
                 <TextBlock Text="{Binding ComingSoonMessage}" Classes="caption"
-                           Foreground="{StaticResource WarnBrush}"
+                           Foreground="{DynamicResource WarnBrush}"
                            Margin="10,0,10,0" TextWrapping="Wrap"
                            IsVisible="{Binding ComingSoonMessage, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}" />
             </StackPanel>
 
-            <Border Grid.Row="2" Classes="glass" CornerRadius="16" Padding="14">
+            <Border Grid.Row="2" Classes="glass" CornerRadius="10" Padding="14">
                 <StackPanel Spacing="12">
                     <StackPanel Orientation="Horizontal" Spacing="12">
-                        <Border Width="40" Height="40" CornerRadius="12"
-                                Background="{StaticResource HeroGradient}">
-                            <TextBlock Text="LM" FontSize="14" FontWeight="SemiBold"
-                                       Foreground="{StaticResource TextPrimaryBrush}"
+                        <Border Width="40" Height="40" CornerRadius="8"
+                                Background="{DynamicResource BgInsetBrush}"
+                                BorderBrush="{DynamicResource HairlineBrush}" BorderThickness="1">
+                            <TextBlock Text="LM" FontSize="13" FontWeight="SemiBold"
+                                       FontFamily="monospace"
+                                       Foreground="{DynamicResource TextPrimaryBrush}"
                                        HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <StackPanel VerticalAlignment="Center" Spacing="1">
                             <TextBlock Text="{Binding StudentName}" FontSize="13.5" FontWeight="SemiBold"
-                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                                       Foreground="{DynamicResource TextPrimaryBrush}" />
                             <TextBlock Text="Informatik · 4. Sem." FontSize="11"
-                                       Foreground="{StaticResource TextMutedBrush}" />
+                                       Foreground="{DynamicResource TextMutedBrush}" />
                         </StackPanel>
                     </StackPanel>
                     <Button Classes="ghost" Classes.active="{Binding IsSettingsActive}"

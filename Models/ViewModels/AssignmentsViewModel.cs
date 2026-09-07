@@ -55,9 +55,9 @@ public partial class AssignmentsViewModel
     private static IBrush ColorFor(CanvasAssignment a) =>
         a.Submission?.WorkflowState switch
         {
-            "graded"      => new SolidColorBrush(Color.Parse("#34D399")),
-            "submitted"   => new SolidColorBrush(Color.Parse("#38BDF8")),
-            "unsubmitted" => new SolidColorBrush(Color.Parse("#FBBF24")),
-            _             => new SolidColorBrush(Color.Parse("#6B7899"))
+            "graded"      => new SolidColorBrush(Color.Parse("#6FA35B")),
+            "submitted"   => new SolidColorBrush(Color.Parse("#4E8B86")),
+            "unsubmitted" => new SolidColorBrush(Color.Parse("#CC7A2E")),
+            _             => new SolidColorBrush(Color.Parse("#766D5D"))
         };
 }

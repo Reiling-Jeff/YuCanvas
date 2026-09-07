@@ -45,8 +45,8 @@ public partial class DashboardViewModel : ObservableObject
     private bool _passedSync = false;
     
     public IBrush SyncPassedColor => _passedSync 
-                                     ? new SolidColorBrush(Color.Parse("#34D399")) 
-                                     : new SolidColorBrush(Color.Parse("#FB7185"));
+                                     ? new SolidColorBrush(Color.Parse("#6FA35B")) 
+                                     : new SolidColorBrush(Color.Parse("#C1483C"));
 
     [ObservableProperty]
     private string _lastSyncText = "n/a";
@@ -77,13 +77,13 @@ public partial class DashboardViewModel : ObservableObject
     {
         new Deadline { Title = "Übung 6 abgeben", Course = "Verteilte Systeme",
             DueLabel = "Sa 23:59", Relative = "in 2 Tagen",
-            AccentColor = new SolidColorBrush(Color.Parse("#FB7185")) },
+            AccentColor = new SolidColorBrush(Color.Parse("#C1483C")) },
         new Deadline { Title = "Quiz Kapitel 4",  Course = "Datenbanksysteme",
             DueLabel = "Mo 12:00", Relative = "in 4 Tagen",
-            AccentColor = new SolidColorBrush(Color.Parse("#FBBF24")) },
+            AccentColor = new SolidColorBrush(Color.Parse("#CC7A2E")) },
         new Deadline { Title = "Projektabgabe",   Course = "Algorithmen",
             DueLabel = "12. Jul",  Relative = "in 9 Tagen",
-            AccentColor = new SolidColorBrush(Color.Parse("#38BDF8")) },
+            AccentColor = new SolidColorBrush(Color.Parse("#4E8B86")) },
     };
     
     public ObservableCollection<Announcement> Announcements { get; } = new()
